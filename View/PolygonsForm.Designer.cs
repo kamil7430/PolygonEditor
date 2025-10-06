@@ -30,6 +30,8 @@
         {
             menuStrip = new MenuStrip();
             helpToolStripMenuItem = new ToolStripMenuItem();
+            libraryAlgorithmRadioButton = new RadioButton();
+            bresenhamAlgorithmRadioButton = new RadioButton();
             menuStrip.SuspendLayout();
             SuspendLayout();
             // 
@@ -50,11 +52,37 @@
             helpToolStripMenuItem.Text = "Pomoc";
             helpToolStripMenuItem.Click += helpToolStripMenuItem_Click;
             // 
+            // libraryAlgorithmRadioButton
+            // 
+            libraryAlgorithmRadioButton.AutoSize = true;
+            libraryAlgorithmRadioButton.Location = new Point(12, 36);
+            libraryAlgorithmRadioButton.Name = "libraryAlgorithmRadioButton";
+            libraryAlgorithmRadioButton.Size = new Size(212, 29);
+            libraryAlgorithmRadioButton.TabIndex = 1;
+            libraryAlgorithmRadioButton.TabStop = true;
+            libraryAlgorithmRadioButton.Text = "Algorytm biblioteczny";
+            libraryAlgorithmRadioButton.UseVisualStyleBackColor = true;
+            libraryAlgorithmRadioButton.CheckedChanged += libraryAlgorithmRadioButton_CheckedChanged;
+            // 
+            // bresenhamAlgorithmRadioButton
+            // 
+            bresenhamAlgorithmRadioButton.AutoSize = true;
+            bresenhamAlgorithmRadioButton.Location = new Point(230, 36);
+            bresenhamAlgorithmRadioButton.Name = "bresenhamAlgorithmRadioButton";
+            bresenhamAlgorithmRadioButton.Size = new Size(213, 29);
+            bresenhamAlgorithmRadioButton.TabIndex = 2;
+            bresenhamAlgorithmRadioButton.TabStop = true;
+            bresenhamAlgorithmRadioButton.Text = "Algorytm Bresenhama";
+            bresenhamAlgorithmRadioButton.UseVisualStyleBackColor = true;
+            bresenhamAlgorithmRadioButton.CheckedChanged += bresenhamAlgorithmRadioButton_CheckedChanged;
+            // 
             // PolygonsForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(978, 644);
+            Controls.Add(bresenhamAlgorithmRadioButton);
+            Controls.Add(libraryAlgorithmRadioButton);
             Controls.Add(menuStrip);
             MainMenuStrip = menuStrip;
             Name = "PolygonsForm";
@@ -69,5 +97,7 @@
 
         private MenuStrip menuStrip;
         private ToolStripMenuItem helpToolStripMenuItem;
+        private RadioButton libraryAlgorithmRadioButton;
+        private RadioButton bresenhamAlgorithmRadioButton;
     }
 }
