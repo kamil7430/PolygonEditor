@@ -4,12 +4,10 @@ namespace PolygonEditor.View;
 
 public partial class PolygonsForm : Form, IPolygonEditorView
 {
-    private readonly PolygonsFormPresenter _presenter;
-
     public PolygonsForm()
     {
         InitializeComponent();
-        _presenter = new PolygonsFormPresenter(this);
+        _ = new PolygonsFormPresenter(this);
     }
 
     public event EventHandler? HelpClicked;
