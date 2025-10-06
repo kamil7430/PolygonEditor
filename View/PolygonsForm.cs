@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using PolygonEditor.Presenter;
 
-namespace PolygonEditor.View
+namespace PolygonEditor.View;
+
+public partial class PolygonsForm : Form, IPolygonEditorView
 {
-    public partial class PolygonsForm : Form
+    private readonly PolygonsFormPresenter _presenter;
+
+    public PolygonsForm()
     {
-        public PolygonsForm()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+        _presenter = new PolygonsFormPresenter(this);
     }
+
+    public event EventHandler? HelpClicked;
+
+    public void ShowMessageBox(string message)
+        => MessageBox.Show(message);
+
+    private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        => HelpClicked?.Invoke(sender, e);
 }
