@@ -1,16 +1,17 @@
-﻿using PolygonEditor.View;
+﻿using PolygonEditor.Model.RenderingStrategies;
+using PolygonEditor.View;
 
 namespace PolygonEditor.Presenter;
 
 internal class PolygonsFormPresenter
 {
     private readonly IPolygonEditorView _view;
-    private RenderingAlgorithm _renderingAlgorithm;
+    private IRenderingStrategy _renderingStrategy;
 
     public PolygonsFormPresenter(IPolygonEditorView view)
     {
         _view = view;
-        _renderingAlgorithm = RenderingAlgorithm.LibraryAlgorithm;
+        _renderingStrategy = new LibraryDrawingFunctionStrategy();
         SubscribeToEvents();
     }
 
@@ -18,10 +19,10 @@ internal class PolygonsFormPresenter
         => _view.ShowMessageBox("To jest pomoc.");
 
     private void LibraryAlgorithmChosen(object? sender, EventArgs e)
-        => _renderingAlgorithm = RenderingAlgorithm.LibraryAlgorithm;
+        => _renderingStrategy = new LibraryDrawingFunctionStrategy();
 
     private void BresenhamAlgorithmChosen(object? sender, EventArgs e)
-        => _renderingAlgorithm = RenderingAlgorithm.MyBresenhamAlgorithm;
+        => _renderingStrategy = new MyBresenhamAlgorithmStrategy();
 
     private void SubscribeToEvents()
     {
