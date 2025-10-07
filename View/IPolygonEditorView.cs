@@ -1,4 +1,6 @@
-﻿namespace PolygonEditor.View;
+﻿using PolygonEditor.Model;
+
+namespace PolygonEditor.View;
 
 internal interface IPolygonEditorView
 {
@@ -7,4 +9,5 @@ internal interface IPolygonEditorView
     event EventHandler? BresenhamAlgorithmChosen;
 
     void ShowMessageBox(string message);
+    void DrawLine(Vertex v1, Vertex v2);
 }

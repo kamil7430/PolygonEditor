@@ -1,4 +1,5 @@
-﻿using PolygonEditor.Model.RenderingStrategies;
+﻿using PolygonEditor.Model;
+using PolygonEditor.Model.RenderingStrategies;
 using PolygonEditor.View;
 
 namespace PolygonEditor.Presenter;
@@ -23,6 +24,14 @@ internal class PolygonsFormPresenter
 
     private void BresenhamAlgorithmChosen(object? sender, EventArgs e)
         => _renderingStrategy = new MyBresenhamAlgorithmStrategy();
+
+    private IEnumerable<Point>? DrawLine(Vertex v1, Vertex v2)
+    {
+        if (!_renderingStrategy.ShouldUseLibraryDrawingFunction)
+            return _renderingStrategy.GetPixelsToPaint(v1, v2);
+        _view.DrawLine(v1, v2);
+        return null;
+    }
 
     private void SubscribeToEvents()
     {
