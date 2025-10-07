@@ -5,10 +5,12 @@ namespace PolygonEditor.Presenter;
 internal class PolygonsFormPresenter
 {
     private readonly IPolygonEditorView _view;
+    private RenderingAlgorithm _renderingAlgorithm;
 
     public PolygonsFormPresenter(IPolygonEditorView view)
     {
         _view = view;
+        _renderingAlgorithm = RenderingAlgorithm.LibraryAlgorithm;
         SubscribeToEvents();
     }
 
@@ -16,10 +18,10 @@ internal class PolygonsFormPresenter
         => _view.ShowMessageBox("To jest pomoc.");
 
     private void LibraryAlgorithmChosen(object? sender, EventArgs e)
-    { }
+        => _renderingAlgorithm = RenderingAlgorithm.LibraryAlgorithm;
 
     private void BresenhamAlgorithmChosen(object? sender, EventArgs e)
-    { }
+        => _renderingAlgorithm = RenderingAlgorithm.MyBresenhamAlgorithm;
 
     private void SubscribeToEvents()
     {
