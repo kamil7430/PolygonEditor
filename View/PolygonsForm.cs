@@ -4,6 +4,8 @@ namespace PolygonEditor.View;
 
 public partial class PolygonsForm : Form, IPolygonEditorView
 {
+    private const int VERTEX_RADIUS = 20;
+
     public PolygonsForm()
     {
         InitializeComponent();
@@ -26,6 +28,10 @@ public partial class PolygonsForm : Form, IPolygonEditorView
         foreach (var p in points)
             g.FillRectangle(Brushes.Black, p.X, p.Y, 1, 1);
     }
+
+    public void DrawVertex(Graphics g, Point p)
+        => g.FillEllipse(Brushes.PaleVioletRed, p.X - VERTEX_RADIUS / 2,
+            p.Y - VERTEX_RADIUS / 2, VERTEX_RADIUS, VERTEX_RADIUS);
 
     private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         => HelpClicked?.Invoke(sender, e);

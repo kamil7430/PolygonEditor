@@ -35,6 +35,7 @@ internal class PolygonsFormPresenter
             var pixels = DrawLines(paintEventArgs.Graphics);
             if (pixels != null)
                 _view.DrawPixels(paintEventArgs.Graphics, pixels);
+            DrawVertices(paintEventArgs.Graphics);
         }
     }
 
@@ -47,6 +48,12 @@ internal class PolygonsFormPresenter
         for (int i = 0; i < vertexCount; i++)
             _view.DrawLine(g, vertices[i].ToPoint(), vertices[(i + 1) % vertexCount].ToPoint());
         return null;
+    }
+
+    private void DrawVertices(Graphics g)
+    {
+        foreach (var vertex in _polygon.Vertices)
+            _view.DrawVertex(g, vertex.ToPoint());
     }
 
     private void SubscribeToEvents()
