@@ -9,4 +9,5 @@ public interface IPolygonEditorView
 
     void ShowMessageBox(string message);
     void DrawLine(Graphics g, Point p1, Point p2);
+    void DrawPixels(Graphics g, IEnumerable<Point> points);
 }

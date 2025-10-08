@@ -6,11 +6,14 @@ namespace PolygonEditor.Presenter;
 
 internal class PolygonsFormPresenter
 {
+    private Polygon _polygon;
+
     private readonly IPolygonEditorView _view;
     private IRenderingStrategy _renderingStrategy;
 
     public PolygonsFormPresenter(IPolygonEditorView view)
     {
+        _polygon = Polygon.Predefined;
         _view = view;
         _renderingStrategy = new LibraryDrawingFunctionStrategy();
         SubscribeToEvents();
@@ -26,13 +29,20 @@ internal class PolygonsFormPresenter
         => _renderingStrategy = new MyBresenhamAlgorithmStrategy();
 
     private void PolygonPanelPainting(object? sender, EventArgs e)
-    { }
+    {
+        if (e is PaintEventArgs paintEventArgs)
+        {
+            var pixels = DrawLine(paintEventArgs.Graphics);
+            if (pixels != null)
+                _view.DrawPixels(paintEventArgs.Graphics, pixels);
+        }
+    }
 
-    private IEnumerable<Point>? DrawLine(Graphics g, Vertex v1, Vertex v2)
+    private IEnumerable<Point>? DrawLine(Graphics g)
     {
         if (!_renderingStrategy.ShouldUseLibraryDrawingFunction)
-            return _renderingStrategy.GetPixelsToPaint(v1, v2);
-        _view.DrawLine(g, v1.ToPoint(), v2.ToPoint());
+            return _renderingStrategy.GetPixelsToPaint(_polygon);
+        _view.DrawLine(g, );
         return null;
     }
 
