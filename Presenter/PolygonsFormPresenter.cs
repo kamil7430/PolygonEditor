@@ -32,17 +32,20 @@ internal class PolygonsFormPresenter
     {
         if (e is PaintEventArgs paintEventArgs)
         {
-            var pixels = DrawLine(paintEventArgs.Graphics);
+            var pixels = DrawLines(paintEventArgs.Graphics);
             if (pixels != null)
                 _view.DrawPixels(paintEventArgs.Graphics, pixels);
         }
     }
 
-    private IEnumerable<Point>? DrawLine(Graphics g)
+    private IEnumerable<Point>? DrawLines(Graphics g)
     {
         if (!_renderingStrategy.ShouldUseLibraryDrawingFunction)
             return _renderingStrategy.GetPixelsToPaint(_polygon);
-        _view.DrawLine(g, );
+        var vertices = _polygon.Vertices;
+        int vertexCount = vertices.Count;
+        for (int i = 0; i < vertexCount; i++)
+            _view.DrawLine(g, vertices[i].ToPoint(), vertices[(i + 1) % vertexCount].ToPoint());
         return null;
     }
 

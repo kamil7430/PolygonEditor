@@ -16,7 +16,7 @@ public class Polygon
     public static Polygon Predefined
         => new Polygon
         (
-            [new(10, 15), new(130, 30), new(140, 125), new(25, 30)],
+            [new(10, 15), new(530, 130), new(440, 425), new(75, 330)],
             [new(), new(), new(), new()]
         );
 }
