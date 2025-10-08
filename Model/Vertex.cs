@@ -1,6 +1,6 @@
 ﻿namespace PolygonEditor.Model;
 
-internal class Vertex
+public class Vertex
 {
     public int X { get; set; }
     public int Y { get; set; }
@@ -10,4 +10,7 @@ internal class Vertex
         X = x;
         Y = y;
     }
+
+    public Point ToPoint()
+        => new Point(X, Y);
 }

@@ -32,6 +32,7 @@
             helpToolStripMenuItem = new ToolStripMenuItem();
             libraryAlgorithmRadioButton = new RadioButton();
             bresenhamAlgorithmRadioButton = new RadioButton();
+            polygonPanel = new Panel();
             menuStrip.SuspendLayout();
             SuspendLayout();
             // 
@@ -76,11 +77,21 @@
             bresenhamAlgorithmRadioButton.UseVisualStyleBackColor = true;
             bresenhamAlgorithmRadioButton.CheckedChanged += bresenhamAlgorithmRadioButton_CheckedChanged;
             // 
+            // polygonPanel
+            // 
+            polygonPanel.BackColor = SystemColors.ControlLightLight;
+            polygonPanel.Location = new Point(12, 71);
+            polygonPanel.Name = "polygonPanel";
+            polygonPanel.Size = new Size(954, 561);
+            polygonPanel.TabIndex = 3;
+            polygonPanel.Paint += polygonPanel_Paint;
+            // 
             // PolygonsForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(978, 644);
+            Controls.Add(polygonPanel);
             Controls.Add(bresenhamAlgorithmRadioButton);
             Controls.Add(libraryAlgorithmRadioButton);
             Controls.Add(menuStrip);
@@ -99,5 +110,6 @@
         private ToolStripMenuItem helpToolStripMenuItem;
         private RadioButton libraryAlgorithmRadioButton;
         private RadioButton bresenhamAlgorithmRadioButton;
+        private Panel polygonPanel;
     }
 }

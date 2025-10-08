@@ -1,6 +1,6 @@
 ﻿namespace PolygonEditor.Model.RenderingStrategies;
 
-internal class MyBresenhamAlgorithmStrategy : IRenderingStrategy
+public class MyBresenhamAlgorithmStrategy : IRenderingStrategy
 {
     public bool ShouldUseLibraryDrawingFunction
         => false;

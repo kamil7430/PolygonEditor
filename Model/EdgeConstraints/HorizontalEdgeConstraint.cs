@@ -1,6 +1,6 @@
 ﻿namespace PolygonEditor.Model.EdgeConstraints;
 
-internal class HorizontalEdgeConstraint : IEdgeConstraint
+public class HorizontalEdgeConstraint : IEdgeConstraint
 {
 
 }

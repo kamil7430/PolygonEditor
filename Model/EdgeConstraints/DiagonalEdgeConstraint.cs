@@ -1,5 +1,5 @@
 ﻿namespace PolygonEditor.Model.EdgeConstraints;
 
-internal class DiagonalEdgeConstraint : IEdgeConstraint
+public class DiagonalEdgeConstraint : IEdgeConstraint
 {
 }

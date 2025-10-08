@@ -25,11 +25,14 @@ internal class PolygonsFormPresenter
     private void BresenhamAlgorithmChosen(object? sender, EventArgs e)
         => _renderingStrategy = new MyBresenhamAlgorithmStrategy();
 
-    private IEnumerable<Point>? DrawLine(Vertex v1, Vertex v2)
+    private void PolygonPanelPainting(object? sender, EventArgs e)
+    { }
+
+    private IEnumerable<Point>? DrawLine(Graphics g, Vertex v1, Vertex v2)
     {
         if (!_renderingStrategy.ShouldUseLibraryDrawingFunction)
             return _renderingStrategy.GetPixelsToPaint(v1, v2);
-        _view.DrawLine(v1, v2);
+        _view.DrawLine(g, v1.ToPoint(), v2.ToPoint());
         return null;
     }
 
@@ -38,5 +41,6 @@ internal class PolygonsFormPresenter
         _view.HelpClicked += HelpClicked;
         _view.LibraryAlgorithmChosen += LibraryAlgorithmChosen;
         _view.BresenhamAlgorithmChosen += BresenhamAlgorithmChosen;
+        _view.PolygonPanelPainting += PolygonPanelPainting;
     }
 }

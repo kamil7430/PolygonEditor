@@ -2,7 +2,7 @@
 
 namespace PolygonEditor.Model;
 
-internal class Edge
+public class Edge
 {
     public IEdgeConstraint Constraint { get; set; }
 

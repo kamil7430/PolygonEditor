@@ -1,6 +1,6 @@
 ﻿namespace PolygonEditor.Model;
 
-internal class Polygon
+public class Polygon
 {
     public List<Vertex> Vertices { get; set; }
     public List<Edge> Edges { get; set; }

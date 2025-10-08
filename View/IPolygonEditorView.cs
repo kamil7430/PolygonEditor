@@ -1,13 +1,12 @@
-﻿using PolygonEditor.Model;
+﻿namespace PolygonEditor.View;
 
-namespace PolygonEditor.View;
-
-internal interface IPolygonEditorView
+public interface IPolygonEditorView
 {
     event EventHandler? HelpClicked;
     event EventHandler? LibraryAlgorithmChosen;
     event EventHandler? BresenhamAlgorithmChosen;
+    event EventHandler? PolygonPanelPainting;
 
     void ShowMessageBox(string message);
-    void DrawLine(Vertex v1, Vertex v2);
+    void DrawLine(Graphics g, Point p1, Point p2);
 }

@@ -1,6 +1,6 @@
 ﻿namespace PolygonEditor.Model.RenderingStrategies;
 
-internal class LibraryDrawingFunctionStrategy : IRenderingStrategy
+public class LibraryDrawingFunctionStrategy : IRenderingStrategy
 {
     public bool ShouldUseLibraryDrawingFunction
         => true;
