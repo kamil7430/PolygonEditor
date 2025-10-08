@@ -85,6 +85,8 @@
             polygonPanel.Size = new Size(954, 561);
             polygonPanel.TabIndex = 3;
             polygonPanel.Paint += polygonPanel_Paint;
+            polygonPanel.MouseDown += polygonPanel_MouseDown;
+            polygonPanel.MouseUp += polygonPanel_MouseUp;
             // 
             // PolygonsForm
             // 

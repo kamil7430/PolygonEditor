@@ -8,6 +8,8 @@ public class PolygonsFormPresenter
 {
     private Polygon _polygon;
 
+    private Vertex? _draggingVertex;
+
     private readonly IPolygonEditorView _view;
     private IRenderingStrategy _renderingStrategy;
 
@@ -39,6 +41,17 @@ public class PolygonsFormPresenter
         }
     }
 
+    private void PolygonPanelMouseUp(object? sender, EventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void PolygonPanelMouseDown(object? sender, EventArgs e)
+    {
+        var eventArgs = (MouseEventArgs)e;
+
+    }
+
     private IEnumerable<Point>? DrawLines(Graphics g)
     {
         if (!_renderingStrategy.ShouldUseLibraryDrawingFunction)
@@ -62,5 +75,7 @@ public class PolygonsFormPresenter
         _view.LibraryAlgorithmChosen += LibraryAlgorithmChosen;
         _view.BresenhamAlgorithmChosen += BresenhamAlgorithmChosen;
         _view.PolygonPanelPainting += PolygonPanelPainting;
+        _view.PolygonPanelMouseDown += PolygonPanelMouseDown;
+        _view.PolygonPanelMouseUp += PolygonPanelMouseUp;
     }
 }
