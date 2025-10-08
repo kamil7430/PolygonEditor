@@ -4,7 +4,7 @@ using PolygonEditor.View;
 
 namespace PolygonEditor.Presenter;
 
-internal class PolygonsFormPresenter
+public class PolygonsFormPresenter
 {
     private Polygon _polygon;
 
