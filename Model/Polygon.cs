@@ -23,6 +23,18 @@ public class Polygon
             [new(), new(), new(), new()]
         );
 
+    public void MoveVertex(Vertex vertex, Point destination)
+    {
+        vertex.X = destination.X;
+        vertex.Y = destination.Y;
+        int index = Vertices.IndexOf(vertex);
+        for (int i = 0; i < Edges.Count; i++)
+        {
+            // TODO: check edge's constraint 
+            int e = (index + i) % Edges.Count;
+        }
+    }
+
     public void DeleteVertex(Vertex vertex)
     {
         var index = Vertices.IndexOf(vertex);

@@ -1,4 +1,5 @@
 ﻿using PolygonEditor.Model;
+using PolygonEditor.Model.EdgeConstraints;
 using PolygonEditor.Model.RenderingStrategies;
 using PolygonEditor.View;
 
@@ -64,8 +65,7 @@ public class PolygonsFormPresenter
         var mouseEventArgs = (MouseEventArgs)e;
         if (_vertexBeingDragged != null && mouseEventArgs.Button == MouseButtons.Left)
         {
-            _vertexBeingDragged.X = mouseEventArgs.X;
-            _vertexBeingDragged.Y = mouseEventArgs.Y;
+            _polygon.MoveVertex(_vertexBeingDragged, mouseEventArgs.Location);
             _view.RefreshPolygonPanel();
         }
     }
@@ -83,14 +83,14 @@ public class PolygonsFormPresenter
 
     private void VertexContextMenuClosing(object? sender, ToolStripDropDownClosingEventArgs e)
     {
-        if (e.CloseReason != ToolStripDropDownCloseReason.ItemClicked)
-            _contextMenusVertex = null;
+        //if (e.CloseReason != ToolStripDropDownCloseReason.ItemClicked)
+        //    _contextMenusVertex = null;
     }
 
     private void EdgeContextMenuClosing(object? sender, ToolStripDropDownClosingEventArgs e)
     {
-        if (e.CloseReason != ToolStripDropDownCloseReason.ItemClicked)
-            _contextMenusEdge = null;
+        //if (e.CloseReason != ToolStripDropDownCloseReason.ItemClicked)
+        //    _contextMenusEdge = null;
     }
 
     private void DeleteVertexClicked(object? sender, EventArgs e)
@@ -106,6 +106,24 @@ public class PolygonsFormPresenter
         _contextMenusEdge = null;
         _view.RefreshPolygonPanel();
     }
+
+    private void RemoveConstraintClicked(object? sender, EventArgs e)
+        => ChangeConstraintFromContextMenu(new NoConstraint());
+
+    private void CircleArcClicked(object? sender, EventArgs e)
+        => ChangeConstraintFromContextMenu(new CircleArcEdgeConstraint());
+
+    private void BezierCurveClicked(object? sender, EventArgs e)
+        => ChangeConstraintFromContextMenu(new BezierCurveEdgeConstraint());
+
+    private void FixedEdgeLengthClicked(object? sender, EventArgs e)
+        => ChangeConstraintFromContextMenu(new FixedEdgeLengthConstraint());
+
+    private void DiagonalEdgeClicked(object? sender, EventArgs e)
+        => ChangeConstraintFromContextMenu(new DiagonalEdgeConstraint());
+
+    private void HorizontalEdgeClicked(object? sender, EventArgs e)
+        => ChangeConstraintFromContextMenu(new HorizontalEdgeConstraint());
 
     private IEnumerable<Point>? DrawLines(Graphics g)
     {
@@ -151,6 +169,13 @@ public class PolygonsFormPresenter
         _vertexBeingDragged = _polygon.GetNearestVertexInRadius(e.Location, _view.VertexRadius);
     }
 
+    private void ChangeConstraintFromContextMenu(IEdgeConstraint constraint)
+    {
+        _contextMenusEdge!.Constraint = constraint;
+        _contextMenusEdge = null;
+        _view.RefreshPolygonPanel();
+    }
+
     private void SubscribeToEvents()
     {
         _view.HelpClicked += HelpClicked;
@@ -162,6 +187,12 @@ public class PolygonsFormPresenter
         _view.PolygonPanelMouseUp += PolygonPanelMouseUp;
         _view.DeleteVertexClicked += DeleteVertexClicked;
         _view.AddVertexClicked += AddVertexClicked;
+        _view.HorizontalEdgeClicked += HorizontalEdgeClicked;
+        _view.DiagonalEdgeClicked += DiagonalEdgeClicked;
+        _view.FixedEdgeLengthClicked += FixedEdgeLengthClicked;
+        _view.BezierCurveClicked += BezierCurveClicked;
+        _view.CircleArcClicked += CircleArcClicked;
+        _view.RemoveConstraintClicked += RemoveConstraintClicked;
         _view.VertexContextMenuClosing += VertexContextMenuClosing;
         _view.EdgeContextMenuClosing += EdgeContextMenuClosing;
     }
