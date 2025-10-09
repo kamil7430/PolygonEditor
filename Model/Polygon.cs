@@ -36,4 +36,22 @@ public class Polygon
         }
         return nearestVertex?.Vertex;
     }
+
+    public Edge? GetNearestEdgeInRadius(Point p, double radius)
+    {
+        (Edge Edge, double Distance)? nearestEdge = null;
+        var verticesCount = Vertices.Count;
+        for (int i = 0; i < verticesCount; i++)
+        {
+            Vertex a = Vertices[i];
+            Vertex b = Vertices[(i + 1) % verticesCount];
+            var numerator = Math.Abs((b.X - a.X) * (a.Y - p.Y) - (a.X - p.X) * (b.Y - a.Y));
+            var denominator = Math.Sqrt((b.X - a.X) * (b.X - a.X) + (b.Y - a.Y) * (b.Y - a.Y));
+            var distance = numerator / denominator;
+            if (distance <= radius)
+                if (nearestEdge == null || distance < nearestEdge.Value.Distance)
+                    nearestEdge = (Edges[i], distance);
+        }
+        return nearestEdge?.Edge;
+    }
 }

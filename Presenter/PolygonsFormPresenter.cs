@@ -6,8 +6,9 @@ namespace PolygonEditor.Presenter;
 
 public class PolygonsFormPresenter
 {
-    private Polygon _polygon;
+    private const int DISTANCE_TO_CATCH_EDGE = 10;
 
+    private Polygon _polygon;
     private Vertex? _vertexBeingDragged;
 
     private readonly IPolygonEditorView _view;
@@ -49,6 +50,9 @@ public class PolygonsFormPresenter
         {
             case MouseButtons.Left:
                 HandleLeftButtonUp(mouseEventArgs);
+                break;
+            case MouseButtons.Right:
+                HandleRightButtonUp(mouseEventArgs);
                 break;
         }
     }
@@ -94,6 +98,21 @@ public class PolygonsFormPresenter
 
     private void HandleLeftButtonUp(MouseEventArgs e)
         => _vertexBeingDragged = null;
+
+    private void HandleRightButtonUp(MouseEventArgs e)
+    {
+        var vertex = _polygon.GetNearestVertexInRadius(e.Location, _view.VertexRadius);
+        if (vertex != null)
+        {
+            _view.ShowMessageBox("wybrano vertex");
+            return;
+        }
+        var edge = _polygon.GetNearestEdgeInRadius(e.Location, DISTANCE_TO_CATCH_EDGE);
+        if (edge != null)
+        {
+            _view.ShowMessageBox("wybrano edge");
+        }
+    }
 
     private void HandleLeftButtonDown(MouseEventArgs e)
     {
