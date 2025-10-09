@@ -11,6 +11,17 @@ public interface IPolygonEditorView
     event EventHandler? PolygonPanelMouseDown;
     event EventHandler? PolygonPanelMouseMove;
     event EventHandler? PolygonPanelMouseUp;
+    event ToolStripItemClickedEventHandler? DeleteVertexClicked;
+    event ToolStripItemClickedEventHandler? ContinuityG0Clicked;
+    event ToolStripItemClickedEventHandler? ContinuityG1Clicked;
+    event ToolStripItemClickedEventHandler? ContinuityC1Clicked;
+    event ToolStripItemClickedEventHandler? AddVertexClicked;
+    event ToolStripItemClickedEventHandler? HorizontalEdgeClicked;
+    event ToolStripItemClickedEventHandler? DiagonalEdgeClicked;
+    event ToolStripItemClickedEventHandler? FixedEdgeLengthClicked;
+    event ToolStripItemClickedEventHandler? BezierCurveClicked;
+    event ToolStripItemClickedEventHandler? CircleArcClicked;
+    event ToolStripItemClickedEventHandler? RemoveConstraintClicked;
 
     void ShowMessageBox(string message);
     void DrawLine(Graphics g, Point p1, Point p2);
