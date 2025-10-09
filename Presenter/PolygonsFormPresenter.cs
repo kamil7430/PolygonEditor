@@ -100,6 +100,13 @@ public class PolygonsFormPresenter
         _view.RefreshPolygonPanel();
     }
 
+    private void AddVertexClicked(object? sender, EventArgs e)
+    {
+        _polygon.AddVertex(_contextMenusEdge!);
+        _contextMenusEdge = null;
+        _view.RefreshPolygonPanel();
+    }
+
     private IEnumerable<Point>? DrawLines(Graphics g)
     {
         if (!_renderingStrategy.ShouldUseLibraryDrawingFunction)
@@ -154,6 +161,7 @@ public class PolygonsFormPresenter
         _view.PolygonPanelMouseMove += PolygonPanelMouseMove;
         _view.PolygonPanelMouseUp += PolygonPanelMouseUp;
         _view.DeleteVertexClicked += DeleteVertexClicked;
+        _view.AddVertexClicked += AddVertexClicked;
         _view.VertexContextMenuClosing += VertexContextMenuClosing;
         _view.EdgeContextMenuClosing += EdgeContextMenuClosing;
     }

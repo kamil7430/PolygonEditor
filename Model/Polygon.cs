@@ -32,6 +32,16 @@ public class Polygon
         Edges[index].Constraint = new NoConstraint();
     }
 
+    public void AddVertex(Edge edge)
+    {
+        var index = Edges.IndexOf(edge);
+        var v1 = Vertices[index];
+        var v2 = Vertices[(index + 1) % Vertices.Count];
+        var newVertex = new Vertex((v2.X + v1.X) / 2, (v2.Y + v1.Y) / 2);
+        Vertices.Insert(index + 1, newVertex);
+        Edges.Insert(index + 1, new Edge());
+    }
+
     public Vertex? GetNearestVertexInRadius(Point point, float radius)
     {
         (Vertex Vertex, float Distance)? nearestVertex = null;
