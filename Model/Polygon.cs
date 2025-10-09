@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using PolygonEditor.Model.EdgeConstraints;
+using System.Numerics;
 
 namespace PolygonEditor.Model;
 
@@ -21,6 +22,15 @@ public class Polygon
             [new(10, 15), new(530, 130), new(440, 425), new(75, 330)],
             [new(), new(), new(), new()]
         );
+
+    public void DeleteVertex(Vertex vertex)
+    {
+        var index = Vertices.IndexOf(vertex);
+        Vertices.RemoveAt(index);
+        Edges.RemoveAt(index);
+        index %= Edges.Count;
+        Edges[index].Constraint = new NoConstraint();
+    }
 
     public Vertex? GetNearestVertexInRadius(Point point, float radius)
     {

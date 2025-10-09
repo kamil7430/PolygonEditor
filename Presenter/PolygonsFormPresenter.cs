@@ -93,6 +93,13 @@ public class PolygonsFormPresenter
             _contextMenusEdge = null;
     }
 
+    private void DeleteVertexClicked(object? sender, EventArgs e)
+    {
+        _polygon.DeleteVertex(_contextMenusVertex!);
+        _contextMenusVertex = null;
+        _view.RefreshPolygonPanel();
+    }
+
     private IEnumerable<Point>? DrawLines(Graphics g)
     {
         if (!_renderingStrategy.ShouldUseLibraryDrawingFunction)
@@ -146,6 +153,7 @@ public class PolygonsFormPresenter
         _view.PolygonPanelMouseDown += PolygonPanelMouseDown;
         _view.PolygonPanelMouseMove += PolygonPanelMouseMove;
         _view.PolygonPanelMouseUp += PolygonPanelMouseUp;
+        _view.DeleteVertexClicked += DeleteVertexClicked;
         _view.VertexContextMenuClosing += VertexContextMenuClosing;
         _view.EdgeContextMenuClosing += EdgeContextMenuClosing;
     }
