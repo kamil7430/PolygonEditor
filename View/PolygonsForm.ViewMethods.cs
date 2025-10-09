@@ -22,4 +22,10 @@ public partial class PolygonsForm
 
     public void RefreshPolygonPanel()
         => polygonPanel.Refresh();
+
+    public void ShowVertexContextMenu(Point location)
+        => vertexContextMenuStrip.Show(location);
+
+    public void ShowEdgeContextMenu(Point location)
+        => edgeContextMenuStrip.Show(location);
 }

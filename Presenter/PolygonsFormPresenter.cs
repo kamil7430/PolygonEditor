@@ -11,13 +11,15 @@ public class PolygonsFormPresenter
     private Polygon _polygon;
     private Vertex? _vertexBeingDragged;
 
+    private Vertex? _contextMenusVertex;
+    private Edge? _contextMenusEdge;
+
     private readonly IPolygonEditorView _view;
     private IRenderingStrategy _renderingStrategy;
 
     public PolygonsFormPresenter(IPolygonEditorView view)
     {
         _polygon = Polygon.Predefined;
-        _vertexBeingDragged = null;
         _view = view;
         _renderingStrategy = new LibraryDrawingFunctionStrategy();
         SubscribeToEvents();

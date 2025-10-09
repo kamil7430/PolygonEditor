@@ -115,11 +115,12 @@ namespace PolygonEditor.View
             vertexContextMenuStrip.Items.AddRange(new ToolStripItem[] { usuńWierzchołekToolStripMenuItem, ustawCiągłośćToolStripMenuItem });
             vertexContextMenuStrip.Name = "vertexContextMenuStrip";
             vertexContextMenuStrip.Size = new Size(222, 68);
+            vertexContextMenuStrip.Closing += vertexContextMenuStrip_Closing;
             // 
             // usuńWierzchołekToolStripMenuItem
             // 
             usuńWierzchołekToolStripMenuItem.Name = "usuńWierzchołekToolStripMenuItem";
-            usuńWierzchołekToolStripMenuItem.Size = new Size(221, 32);
+            usuńWierzchołekToolStripMenuItem.Size = new Size(240, 32);
             usuńWierzchołekToolStripMenuItem.Text = "Usuń wierzchołek";
             usuńWierzchołekToolStripMenuItem.Click += usuńWierzchołekToolStripMenuItem_Click;
             // 
@@ -127,27 +128,27 @@ namespace PolygonEditor.View
             // 
             ustawCiągłośćToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ciągłośćG0ToolStripMenuItem, ciągłośćC0ToolStripMenuItem, ciągłośćC0ToolStripMenuItem1 });
             ustawCiągłośćToolStripMenuItem.Name = "ustawCiągłośćToolStripMenuItem";
-            ustawCiągłośćToolStripMenuItem.Size = new Size(221, 32);
+            ustawCiągłośćToolStripMenuItem.Size = new Size(240, 32);
             ustawCiągłośćToolStripMenuItem.Text = "Ustaw ciągłość";
             // 
             // ciągłośćG0ToolStripMenuItem
             // 
             ciągłośćG0ToolStripMenuItem.Name = "ciągłośćG0ToolStripMenuItem";
-            ciągłośćG0ToolStripMenuItem.Size = new Size(270, 34);
+            ciągłośćG0ToolStripMenuItem.Size = new Size(208, 34);
             ciągłośćG0ToolStripMenuItem.Text = "Ciągłość G0";
             ciągłośćG0ToolStripMenuItem.Click += ciągłośćG0ToolStripMenuItem_Click;
             // 
             // ciągłośćC0ToolStripMenuItem
             // 
             ciągłośćC0ToolStripMenuItem.Name = "ciągłośćC0ToolStripMenuItem";
-            ciągłośćC0ToolStripMenuItem.Size = new Size(270, 34);
+            ciągłośćC0ToolStripMenuItem.Size = new Size(208, 34);
             ciągłośćC0ToolStripMenuItem.Text = "Ciągłość G1";
             ciągłośćC0ToolStripMenuItem.Click += ciągłośćC0ToolStripMenuItem_Click;
             // 
             // ciągłośćC0ToolStripMenuItem1
             // 
             ciągłośćC0ToolStripMenuItem1.Name = "ciągłośćC0ToolStripMenuItem1";
-            ciągłośćC0ToolStripMenuItem1.Size = new Size(270, 34);
+            ciągłośćC0ToolStripMenuItem1.Size = new Size(208, 34);
             ciągłośćC0ToolStripMenuItem1.Text = "Ciągłość C1";
             ciągłośćC0ToolStripMenuItem1.Click += ciągłośćC0ToolStripMenuItem1_Click;
             // 
@@ -157,11 +158,12 @@ namespace PolygonEditor.View
             edgeContextMenuStrip.Items.AddRange(new ToolStripItem[] { dodajWierzchołekToolStripMenuItem, dodajOgraniczenieToolStripMenuItem, usuńOgraniczenieToolStripMenuItem });
             edgeContextMenuStrip.Name = "edgeContextMenuStrip";
             edgeContextMenuStrip.Size = new Size(241, 133);
+            edgeContextMenuStrip.Closing += edgeContextMenuStrip_Closing;
             // 
             // dodajWierzchołekToolStripMenuItem
             // 
             dodajWierzchołekToolStripMenuItem.Name = "dodajWierzchołekToolStripMenuItem";
-            dodajWierzchołekToolStripMenuItem.Size = new Size(240, 32);
+            dodajWierzchołekToolStripMenuItem.Size = new Size(236, 32);
             dodajWierzchołekToolStripMenuItem.Text = "Dodaj wierzchołek";
             dodajWierzchołekToolStripMenuItem.Click += dodajWierzchołekToolStripMenuItem_Click;
             // 
@@ -169,7 +171,7 @@ namespace PolygonEditor.View
             // 
             dodajOgraniczenieToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { krawędźPoziomaToolStripMenuItem, krawędźSkośnaToolStripMenuItem, stałaDługośćKrawędziToolStripMenuItem, krzywaBezieraToolStripMenuItem, łukOkręguToolStripMenuItem });
             dodajOgraniczenieToolStripMenuItem.Name = "dodajOgraniczenieToolStripMenuItem";
-            dodajOgraniczenieToolStripMenuItem.Size = new Size(240, 32);
+            dodajOgraniczenieToolStripMenuItem.Size = new Size(236, 32);
             dodajOgraniczenieToolStripMenuItem.Text = "Ustaw ograniczenie";
             // 
             // krawędźPoziomaToolStripMenuItem
@@ -210,7 +212,7 @@ namespace PolygonEditor.View
             // usuńOgraniczenieToolStripMenuItem
             // 
             usuńOgraniczenieToolStripMenuItem.Name = "usuńOgraniczenieToolStripMenuItem";
-            usuńOgraniczenieToolStripMenuItem.Size = new Size(240, 32);
+            usuńOgraniczenieToolStripMenuItem.Size = new Size(236, 32);
             usuńOgraniczenieToolStripMenuItem.Text = "Usuń ograniczenie";
             usuńOgraniczenieToolStripMenuItem.Click += usuńOgraniczenieToolStripMenuItem_Click;
             // 

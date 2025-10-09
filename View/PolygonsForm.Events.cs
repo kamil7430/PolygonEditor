@@ -48,6 +48,8 @@ public partial class PolygonsForm
     public event ToolStripItemClickedEventHandler? BezierCurveClicked;
     public event ToolStripItemClickedEventHandler? CircleArcClicked;
     public event ToolStripItemClickedEventHandler? RemoveConstraintClicked;
+    public event ToolStripDropDownClosingEventHandler? VertexContextMenuClosing;
+    public event ToolStripDropDownClosingEventHandler? EdgeContextMenuClosing;
 
     private void usuńWierzchołekToolStripMenuItem_Click(object sender, EventArgs e)
         => DeleteVertexClicked?.Invoke(sender, (ToolStripItemClickedEventArgs)e);
@@ -81,4 +83,10 @@ public partial class PolygonsForm
 
     private void usuńOgraniczenieToolStripMenuItem_Click(object sender, EventArgs e)
         => RemoveConstraintClicked?.Invoke(sender, (ToolStripItemClickedEventArgs)e);
+
+    private void vertexContextMenuStrip_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+        => VertexContextMenuClosing?.Invoke(sender, e);
+
+    private void edgeContextMenuStrip_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+        => EdgeContextMenuClosing?.Invoke(sender, e);
 }
