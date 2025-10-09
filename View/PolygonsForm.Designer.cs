@@ -1,4 +1,6 @@
-﻿namespace PolygonEditor.View
+﻿using PolygonEditor.View.Controls;
+
+namespace PolygonEditor.View
 {
     partial class PolygonsForm
     {
@@ -32,7 +34,7 @@
             helpToolStripMenuItem = new ToolStripMenuItem();
             libraryAlgorithmRadioButton = new RadioButton();
             bresenhamAlgorithmRadioButton = new RadioButton();
-            polygonPanel = new Panel();
+            polygonPanel = new DoubleBufferedPanel();
             menuStrip.SuspendLayout();
             SuspendLayout();
             // 
@@ -113,6 +115,6 @@
         private ToolStripMenuItem helpToolStripMenuItem;
         private RadioButton libraryAlgorithmRadioButton;
         private RadioButton bresenhamAlgorithmRadioButton;
-        private Panel polygonPanel;
+        private DoubleBufferedPanel polygonPanel;
     }
 }
