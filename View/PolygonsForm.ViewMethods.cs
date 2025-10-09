@@ -2,7 +2,7 @@
 
 public partial class PolygonsForm
 {
-    private const int VERTEX_RADIUS = 20;
+    public int VertexRadius { get; } = 10;
 
     public void ShowMessageBox(string message)
         => MessageBox.Show(message);
@@ -17,6 +17,9 @@ public partial class PolygonsForm
     }
 
     public void DrawVertex(Graphics g, Point p)
-        => g.FillEllipse(Brushes.PaleVioletRed, p.X - VERTEX_RADIUS / 2,
-            p.Y - VERTEX_RADIUS / 2, VERTEX_RADIUS, VERTEX_RADIUS);
+        => g.FillEllipse(Brushes.PaleVioletRed, p.X - VertexRadius,
+            p.Y - VertexRadius, VertexRadius * 2, VertexRadius * 2);
+
+    public void RefreshPolygonPanel()
+        => polygonPanel.Refresh();
 }

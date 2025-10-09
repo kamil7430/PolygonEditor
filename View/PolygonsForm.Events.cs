@@ -7,6 +7,7 @@ public partial class PolygonsForm
     public event EventHandler? BresenhamAlgorithmChosen;
     public event EventHandler? PolygonPanelPainting;
     public event EventHandler? PolygonPanelMouseDown;
+    public event EventHandler? PolygonPanelMouseMove;
     public event EventHandler? PolygonPanelMouseUp;
 
     private void helpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -29,6 +30,9 @@ public partial class PolygonsForm
 
     private void polygonPanel_MouseDown(object sender, MouseEventArgs e)
         => PolygonPanelMouseDown?.Invoke(sender, e);
+
+    private void polygonPanel_MouseMove(object sender, MouseEventArgs e)
+        => PolygonPanelMouseMove?.Invoke(sender, e);
 
     private void polygonPanel_MouseUp(object sender, MouseEventArgs e)
         => PolygonPanelMouseUp?.Invoke(sender, e);

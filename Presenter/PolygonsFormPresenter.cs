@@ -8,7 +8,7 @@ public class PolygonsFormPresenter
 {
     private Polygon _polygon;
 
-    private Vertex? _draggingVertex;
+    private Vertex? _vertexBeingDragged;
 
     private readonly IPolygonEditorView _view;
     private IRenderingStrategy _renderingStrategy;
@@ -16,6 +16,7 @@ public class PolygonsFormPresenter
     public PolygonsFormPresenter(IPolygonEditorView view)
     {
         _polygon = Polygon.Predefined;
+        _vertexBeingDragged = null;
         _view = view;
         _renderingStrategy = new LibraryDrawingFunctionStrategy();
         SubscribeToEvents();
@@ -43,13 +44,35 @@ public class PolygonsFormPresenter
 
     private void PolygonPanelMouseUp(object? sender, EventArgs e)
     {
-        throw new NotImplementedException();
+        var mouseEventArgs = (MouseEventArgs)e;
+        switch (mouseEventArgs.Button)
+        {
+            case MouseButtons.Left:
+                HandleLeftButtonUp(mouseEventArgs);
+                break;
+        }
+    }
+
+    private void PolygonPanelMouseMove(object? sender, EventArgs e)
+    {
+        var mouseEventArgs = (MouseEventArgs)e;
+        if (_vertexBeingDragged != null && mouseEventArgs.Button == MouseButtons.Left)
+        {
+            _vertexBeingDragged.X = mouseEventArgs.X;
+            _vertexBeingDragged.Y = mouseEventArgs.Y;
+            _view.RefreshPolygonPanel();
+        }
     }
 
     private void PolygonPanelMouseDown(object? sender, EventArgs e)
     {
-        var eventArgs = (MouseEventArgs)e;
-
+        var mouseEventArgs = (MouseEventArgs)e;
+        switch (mouseEventArgs.Button)
+        {
+            case MouseButtons.Left:
+                HandleLeftButtonDown(mouseEventArgs);
+                break;
+        }
     }
 
     private IEnumerable<Point>? DrawLines(Graphics g)
@@ -69,6 +92,16 @@ public class PolygonsFormPresenter
             _view.DrawVertex(g, vertex.ToPoint());
     }
 
+    private void HandleLeftButtonUp(MouseEventArgs e)
+        => _vertexBeingDragged = null;
+
+    private void HandleLeftButtonDown(MouseEventArgs e)
+    {
+        if (_vertexBeingDragged != null)
+            return;
+        _vertexBeingDragged = _polygon.GetNearestVertexInRadius(e.Location, _view.VertexRadius);
+    }
+
     private void SubscribeToEvents()
     {
         _view.HelpClicked += HelpClicked;
@@ -76,6 +109,7 @@ public class PolygonsFormPresenter
         _view.BresenhamAlgorithmChosen += BresenhamAlgorithmChosen;
         _view.PolygonPanelPainting += PolygonPanelPainting;
         _view.PolygonPanelMouseDown += PolygonPanelMouseDown;
+        _view.PolygonPanelMouseMove += PolygonPanelMouseMove;
         _view.PolygonPanelMouseUp += PolygonPanelMouseUp;
     }
 }
