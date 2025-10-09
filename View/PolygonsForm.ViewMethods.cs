@@ -24,8 +24,16 @@ public partial class PolygonsForm
         => polygonPanel.Refresh();
 
     public void ShowVertexContextMenu(Point location)
-        => vertexContextMenuStrip.Show(location);
+    {
+        var p = PointToScreen(polygonPanel.Location);
+        p.Offset(location);
+        vertexContextMenuStrip.Show(p);
+    }
 
     public void ShowEdgeContextMenu(Point location)
-        => edgeContextMenuStrip.Show(location);
+    {
+        var p = PointToScreen(polygonPanel.Location);
+        p.Offset(location);
+        edgeContextMenuStrip.Show(p);
+    }
 }

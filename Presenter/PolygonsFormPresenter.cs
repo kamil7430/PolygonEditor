@@ -81,6 +81,18 @@ public class PolygonsFormPresenter
         }
     }
 
+    private void VertexContextMenuClosing(object? sender, ToolStripDropDownClosingEventArgs e)
+    {
+        if (e.CloseReason != ToolStripDropDownCloseReason.ItemClicked)
+            _contextMenusVertex = null;
+    }
+
+    private void EdgeContextMenuClosing(object? sender, ToolStripDropDownClosingEventArgs e)
+    {
+        if (e.CloseReason != ToolStripDropDownCloseReason.ItemClicked)
+            _contextMenusEdge = null;
+    }
+
     private IEnumerable<Point>? DrawLines(Graphics g)
     {
         if (!_renderingStrategy.ShouldUseLibraryDrawingFunction)
@@ -106,13 +118,15 @@ public class PolygonsFormPresenter
         var vertex = _polygon.GetNearestVertexInRadius(e.Location, _view.VertexRadius);
         if (vertex != null)
         {
-            _view.ShowMessageBox("wybrano vertex");
+            _contextMenusVertex = vertex;
+            _view.ShowVertexContextMenu(e.Location);
             return;
         }
         var edge = _polygon.GetNearestEdgeInRadius(e.Location, DISTANCE_TO_CATCH_EDGE);
         if (edge != null)
         {
-            _view.ShowMessageBox("wybrano edge");
+            _contextMenusEdge = edge;
+            _view.ShowEdgeContextMenu(e.Location);
         }
     }
 
@@ -132,5 +146,7 @@ public class PolygonsFormPresenter
         _view.PolygonPanelMouseDown += PolygonPanelMouseDown;
         _view.PolygonPanelMouseMove += PolygonPanelMouseMove;
         _view.PolygonPanelMouseUp += PolygonPanelMouseUp;
+        _view.VertexContextMenuClosing += VertexContextMenuClosing;
+        _view.EdgeContextMenuClosing += EdgeContextMenuClosing;
     }
 }
