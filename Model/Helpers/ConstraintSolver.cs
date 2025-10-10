@@ -4,7 +4,33 @@ public static class ConstraintSolver
 {
     public static bool TryMoveVertexAndApplyConstraints(Polygon polygon, Vertex vertexMoved, Point destination)
     {
+        int movedVertexIndex = polygon.Vertices.IndexOf(vertexMoved);
         var vertices = polygon.Vertices.Clone();
+        vertices[movedVertexIndex].MoveTo(destination);
+        if (TryApplyConstraints(vertices, polygon.Edges, movedVertexIndex))
+        {
+            polygon.Vertices = vertices;
+            return true;
+        }
+        return false;
+    }
 
+    private static bool TryApplyConstraints(List<Vertex> vertices, List<Edge> edges, int movedVertexIndex)
+    {
+        int vertexCount = vertices.Count;
+        int i = movedVertexIndex, j = (i + 1).TrueModulo(vertexCount);
+        while (!edges[i].Constraint.CheckConstraint(vertices[i], vertices[j]))
+        {
+            edges[i].Constraint.ApplyConstraint(vertices[i], vertices[j]);
+            i = j;
+            j = (j + 1).TrueModulo(vertexCount);
+        }
+        return true;
+    }
+
+    private static int TrueModulo(this int a, int b)
+    {
+        int c = a % b;
+        return (c + b) % b;
     }
 }

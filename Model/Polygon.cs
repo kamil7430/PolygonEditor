@@ -24,14 +24,19 @@ public class Polygon
             [new(), new(), new(), new()]
         );
 
-    public void MoveVertex(Vertex vertex, Point destination)
+    public Vertex MoveVertex(Vertex vertex, Point destination)
     {
+        int vertexIndex = Vertices.IndexOf(vertex);
         if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, vertex, destination))
             MoveWholePolygon(destination.Subtract(vertex.ToPoint()).ToSize());
+        return Vertices[vertexIndex];
     }
 
     public void MoveWholePolygon(Size delta)
         => Vertices.ForEach(v => v.Offset(delta));
+
+    public void ApplyConstraints(int index)
+        => MoveVertex(Vertices[index], Vertices[index].ToPoint());
 
     public void DeleteVertex(Vertex vertex)
     {

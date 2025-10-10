@@ -71,7 +71,7 @@ public class PolygonsFormPresenter
         {
             if (_vertexBeingDragged != null)
             {
-                _polygon.MoveVertex(_vertexBeingDragged, mouseEventArgs.Location);
+                _vertexBeingDragged = _polygon.MoveVertex(_vertexBeingDragged, mouseEventArgs.Location);
                 _view.RefreshPolygonPanel();
             }
             else if (_shouldDragWholePolygon)
@@ -215,6 +215,7 @@ public class PolygonsFormPresenter
     private void ChangeConstraintFromContextMenu(IEdgeConstraint constraint)
     {
         _contextMenusEdge!.Constraint = constraint;
+        _polygon.ApplyConstraints(_polygon.Edges.IndexOf(_contextMenusEdge));
         _contextMenusEdge = null;
         _view.RefreshPolygonPanel();
     }

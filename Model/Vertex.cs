@@ -13,6 +13,12 @@ public class Vertex : ICastableToVector2, ICloneable
         Y = y;
     }
 
+    public void MoveTo(Point point)
+    {
+        X = point.X;
+        Y = point.Y;
+    }
+
     public void Offset(Size size)
     {
         X += size.Width;
