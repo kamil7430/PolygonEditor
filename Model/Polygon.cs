@@ -24,7 +24,11 @@ public class Polygon
         );
 
     public void MoveVertex(Vertex vertex, Point destination)
-        => ConstraintSolver.MoveVertexAndApplyConstraints(this, vertex, destination);
+    {
+        if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, vertex, destination))
+            MoveWholePolygon(destination.Subtract(vertex.ToPoint()).ToSize());
+    }
+
 
     public void MoveWholePolygon(Size delta)
         => Vertices.ForEach(v => v.Offset(delta));

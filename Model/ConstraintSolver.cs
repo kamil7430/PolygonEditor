@@ -2,6 +2,8 @@
 
 public static class ConstraintSolver
 {
-    public static void MoveVertexAndApplyConstraints(Polygon polygon, Vertex vertexMoved, Point destination)
-    { }
+    public static bool TryMoveVertexAndApplyConstraints(Polygon polygon, Vertex vertexMoved, Point destination)
+    {
+        return false;
+    }
 }
