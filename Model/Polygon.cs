@@ -35,6 +35,9 @@ public class Polygon
         }
     }
 
+    public void MoveWholePolygon(Size delta)
+        => Vertices.ForEach(v => v.Offset(delta));
+
     public void DeleteVertex(Vertex vertex)
     {
         var index = Vertices.IndexOf(vertex);

@@ -9,6 +9,8 @@ public partial class PolygonsForm
     public event EventHandler? PolygonPanelMouseDown;
     public event EventHandler? PolygonPanelMouseMove;
     public event EventHandler? PolygonPanelMouseUp;
+    public event KeyEventHandler? FormKeyDown;
+    public event KeyEventHandler? FormKeyUp;
 
     private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         => HelpClicked?.Invoke(sender, e);
@@ -36,6 +38,12 @@ public partial class PolygonsForm
 
     private void polygonPanel_MouseUp(object sender, MouseEventArgs e)
         => PolygonPanelMouseUp?.Invoke(sender, e);
+
+    private void PolygonsForm_KeyDown(object sender, KeyEventArgs e)
+        => FormKeyDown?.Invoke(sender, e);
+
+    private void PolygonsForm_KeyUp(object sender, KeyEventArgs e)
+        => FormKeyUp?.Invoke(sender, e);
 
     public event EventHandler? DeleteVertexClicked;
     public event EventHandler? ContinuityG0Clicked;

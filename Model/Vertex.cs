@@ -13,4 +13,10 @@ public class Vertex
 
     public Point ToPoint()
         => new Point(X, Y);
+
+    public void Offset(Size size)
+    {
+        X += size.Width;
+        Y += size.Height;
+    }
 }

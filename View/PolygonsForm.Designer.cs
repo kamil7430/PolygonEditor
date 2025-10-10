@@ -120,7 +120,7 @@ namespace PolygonEditor.View
             // usuńWierzchołekToolStripMenuItem
             // 
             usuńWierzchołekToolStripMenuItem.Name = "usuńWierzchołekToolStripMenuItem";
-            usuńWierzchołekToolStripMenuItem.Size = new Size(240, 32);
+            usuńWierzchołekToolStripMenuItem.Size = new Size(221, 32);
             usuńWierzchołekToolStripMenuItem.Text = "Usuń wierzchołek";
             usuńWierzchołekToolStripMenuItem.Click += usuńWierzchołekToolStripMenuItem_Click;
             // 
@@ -128,7 +128,7 @@ namespace PolygonEditor.View
             // 
             ustawCiągłośćToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ciągłośćG0ToolStripMenuItem, ciągłośćC0ToolStripMenuItem, ciągłośćC0ToolStripMenuItem1 });
             ustawCiągłośćToolStripMenuItem.Name = "ustawCiągłośćToolStripMenuItem";
-            ustawCiągłośćToolStripMenuItem.Size = new Size(240, 32);
+            ustawCiągłośćToolStripMenuItem.Size = new Size(221, 32);
             ustawCiągłośćToolStripMenuItem.Text = "Ustaw ciągłość";
             // 
             // ciągłośćG0ToolStripMenuItem
@@ -157,7 +157,7 @@ namespace PolygonEditor.View
             edgeContextMenuStrip.ImageScalingSize = new Size(24, 24);
             edgeContextMenuStrip.Items.AddRange(new ToolStripItem[] { dodajWierzchołekToolStripMenuItem, dodajOgraniczenieToolStripMenuItem, usuńOgraniczenieToolStripMenuItem });
             edgeContextMenuStrip.Name = "edgeContextMenuStrip";
-            edgeContextMenuStrip.Size = new Size(241, 133);
+            edgeContextMenuStrip.Size = new Size(237, 100);
             edgeContextMenuStrip.Closing += edgeContextMenuStrip_Closing;
             // 
             // dodajWierzchołekToolStripMenuItem
@@ -225,9 +225,12 @@ namespace PolygonEditor.View
             Controls.Add(bresenhamAlgorithmRadioButton);
             Controls.Add(libraryAlgorithmRadioButton);
             Controls.Add(menuStrip);
+            KeyPreview = true;
             MainMenuStrip = menuStrip;
             Name = "PolygonsForm";
             Text = "Edytor wielokątów";
+            KeyDown += PolygonsForm_KeyDown;
+            KeyUp += PolygonsForm_KeyUp;
             menuStrip.ResumeLayout(false);
             menuStrip.PerformLayout();
             vertexContextMenuStrip.ResumeLayout(false);

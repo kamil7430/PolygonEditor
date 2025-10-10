@@ -12,6 +12,9 @@ public class PolygonsFormPresenter
     private Polygon _polygon;
     private Vertex? _vertexBeingDragged;
 
+    private bool _shouldDragWholePolygon;
+    private Point? _sourceOfPolygonMovement;
+
     private Vertex? _contextMenusVertex;
     private Edge? _contextMenusEdge;
 
@@ -21,6 +24,7 @@ public class PolygonsFormPresenter
     public PolygonsFormPresenter(IPolygonEditorView view)
     {
         _polygon = Polygon.Predefined;
+        _shouldDragWholePolygon = false;
         _view = view;
         _renderingStrategy = new LibraryDrawingFunctionStrategy();
         SubscribeToEvents();
@@ -63,10 +67,22 @@ public class PolygonsFormPresenter
     private void PolygonPanelMouseMove(object? sender, EventArgs e)
     {
         var mouseEventArgs = (MouseEventArgs)e;
-        if (_vertexBeingDragged != null && mouseEventArgs.Button == MouseButtons.Left)
+        if (mouseEventArgs.Button == MouseButtons.Left)
         {
-            _polygon.MoveVertex(_vertexBeingDragged, mouseEventArgs.Location);
-            _view.RefreshPolygonPanel();
+            if (_vertexBeingDragged != null)
+            {
+                _polygon.MoveVertex(_vertexBeingDragged, mouseEventArgs.Location);
+                _view.RefreshPolygonPanel();
+            }
+            else if (_shouldDragWholePolygon)
+            {
+                var newLoc = mouseEventArgs.Location;
+                var delta = new Size(newLoc.X - _sourceOfPolygonMovement!.Value.X,
+                    newLoc.Y - _sourceOfPolygonMovement.Value.Y);
+                _polygon.MoveWholePolygon(delta);
+                _sourceOfPolygonMovement = newLoc;
+                _view.RefreshPolygonPanel();
+            }
         }
     }
 
@@ -77,6 +93,27 @@ public class PolygonsFormPresenter
         {
             case MouseButtons.Left:
                 HandleLeftButtonDown(mouseEventArgs);
+                break;
+        }
+    }
+
+    private void FormKeyUp(object? sender, KeyEventArgs e)
+    {
+        switch (e.KeyCode)
+        {
+            case Keys.ControlKey:
+                _shouldDragWholePolygon = false;
+                _sourceOfPolygonMovement = null;
+                break;
+        }
+    }
+
+    private void FormKeyDown(object? sender, KeyEventArgs e)
+    {
+        switch (e.KeyCode)
+        {
+            case Keys.ControlKey:
+                _shouldDragWholePolygon = true;
                 break;
         }
     }
@@ -143,7 +180,10 @@ public class PolygonsFormPresenter
     }
 
     private void HandleLeftButtonUp(MouseEventArgs e)
-        => _vertexBeingDragged = null;
+    {
+        _vertexBeingDragged = null;
+        _sourceOfPolygonMovement = null;
+    }
 
     private void HandleRightButtonUp(MouseEventArgs e)
     {
@@ -166,7 +206,10 @@ public class PolygonsFormPresenter
     {
         if (_vertexBeingDragged != null)
             return;
-        _vertexBeingDragged = _polygon.GetNearestVertexInRadius(e.Location, _view.VertexRadius);
+        if (_shouldDragWholePolygon)
+            _sourceOfPolygonMovement = e.Location;
+        else
+            _vertexBeingDragged = _polygon.GetNearestVertexInRadius(e.Location, _view.VertexRadius);
     }
 
     private void ChangeConstraintFromContextMenu(IEdgeConstraint constraint)
@@ -185,6 +228,8 @@ public class PolygonsFormPresenter
         _view.PolygonPanelMouseDown += PolygonPanelMouseDown;
         _view.PolygonPanelMouseMove += PolygonPanelMouseMove;
         _view.PolygonPanelMouseUp += PolygonPanelMouseUp;
+        _view.FormKeyDown += FormKeyDown;
+        _view.FormKeyUp += FormKeyUp;
         _view.DeleteVertexClicked += DeleteVertexClicked;
         _view.AddVertexClicked += AddVertexClicked;
         _view.HorizontalEdgeClicked += HorizontalEdgeClicked;

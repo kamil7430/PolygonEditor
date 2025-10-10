@@ -11,6 +11,8 @@ public interface IPolygonEditorView
     event EventHandler? PolygonPanelMouseDown;
     event EventHandler? PolygonPanelMouseMove;
     event EventHandler? PolygonPanelMouseUp;
+    event KeyEventHandler? FormKeyDown;
+    event KeyEventHandler? FormKeyUp;
     event EventHandler? DeleteVertexClicked;
     event EventHandler? ContinuityG0Clicked;
     event EventHandler? ContinuityG1Clicked;
