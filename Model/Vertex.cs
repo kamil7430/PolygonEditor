@@ -2,7 +2,7 @@
 
 namespace PolygonEditor.Model;
 
-public class Vertex
+public class Vertex : ICastableToVector2
 {
     public int X { get; set; }
     public int Y { get; set; }
