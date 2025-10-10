@@ -24,16 +24,7 @@ public class Polygon
         );
 
     public void MoveVertex(Vertex vertex, Point destination)
-    {
-        vertex.X = destination.X;
-        vertex.Y = destination.Y;
-        int index = Vertices.IndexOf(vertex);
-        for (int i = 0; i < Edges.Count; i++)
-        {
-            // TODO: check edge's constraint 
-            int e = (index + i) % Edges.Count;
-        }
-    }
+        => ConstraintSolver.MoveVertexAndApplyConstraints(this, vertex, destination);
 
     public void MoveWholePolygon(Size delta)
         => Vertices.ForEach(v => v.Offset(delta));
