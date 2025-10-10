@@ -2,4 +2,9 @@
 
 public class NoConstraint : IEdgeConstraint
 {
+    public void ApplyConstraint(Vertex a, Vertex b)
+    { }
+
+    public bool CheckConstraint(Vertex a, Vertex b)
+        => true;
 }
