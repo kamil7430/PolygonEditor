@@ -154,7 +154,7 @@ public class PolygonsFormPresenter
         => ChangeConstraintFromContextMenu(new BezierCurveEdgeConstraint());
 
     private void FixedEdgeLengthClicked(object? sender, EventArgs e)
-        => ChangeConstraintFromContextMenu(new FixedEdgeLengthConstraint());
+        => ChangeConstraintFromContextMenu(new FixedEdgeLengthConstraint(100));
 
     private void DiagonalEdgeClicked(object? sender, EventArgs e)
         => ChangeConstraintFromContextMenu(new DiagonalEdgeConstraint());

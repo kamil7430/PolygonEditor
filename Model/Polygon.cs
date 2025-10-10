@@ -30,7 +30,6 @@ public class Polygon
             MoveWholePolygon(destination.Subtract(vertex.ToPoint()).ToSize());
     }
 
-
     public void MoveWholePolygon(Size delta)
         => Vertices.ForEach(v => v.Offset(delta));
 
