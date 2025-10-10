@@ -1,4 +1,4 @@
-﻿namespace PolygonEditor.Model;
+﻿namespace PolygonEditor.Model.Helpers;
 
 public static class ConstraintSolver
 {

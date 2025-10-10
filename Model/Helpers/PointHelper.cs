@@ -1,4 +1,6 @@
-﻿namespace PolygonEditor;
+﻿using System.Numerics;
+
+namespace PolygonEditor.Model.Helpers;
 
 public static class PointHelper
 {
@@ -10,4 +12,7 @@ public static class PointHelper
 
     public static Size ToSize(this Point p)
         => new Size(p);
+
+    public static Vector2 ToVector2(this Point p)
+        => new Vector2(p.X, p.Y);
 }

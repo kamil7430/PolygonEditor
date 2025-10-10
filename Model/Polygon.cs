@@ -1,4 +1,5 @@
 ﻿using PolygonEditor.Model.EdgeConstraints;
+using PolygonEditor.Model.Helpers;
 using System.Numerics;
 
 namespace PolygonEditor.Model;

@@ -1,4 +1,6 @@
-﻿namespace PolygonEditor.Model;
+﻿using System.Numerics;
+
+namespace PolygonEditor.Model;
 
 public class Vertex
 {
@@ -13,6 +15,9 @@ public class Vertex
 
     public Point ToPoint()
         => new Point(X, Y);
+
+    public Vector2 ToVector2()
+        => new Vector2(X, Y);
 
     public void Offset(Size size)
     {
