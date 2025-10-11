@@ -11,9 +11,9 @@
   - [ ] Możliwe ograniczenia:
     - [ ] Krawędź pozioma (osoby o nazwiskach od A do K), krawędź pionowa (osoby o nazwiskach od L do Z), krawędź skośna (45°)
     - [ ] Zadana długość krawędzi. Ustawiamy dowolną zadaną długość krawędzi poprzez okno edycyjne (bieżąca długość -> wartość domyślna).
-  - [ ] Maksymalnie tylko jedno ograniczenie dla krawędzi
-  - [ ] Dwie sąsiednie krawędzie nie mogą być obie pionowe lub obie poziome
-  - [ ] Dodawanie wierzchołka na krawędzi lub usuwanie wierzchołka - usuwa ograniczenia i typ "przyległych" krawędzi
+  - [x] Maksymalnie tylko jedno ograniczenie dla krawędzi
+  - [x] Dwie sąsiednie krawędzie nie mogą być obie pionowe lub obie poziome
+  - [x] Dodawanie wierzchołka na krawędzi lub usuwanie wierzchołka - usuwa ograniczenia i typ "przyległych" krawędzi
   - [ ] Ustawione ograniczenia są widoczne (jako odpowiednie "ikonki") przy środku krawędzi
   - [x] Powinna istnieć mozliwość usuwania relacji
 - [ ] Włączanie/wyłączanie dla wybranej krawędzi - segmentu Beziera 3-go stopnia (krawędż nie jest odcinkiem tylko krzywą).

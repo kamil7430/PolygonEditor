@@ -214,8 +214,8 @@ public class PolygonsFormPresenter
 
     private void ChangeConstraintFromContextMenu(IEdgeConstraint constraint)
     {
-        _contextMenusEdge!.Constraint = constraint;
-        _polygon.ApplyConstraints(_polygon.Edges.IndexOf(_contextMenusEdge));
+        if (!_polygon.TryApplyConstraints(_contextMenusEdge!, constraint))
+            _view.ShowMessageBox("Ograniczenie nie może być dodane!");
         _contextMenusEdge = null;
         _view.RefreshPolygonPanel();
     }

@@ -35,8 +35,28 @@ public class Polygon
     public void MoveWholePolygon(Size delta)
         => Vertices.ForEach(v => v.Offset(delta));
 
-    public void ApplyConstraints(int index)
-        => MoveVertex(Vertices[index], Vertices[index].ToPoint());
+    public bool TryApplyConstraints(Edge edge, IEdgeConstraint constraint)
+    {
+        var oldConstraint = edge.Constraint;
+        edge.Constraint = constraint;
+        var index = Edges.IndexOf(edge);
+
+        if (constraint is HorizontalEdgeConstraint &&
+            (Edges[(index - 1).TrueModulo(Edges.Count)].Constraint is HorizontalEdgeConstraint
+            || Edges[(index + 1).TrueModulo(Edges.Count)].Constraint is HorizontalEdgeConstraint))
+        {
+            edge.Constraint = oldConstraint;
+            return false;
+        }
+
+        if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, Vertices[index], Vertices[index].ToPoint()))
+        {
+            edge.Constraint = oldConstraint;
+            return false;
+        }
+
+        return true;
+    }
 
     public void DeleteVertex(Vertex vertex)
     {
@@ -44,6 +64,7 @@ public class Polygon
         Vertices.RemoveAt(index);
         Edges.RemoveAt(index);
         index %= Edges.Count;
+        Edges[(index - 1).TrueModulo(Edges.Count)].Constraint = new NoConstraint();
         Edges[index].Constraint = new NoConstraint();
     }
 
@@ -53,6 +74,7 @@ public class Polygon
         var v1 = Vertices[index];
         var v2 = Vertices[(index + 1) % Vertices.Count];
         var newVertex = new Vertex((v2.X + v1.X) / 2, (v2.Y + v1.Y) / 2);
+        edge.Constraint = new NoConstraint();
         Vertices.Insert(index + 1, newVertex);
         Edges.Insert(index + 1, new Edge());
     }

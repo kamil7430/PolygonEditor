@@ -42,10 +42,4 @@ public static class ConstraintSolver
 
         return true;
     }
-
-    private static int TrueModulo(this int a, int b)
-    {
-        int c = a % b;
-        return (c + b) % b;
-    }
 }
