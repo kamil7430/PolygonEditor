@@ -24,7 +24,22 @@ public static class ConstraintSolver
             edges[i].Constraint.ApplyConstraint(vertices[i], vertices[j]);
             i = j;
             j = (j + 1).TrueModulo(vertexCount);
+            if (j == movedVertexIndex)
+                return false;
         }
+
+        int lastTouchedIndex = j;
+        i = movedVertexIndex;
+        j = (i - 1).TrueModulo(vertexCount);
+        while (!edges[(i - 1).TrueModulo(vertexCount)].Constraint.CheckConstraint(vertices[i], vertices[j]))
+        {
+            edges[(i - 1).TrueModulo(vertexCount)].Constraint.ApplyConstraint(vertices[i], vertices[j]);
+            i = j;
+            j = (j - 1).TrueModulo(vertexCount);
+            if (lastTouchedIndex == i)
+                return false;
+        }
+
         return true;
     }
 

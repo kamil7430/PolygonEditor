@@ -1,5 +1,6 @@
 ﻿using PolygonEditor.Model;
 using PolygonEditor.Model.EdgeConstraints;
+using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.RenderingStrategies;
 using PolygonEditor.View;
 
@@ -77,8 +78,7 @@ public class PolygonsFormPresenter
             else if (_shouldDragWholePolygon)
             {
                 var newLoc = mouseEventArgs.Location;
-                var delta = new Size(newLoc.X - _sourceOfPolygonMovement!.Value.X,
-                    newLoc.Y - _sourceOfPolygonMovement.Value.Y);
+                var delta = PointHelper.Subtract(newLoc, _sourceOfPolygonMovement!.Value).ToSize();
                 _polygon.MoveWholePolygon(delta);
                 _sourceOfPolygonMovement = newLoc;
                 _view.RefreshPolygonPanel();

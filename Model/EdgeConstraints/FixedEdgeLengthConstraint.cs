@@ -15,7 +15,10 @@ public class FixedEdgeLengthConstraint : IEdgeConstraint
     {
         double realLength = Math.Round(a.DistanceTo(b));
         double scale = _length / realLength;
-        b.Scale(scale);
+        var delta = b.ToPoint().Subtract(a.ToPoint()).ToSize();
+        delta.Width = (int)Math.Round(delta.Width * (scale - 1));
+        delta.Height = (int)Math.Round(delta.Height * (scale - 1));
+        b.Offset(delta);
     }
 
     public bool CheckConstraint(Vertex a, Vertex b)
