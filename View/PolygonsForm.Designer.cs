@@ -225,8 +225,10 @@ namespace PolygonEditor.View
             Controls.Add(bresenhamAlgorithmRadioButton);
             Controls.Add(libraryAlgorithmRadioButton);
             Controls.Add(menuStrip);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             KeyPreview = true;
             MainMenuStrip = menuStrip;
+            MaximizeBox = false;
             Name = "PolygonsForm";
             Text = "Edytor wielokątów";
             KeyDown += PolygonsForm_KeyDown;

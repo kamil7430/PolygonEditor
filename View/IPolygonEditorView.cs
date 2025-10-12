@@ -34,4 +34,5 @@ public interface IPolygonEditorView
     void RefreshPolygonPanel();
     void ShowVertexContextMenu(Point location);
     void ShowEdgeContextMenu(Point location);
+    int? ShowFixedEdgeLengthForm(int actualLength);
 }

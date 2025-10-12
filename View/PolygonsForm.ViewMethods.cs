@@ -1,4 +1,6 @@
-﻿namespace PolygonEditor.View;
+﻿using PolygonEditor.View.Forms;
+
+namespace PolygonEditor.View;
 
 public partial class PolygonsForm
 {
@@ -35,5 +37,14 @@ public partial class PolygonsForm
         var p = PointToScreen(polygonPanel.Location);
         p.Offset(location);
         edgeContextMenuStrip.Show(p);
+    }
+
+    public int? ShowFixedEdgeLengthForm(int actualLength)
+    {
+        var form = new FixedEdgeLengthForm(actualLength);
+        var result = form.ShowDialog();
+        if (result == DialogResult.OK)
+            return form.NewEdgeLength;
+        return null;
     }
 }

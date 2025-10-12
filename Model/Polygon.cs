@@ -111,4 +111,11 @@ public class Polygon
         }
         return nearestEdge?.Edge;
     }
+
+    public int GetEdgeLength(Edge edge)
+    {
+        int index = Edges.IndexOf(edge);
+        int nextIndex = (index + 1).TrueModulo(Edges.Count);
+        return (int)Math.Round(Vertices[index].DistanceTo(Vertices[nextIndex]));
+    }
 }
