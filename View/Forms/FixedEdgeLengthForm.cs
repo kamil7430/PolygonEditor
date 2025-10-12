@@ -8,7 +8,12 @@
         public FixedEdgeLengthForm(int actualLength)
         {
             InitializeComponent();
-            lengthNumericSelector.Value = actualLength;
+            if (actualLength < lengthNumericSelector.Minimum)
+                lengthNumericSelector.Value = lengthNumericSelector.Minimum;
+            else if (actualLength > lengthNumericSelector.Maximum)
+                lengthNumericSelector.Value = lengthNumericSelector.Maximum;
+            else
+                lengthNumericSelector.Value = actualLength;
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
