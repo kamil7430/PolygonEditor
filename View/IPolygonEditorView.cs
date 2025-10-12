@@ -19,7 +19,8 @@ public interface IPolygonEditorView
     event EventHandler? ContinuityC1Clicked;
     event EventHandler? AddVertexClicked;
     event EventHandler? HorizontalEdgeClicked;
-    event EventHandler? DiagonalEdgeClicked;
+    event EventHandler? DiagonalUpEdgeClicked;
+    event EventHandler? DiagonalDownEdgeClicked;
     event EventHandler? FixedEdgeLengthClicked;
     event EventHandler? BezierCurveClicked;
     event EventHandler? CircleArcClicked;

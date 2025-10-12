@@ -161,8 +161,11 @@ public class PolygonsFormPresenter
         _contextMenusEdge = null;
     }
 
-    private void DiagonalEdgeClicked(object? sender, EventArgs e)
-        => ChangeConstraintFromContextMenu(new DiagonalEdgeConstraint());
+    private void DiagonalUpEdgeClicked(object? sender, EventArgs e)
+        => ChangeConstraintFromContextMenu(new DiagonalEdgeConstraint(DiagonalEdgeConstraint.DiagonalDirection.RightUp));
+
+    private void DiagonalDownEdgeClicked(object? sender, EventArgs e)
+        => ChangeConstraintFromContextMenu(new DiagonalEdgeConstraint(DiagonalEdgeConstraint.DiagonalDirection.RightDown));
 
     private void HorizontalEdgeClicked(object? sender, EventArgs e)
         => ChangeConstraintFromContextMenu(new HorizontalEdgeConstraint());
@@ -239,7 +242,8 @@ public class PolygonsFormPresenter
         _view.DeleteVertexClicked += DeleteVertexClicked;
         _view.AddVertexClicked += AddVertexClicked;
         _view.HorizontalEdgeClicked += HorizontalEdgeClicked;
-        _view.DiagonalEdgeClicked += DiagonalEdgeClicked;
+        _view.DiagonalUpEdgeClicked += DiagonalUpEdgeClicked;
+        _view.DiagonalDownEdgeClicked += DiagonalDownEdgeClicked;
         _view.FixedEdgeLengthClicked += FixedEdgeLengthClicked;
         _view.BezierCurveClicked += BezierCurveClicked;
         _view.CircleArcClicked += CircleArcClicked;

@@ -51,7 +51,8 @@ public partial class PolygonsForm
     public event EventHandler? ContinuityC1Clicked;
     public event EventHandler? AddVertexClicked;
     public event EventHandler? HorizontalEdgeClicked;
-    public event EventHandler? DiagonalEdgeClicked;
+    public event EventHandler? DiagonalUpEdgeClicked;
+    public event EventHandler? DiagonalDownEdgeClicked;
     public event EventHandler? FixedEdgeLengthClicked;
     public event EventHandler? BezierCurveClicked;
     public event EventHandler? CircleArcClicked;
@@ -78,7 +79,10 @@ public partial class PolygonsForm
         => HorizontalEdgeClicked?.Invoke(sender, e);
 
     private void krawędźSkośnaToolStripMenuItem_Click(object sender, EventArgs e)
-        => DiagonalEdgeClicked?.Invoke(sender, e);
+        => DiagonalUpEdgeClicked?.Invoke(sender, e);
+
+    private void diagonalDownToolStripMenuItem_Click(object sender, EventArgs e)
+        => DiagonalDownEdgeClicked?.Invoke(sender, e);
 
     private void stałaDługośćKrawędziToolStripMenuItem_Click(object sender, EventArgs e)
         => FixedEdgeLengthClicked?.Invoke(sender, e);

@@ -51,6 +51,7 @@ namespace PolygonEditor.View
             krzywaBezieraToolStripMenuItem = new ToolStripMenuItem();
             łukOkręguToolStripMenuItem = new ToolStripMenuItem();
             usuńOgraniczenieToolStripMenuItem = new ToolStripMenuItem();
+            diagonalDownToolStripMenuItem = new ToolStripMenuItem();
             menuStrip.SuspendLayout();
             vertexContextMenuStrip.SuspendLayout();
             edgeContextMenuStrip.SuspendLayout();
@@ -157,21 +158,21 @@ namespace PolygonEditor.View
             edgeContextMenuStrip.ImageScalingSize = new Size(24, 24);
             edgeContextMenuStrip.Items.AddRange(new ToolStripItem[] { dodajWierzchołekToolStripMenuItem, dodajOgraniczenieToolStripMenuItem, usuńOgraniczenieToolStripMenuItem });
             edgeContextMenuStrip.Name = "edgeContextMenuStrip";
-            edgeContextMenuStrip.Size = new Size(237, 100);
+            edgeContextMenuStrip.Size = new Size(241, 133);
             edgeContextMenuStrip.Closing += edgeContextMenuStrip_Closing;
             // 
             // dodajWierzchołekToolStripMenuItem
             // 
             dodajWierzchołekToolStripMenuItem.Name = "dodajWierzchołekToolStripMenuItem";
-            dodajWierzchołekToolStripMenuItem.Size = new Size(236, 32);
+            dodajWierzchołekToolStripMenuItem.Size = new Size(240, 32);
             dodajWierzchołekToolStripMenuItem.Text = "Dodaj wierzchołek";
             dodajWierzchołekToolStripMenuItem.Click += dodajWierzchołekToolStripMenuItem_Click;
             // 
             // dodajOgraniczenieToolStripMenuItem
             // 
-            dodajOgraniczenieToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { krawędźPoziomaToolStripMenuItem, krawędźSkośnaToolStripMenuItem, stałaDługośćKrawędziToolStripMenuItem, krzywaBezieraToolStripMenuItem, łukOkręguToolStripMenuItem });
+            dodajOgraniczenieToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { krawędźPoziomaToolStripMenuItem, krawędźSkośnaToolStripMenuItem, diagonalDownToolStripMenuItem, stałaDługośćKrawędziToolStripMenuItem, krzywaBezieraToolStripMenuItem, łukOkręguToolStripMenuItem });
             dodajOgraniczenieToolStripMenuItem.Name = "dodajOgraniczenieToolStripMenuItem";
-            dodajOgraniczenieToolStripMenuItem.Size = new Size(236, 32);
+            dodajOgraniczenieToolStripMenuItem.Size = new Size(240, 32);
             dodajOgraniczenieToolStripMenuItem.Text = "Ustaw ograniczenie";
             // 
             // krawędźPoziomaToolStripMenuItem
@@ -185,7 +186,7 @@ namespace PolygonEditor.View
             // 
             krawędźSkośnaToolStripMenuItem.Name = "krawędźSkośnaToolStripMenuItem";
             krawędźSkośnaToolStripMenuItem.Size = new Size(337, 34);
-            krawędźSkośnaToolStripMenuItem.Text = "Krawędź skośna";
+            krawędźSkośnaToolStripMenuItem.Text = "Krawędź skośna w górę";
             krawędźSkośnaToolStripMenuItem.Click += krawędźSkośnaToolStripMenuItem_Click;
             // 
             // stałaDługośćKrawędziToolStripMenuItem
@@ -212,9 +213,16 @@ namespace PolygonEditor.View
             // usuńOgraniczenieToolStripMenuItem
             // 
             usuńOgraniczenieToolStripMenuItem.Name = "usuńOgraniczenieToolStripMenuItem";
-            usuńOgraniczenieToolStripMenuItem.Size = new Size(236, 32);
+            usuńOgraniczenieToolStripMenuItem.Size = new Size(240, 32);
             usuńOgraniczenieToolStripMenuItem.Text = "Usuń ograniczenie";
             usuńOgraniczenieToolStripMenuItem.Click += usuńOgraniczenieToolStripMenuItem_Click;
+            // 
+            // diagonalDownToolStripMenuItem
+            // 
+            diagonalDownToolStripMenuItem.Name = "diagonalDownToolStripMenuItem";
+            diagonalDownToolStripMenuItem.Size = new Size(337, 34);
+            diagonalDownToolStripMenuItem.Text = "Krawędź skośna w dół";
+            diagonalDownToolStripMenuItem.Click += diagonalDownToolStripMenuItem_Click;
             // 
             // PolygonsForm
             // 
@@ -263,5 +271,6 @@ namespace PolygonEditor.View
         private ToolStripMenuItem krzywaBezieraToolStripMenuItem;
         private ToolStripMenuItem usuńOgraniczenieToolStripMenuItem;
         private ToolStripMenuItem łukOkręguToolStripMenuItem;
+        private ToolStripMenuItem diagonalDownToolStripMenuItem;
     }
 }

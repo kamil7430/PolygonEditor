@@ -8,9 +8,9 @@
   - [x] Dodawanie wierzchołka w środku wybranej krawędzi
   - [x] Przesuwanie całego wielokąta
 - [ ] Dodawanie ograniczeń (relacji) dla wybranej krawędzi:
-  - [ ] Możliwe ograniczenia:
+  - [x] Możliwe ograniczenia:
     - [x] Krawędź pozioma (osoby o nazwiskach od A do K)
-    - [ ] krawędź skośna (45°)
+    - [x] krawędź skośna (45°)
     - [x] Zadana długość krawędzi. Ustawiamy dowolną zadaną długość krawędzi poprzez okno edycyjne (bieżąca długość -> wartość domyślna).
   - [x] Maksymalnie tylko jedno ograniczenie dla krawędzi
   - [x] Dwie sąsiednie krawędzie nie mogą być obie pionowe lub obie poziome
