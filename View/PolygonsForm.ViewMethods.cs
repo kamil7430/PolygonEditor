@@ -12,6 +12,10 @@ public partial class PolygonsForm
     public void DrawLine(Graphics g, Point p1, Point p2)
         => g.DrawLine(Pens.Black, p1, p2);
 
+    public void DrawArc(Graphics g, Point center, int radius, float startAngle, float sweepAngle)
+        => g.DrawArc(Pens.Black, center.X - radius, center.Y - radius,
+            2 * radius, 2 * radius, startAngle, sweepAngle);
+
     public void DrawPixels(Graphics g, IEnumerable<Point> points)
     {
         foreach (var p in points)

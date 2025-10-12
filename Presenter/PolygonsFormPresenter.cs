@@ -47,6 +47,7 @@ public class PolygonsFormPresenter
             var pixels = DrawLines(paintEventArgs.Graphics);
             if (pixels != null)
                 _view.DrawPixels(paintEventArgs.Graphics, pixels);
+            DrawArcs(paintEventArgs.Graphics);
             DrawVertices(paintEventArgs.Graphics);
             DrawStrings(paintEventArgs.Graphics);
         }
@@ -173,13 +174,27 @@ public class PolygonsFormPresenter
 
     private IEnumerable<Point>? DrawLines(Graphics g)
     {
+        // TODO: refactor
         if (!_renderingStrategy.ShouldUseLibraryDrawingFunction)
             return _renderingStrategy.GetPixelsToPaint(_polygon);
-        var vertices = _polygon.Vertices;
-        int vertexCount = vertices.Count;
-        for (int i = 0; i < vertexCount; i++)
-            _view.DrawLine(g, vertices[i].ToPoint(), vertices[(i + 1) % vertexCount].ToPoint());
+        var lineEdges = _polygon.Edges.Where(e => e.Constraint.EdgeType == EdgeType.Line);
+        foreach (var edge in lineEdges)
+        {
+            var (v1, v2) = _polygon.GetEdgeVertices(edge);
+            _view.DrawLine(g, v1.ToPoint(), v2.ToPoint());
+        }
         return null;
+    }
+
+    private void DrawArcs(Graphics g)
+    {
+        var arcEdges = _polygon.Edges.Where(e => e.Constraint.EdgeType == EdgeType.Arc);
+        foreach (var edge in arcEdges)
+        {
+            var (v1, v2) = _polygon.GetEdgeVertices(edge);
+            var (center, radius, startAngle, sweepAngle) = ((CircleArcEdgeConstraint)edge.Constraint).GetCircleParams(v1, v2);
+            _view.DrawArc(g, center, radius, startAngle, sweepAngle);
+        }
     }
 
     private void DrawVertices(Graphics g)
