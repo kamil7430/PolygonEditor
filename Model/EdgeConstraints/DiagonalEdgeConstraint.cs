@@ -15,7 +15,15 @@ public class DiagonalEdgeConstraint : IEdgeConstraint
     {
         _direction = (int)direction;
         _changeX = false;
+        Label = direction switch
+        {
+            DiagonalDirection.RightUp => "\u21d7",
+            DiagonalDirection.RightDown => "\u21d8",
+            _ => throw new NotSupportedException()
+        };
     }
+
+    public string? Label { get; }
 
     public void ApplyConstraint(Vertex a, Vertex b)
     {

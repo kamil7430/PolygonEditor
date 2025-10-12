@@ -2,6 +2,9 @@
 
 public class NoConstraint : IEdgeConstraint
 {
+    public string? Label
+        => "";
+
     public void ApplyConstraint(Vertex a, Vertex b)
     { }
 

@@ -9,7 +9,10 @@ public class FixedEdgeLengthConstraint : IEdgeConstraint
     public FixedEdgeLengthConstraint(int length)
     {
         _length = length;
+        Label = length.ToString();
     }
+
+    public string? Label { get; }
 
     public void ApplyConstraint(Vertex a, Vertex b)
     {
