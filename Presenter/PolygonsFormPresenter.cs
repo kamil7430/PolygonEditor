@@ -48,6 +48,7 @@ public class PolygonsFormPresenter
             if (pixels != null)
                 _view.DrawPixels(paintEventArgs.Graphics, pixels);
             DrawVertices(paintEventArgs.Graphics);
+            DrawStrings(paintEventArgs.Graphics);
         }
     }
 
@@ -185,6 +186,18 @@ public class PolygonsFormPresenter
     {
         foreach (var vertex in _polygon.Vertices)
             _view.DrawVertex(g, vertex.ToPoint());
+    }
+
+    private void DrawStrings(Graphics g)
+    {
+        foreach (var edge in _polygon.Edges)
+        {
+            if (edge.Constraint.Label == null)
+                continue;
+            var (v1, v2) = _polygon.GetEdgeVertices(edge);
+            var point = ((v1 + v2) / 2).ToPoint();
+            _view.DrawString(g, edge.Constraint.Label, point);
+        }
     }
 
     private void HandleLeftButtonUp(MouseEventArgs e)

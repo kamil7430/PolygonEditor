@@ -112,6 +112,12 @@ public class Polygon
         return nearestEdge?.Edge;
     }
 
+    public (Vertex V1, Vertex V2) GetEdgeVertices(Edge edge)
+    {
+        var index = Edges.IndexOf(edge);
+        return (Vertices[index], Vertices[(index + 1) % Vertices.Count]);
+    }
+
     public int GetEdgeLength(Edge edge)
     {
         int index = Edges.IndexOf(edge);

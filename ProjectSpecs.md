@@ -7,7 +7,7 @@
   - [x] Usuwanie wierzchołka
   - [x] Dodawanie wierzchołka w środku wybranej krawędzi
   - [x] Przesuwanie całego wielokąta
-- [ ] Dodawanie ograniczeń (relacji) dla wybranej krawędzi:
+- [x] Dodawanie ograniczeń (relacji) dla wybranej krawędzi:
   - [x] Możliwe ograniczenia:
     - [x] Krawędź pozioma (osoby o nazwiskach od A do K)
     - [x] krawędź skośna (45°)
@@ -15,7 +15,7 @@
   - [x] Maksymalnie tylko jedno ograniczenie dla krawędzi
   - [x] Dwie sąsiednie krawędzie nie mogą być obie pionowe lub obie poziome
   - [x] Dodawanie wierzchołka na krawędzi lub usuwanie wierzchołka - usuwa ograniczenia i typ "przyległych" krawędzi
-  - [ ] Ustawione ograniczenia są widoczne (jako odpowiednie "ikonki") przy środku krawędzi
+  - [x] Ustawione ograniczenia są widoczne (jako odpowiednie "ikonki") przy środku krawędzi
   - [x] Powinna istnieć mozliwość usuwania relacji
 - [ ] Włączanie/wyłączanie dla wybranej krawędzi - segmentu Beziera 3-go stopnia (krawędż nie jest odcinkiem tylko krzywą).
   - [ ] Rysowany jest wielobok Beziera (np. przerywaną linią) oraz dodatkowe 2 punkty kontrolne

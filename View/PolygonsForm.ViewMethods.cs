@@ -22,6 +22,9 @@ public partial class PolygonsForm
         => g.FillEllipse(Brushes.PaleVioletRed, p.X - VertexRadius,
             p.Y - VertexRadius, VertexRadius * 2, VertexRadius * 2);
 
+    public void DrawString(Graphics g, string text, Point point)
+        => g.DrawString(text, Font, Brushes.Violet, point);
+
     public void RefreshPolygonPanel()
         => polygonPanel.Refresh();
 

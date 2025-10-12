@@ -32,6 +32,7 @@ public interface IPolygonEditorView
     void DrawLine(Graphics g, Point p1, Point p2);
     void DrawPixels(Graphics g, IEnumerable<Point> points);
     void DrawVertex(Graphics g, Point p);
+    void DrawString(Graphics g, string text, Point point);
     void RefreshPolygonPanel();
     void ShowVertexContextMenu(Point location);
     void ShowEdgeContextMenu(Point location);

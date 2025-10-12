@@ -25,11 +25,17 @@ public class Vertex : ICastableToVector2, ICloneable
         Y += size.Height;
     }
 
-    public void Scale(double scale)
-    {
-        X = (int)Math.Round(scale * X);
-        Y = (int)Math.Round(scale * Y);
-    }
+    public static Vertex operator +(Vertex a, Vertex b)
+        => new Vertex(a.X + b.X, a.Y + b.Y);
+
+    public static Vertex operator -(Vertex a, Vertex b)
+        => new Vertex(a.X - b.X, a.Y - b.Y);
+
+    public static Vertex operator *(Vertex a, int b)
+        => new Vertex(a.X * b, a.Y * b);
+
+    public static Vertex operator /(Vertex a, int b)
+        => new Vertex(a.X / b, a.Y / b);
 
     public Point ToPoint()
         => new Point(X, Y);
