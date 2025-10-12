@@ -12,6 +12,9 @@ public class FixedEdgeLengthConstraint : IEdgeConstraint
         Label = length.ToString();
     }
 
+    public EdgeType EdgeType
+        => EdgeType.Line;
+
     public string? Label { get; }
 
     public void ApplyConstraint(Vertex a, Vertex b)

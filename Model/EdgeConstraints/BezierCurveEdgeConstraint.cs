@@ -2,6 +2,9 @@
 
 public class BezierCurveEdgeConstraint : IEdgeConstraint
 {
+    public EdgeType EdgeType
+        => EdgeType.BezierCurve;
+
     public string? Label => throw new NotImplementedException();
 
     public void ApplyConstraint(Vertex a, Vertex b)

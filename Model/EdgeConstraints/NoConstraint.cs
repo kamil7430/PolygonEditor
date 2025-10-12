@@ -2,6 +2,9 @@
 
 public class NoConstraint : IEdgeConstraint
 {
+    public EdgeType EdgeType
+        => EdgeType.Line;
+
     public string? Label
         => "";
 

@@ -23,6 +23,9 @@ public class DiagonalEdgeConstraint : IEdgeConstraint
         };
     }
 
+    public EdgeType EdgeType
+        => EdgeType.Line;
+
     public string? Label { get; }
 
     public void ApplyConstraint(Vertex a, Vertex b)

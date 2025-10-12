@@ -2,6 +2,9 @@
 
 public class HorizontalEdgeConstraint : IEdgeConstraint
 {
+    public EdgeType EdgeType
+        => EdgeType.Line;
+
     public string? Label
         => "\u21d4";
 
