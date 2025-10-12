@@ -23,16 +23,14 @@
     - [ ] Ciągłość G0
     - [ ] Ciągłość G1 (ciągłość jednostkowego wektora stycznego
     - [ ] Ciągłość C1 (ciągłość wektora stycznego)
-  - [ ] Przełączanie z krawędzi na krzywą (punkty kontrolne ustawiane są dowolnie z uwzględnieniem ograniczeń ciągłości) - od razu wymusza domyślną klasę ciągłości w sąsiednich wierzchołkach (chyba, że klasa ciągłości była już ustawiona w wierzchołku):
-    - [ ] Ciągłość G1 (ciągłość jednostkowego wektora stycznego (osoby o nazwiskach od A do K)
-    - [ ] Ciągłość C1 (ciągłość wektora stycznego) (osoby o nazwiskach od L do Z)
+  - [ ] Przełączanie z krawędzi na krzywą (punkty kontrolne ustawiane są dowolnie z uwzględnieniem ograniczeń ciągłości) - od razu wymusza domyślną klasę ciągłości w sąsiednich wierzchołkach (chyba, że klasa ciągłości była już ustawiona w wierzchołku): Ciągłość G1 (ciągłość jednostkowego wektora stycznego (osoby o nazwiskach od A do K)
   - [ ] W zależności od ustawionej ciągłości - należy uwzględnić "ograniczenia" przy przesuwaniu wierzchołków i punktów kontrolnych
 - [ ] Włączanie/wyłączanie dla wybranej krawędzi - łuku okręgu (krawędż nie jest odcinkiem tylko łukiem okręgu).
   - [ ] Jeśli wierzchołek sąsiaduje z łukiem - powinna być możliwość ustawienia wymaganej ciągłości w wierzchołku:
     - [ ] Ciągłość G0
     - [ ] Ciągłość G1 (ciągłość jednostkowego wektora stycznego
   - [ ] Tylko jeden koniec łuku może mieć ciągłość G1 (ciągłość jednostkowego wektora stycznego)
-  - [ ] Gry oba końce łuku mają ciągłość G0, to rysowany jest łuk o promieniu równym połowie długości krawędzi
+  - [x] Gry oba końce łuku mają ciągłość G0, to rysowany jest łuk o promieniu równym połowie długości krawędzi
 - [ ] Rysowanie odcinków - algorytm biblioteczny i własna implementacja (alg. Bresenhama) - radiobutton
 - [ ] Rysowanie segmentu Beziera - algorytm przyrostowy: Przejście do bazy potęgowej a następnie szybki iteracyjny algorytm wyznaczania kolejnych punktów.
 - [ ] Definiowanie nowego wielokąta oraz przesuwanie - jak najbardziej intuicyjne
