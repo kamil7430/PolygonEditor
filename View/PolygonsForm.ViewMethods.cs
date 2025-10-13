@@ -1,4 +1,5 @@
 ﻿using PolygonEditor.View.Forms;
+using PolygonEditor.View.Helpers;
 
 namespace PolygonEditor.View;
 
@@ -11,6 +12,9 @@ public partial class PolygonsForm
 
     public void DrawLine(Graphics g, PointF p1, PointF p2)
         => g.DrawLine(Pens.Black, p1, p2);
+
+    public void DrawDashedLine(Graphics g, PointF p1, PointF p2)
+        => g.DrawLine(GdiObjectsRepository.BlackDashedPen, p1, p2);
 
     public void DrawArc(Graphics g, PointF center, float radius, float startAngle, float sweepAngle)
         => g.DrawArc(Pens.Black, center.X - radius, center.Y - radius,

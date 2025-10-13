@@ -205,6 +205,7 @@ public class PolygonsFormPresenter
             var (v1, v2) = _polygon.GetEdgeVertices(edge);
             var (center, radius, startAngle, sweepAngle) = ((CircleArcEdgeConstraint)edge.Constraint).GetCircleParams(v1, v2);
             _view.DrawArc(g, center, radius, startAngle, sweepAngle);
+            _view.DrawDashedLine(g, v1.ToPointF(), v2.ToPointF());
         }
     }
 

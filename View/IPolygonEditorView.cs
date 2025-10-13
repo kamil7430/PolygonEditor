@@ -31,6 +31,7 @@ public interface IPolygonEditorView
 
     void ShowMessageBox(string message);
     void DrawLine(Graphics g, PointF p1, PointF p2);
+    void DrawDashedLine(Graphics g, PointF p1, PointF p2);
     void DrawArc(Graphics g, PointF center, float radius, float startAngle, float sweepAngle);
     void DrawPixels(Graphics g, IEnumerable<PointF> points);
     void DrawVertex(Graphics g, PointF p);
