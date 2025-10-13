@@ -2,7 +2,7 @@
 
 public interface IPolygonEditorView
 {
-    int VertexRadius { get; }
+    float VertexRadius { get; }
 
     event EventHandler? HelpClicked;
     event EventHandler? LibraryAlgorithmChosen;
@@ -29,13 +29,13 @@ public interface IPolygonEditorView
     event ToolStripDropDownClosingEventHandler? EdgeContextMenuClosing;
 
     void ShowMessageBox(string message);
-    void DrawLine(Graphics g, Point p1, Point p2);
-    void DrawArc(Graphics g, Point center, int radius, float startAngle, float sweepAngle);
-    void DrawPixels(Graphics g, IEnumerable<Point> points);
-    void DrawVertex(Graphics g, Point p);
-    void DrawString(Graphics g, string text, Point point);
+    void DrawLine(Graphics g, PointF p1, PointF p2);
+    void DrawArc(Graphics g, PointF center, float radius, float startAngle, float sweepAngle);
+    void DrawPixels(Graphics g, IEnumerable<PointF> points);
+    void DrawVertex(Graphics g, PointF p);
+    void DrawString(Graphics g, string text, PointF point);
     void RefreshPolygonPanel();
-    void ShowVertexContextMenu(Point location);
-    void ShowEdgeContextMenu(Point location);
-    int? ShowFixedEdgeLengthForm(int actualLength);
+    void ShowVertexContextMenu(PointF location);
+    void ShowEdgeContextMenu(PointF location);
+    float? ShowFixedEdgeLengthForm(float actualLength);
 }

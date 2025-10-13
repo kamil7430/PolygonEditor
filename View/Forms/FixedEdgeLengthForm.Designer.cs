@@ -57,6 +57,8 @@
             // 
             // lengthNumericSelector
             // 
+            lengthNumericSelector.DecimalPlaces = 5;
+            lengthNumericSelector.Increment = new decimal(new int[] { 1, 0, 0, 327680 });
             lengthNumericSelector.Location = new Point(221, 38);
             lengthNumericSelector.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             lengthNumericSelector.Minimum = new decimal(new int[] { 10, 0, 0, 0 });

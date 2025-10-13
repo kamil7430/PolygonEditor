@@ -2,10 +2,10 @@
 {
     public partial class FixedEdgeLengthForm : Form
     {
-        public int NewEdgeLength
-            => (int)lengthNumericSelector.Value;
+        public float NewEdgeLength
+            => (float)lengthNumericSelector.Value;
 
-        public FixedEdgeLengthForm(int actualLength)
+        public FixedEdgeLengthForm(decimal actualLength)
         {
             InitializeComponent();
             if (actualLength < lengthNumericSelector.Minimum)
