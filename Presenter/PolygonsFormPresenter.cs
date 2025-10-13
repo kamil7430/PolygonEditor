@@ -8,13 +8,13 @@ namespace PolygonEditor.Presenter;
 
 public class PolygonsFormPresenter
 {
-    private const int DISTANCE_TO_CATCH_EDGE = 10;
+    private const float DISTANCE_TO_CATCH_EDGE = 10f;
 
     private Polygon _polygon;
     private Vertex? _vertexBeingDragged;
 
     private bool _shouldDragWholePolygon;
-    private Point? _sourceOfPolygonMovement;
+    private PointF? _sourceOfPolygonMovement;
 
     private Vertex? _contextMenusVertex;
     private Edge? _contextMenusEdge;
@@ -80,7 +80,7 @@ public class PolygonsFormPresenter
             else if (_shouldDragWholePolygon)
             {
                 var newLoc = mouseEventArgs.Location;
-                var delta = PointHelper.Subtract(newLoc, _sourceOfPolygonMovement!.Value).ToSize();
+                var delta = PointHelper.Subtract(newLoc, _sourceOfPolygonMovement!.Value).ToSizeF();
                 _polygon.MoveWholePolygon(delta);
                 _sourceOfPolygonMovement = newLoc;
                 _view.RefreshPolygonPanel();
@@ -172,7 +172,7 @@ public class PolygonsFormPresenter
     private void HorizontalEdgeClicked(object? sender, EventArgs e)
         => ChangeConstraintFromContextMenu(new HorizontalEdgeConstraint());
 
-    private IEnumerable<Point>? DrawLines(Graphics g)
+    private IEnumerable<PointF>? DrawLines(Graphics g)
     {
         // TODO: refactor
         if (!_renderingStrategy.ShouldUseLibraryDrawingFunction)
@@ -181,7 +181,7 @@ public class PolygonsFormPresenter
         foreach (var edge in lineEdges)
         {
             var (v1, v2) = _polygon.GetEdgeVertices(edge);
-            _view.DrawLine(g, v1.ToPoint(), v2.ToPoint());
+            _view.DrawLine(g, v1.ToPointF(), v2.ToPointF());
         }
         return null;
     }
@@ -200,7 +200,7 @@ public class PolygonsFormPresenter
     private void DrawVertices(Graphics g)
     {
         foreach (var vertex in _polygon.Vertices)
-            _view.DrawVertex(g, vertex.ToPoint());
+            _view.DrawVertex(g, vertex.ToPointF());
     }
 
     private void DrawStrings(Graphics g)
@@ -210,7 +210,7 @@ public class PolygonsFormPresenter
             if (edge.Constraint.Label == null)
                 continue;
             var (v1, v2) = _polygon.GetEdgeVertices(edge);
-            var point = ((v1 + v2) / 2).ToPoint();
+            var point = ((v1 + v2) / 2).ToPointF();
             _view.DrawString(g, edge.Constraint.Label, point);
         }
     }
