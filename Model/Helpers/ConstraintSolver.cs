@@ -25,10 +25,10 @@ public static class ConstraintSolver
             i = j;
             j = (j + 1).TrueModulo(vertexCount);
             if (j == movedVertexIndex)
-                return false;
+                break;
         }
 
-        int lastTouchedIndex = j;
+        int lastTouchedIndex = i;
         i = movedVertexIndex;
         j = (i - 1).TrueModulo(vertexCount);
         while (!edges[(i - 1).TrueModulo(vertexCount)].Constraint.CheckConstraint(vertices[i], vertices[j]))
