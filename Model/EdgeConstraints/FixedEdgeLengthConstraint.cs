@@ -4,12 +4,12 @@ namespace PolygonEditor.Model.EdgeConstraints;
 
 public class FixedEdgeLengthConstraint : IEdgeConstraint
 {
-    private readonly int _length;
+    private readonly float _length;
 
-    public FixedEdgeLengthConstraint(int length)
+    public FixedEdgeLengthConstraint(float length)
     {
         _length = length;
-        Label = length.ToString();
+        Label = length.ToString("F1");
     }
 
     public EdgeType EdgeType
@@ -19,14 +19,14 @@ public class FixedEdgeLengthConstraint : IEdgeConstraint
 
     public void ApplyConstraint(Vertex a, Vertex b)
     {
-        double realLength = Math.Round(a.DistanceTo(b));
-        double scale = _length / realLength;
-        var delta = b.ToPoint().Subtract(a.ToPoint()).ToSize();
-        delta.Width = (int)Math.Round(delta.Width * (scale - 1));
-        delta.Height = (int)Math.Round(delta.Height * (scale - 1));
+        float realLength = a.DistanceTo(b);
+        float scale = _length / realLength;
+        var delta = b.ToPointF().Subtract(a.ToPointF()).ToSizeF();
+        delta.Width *= scale - 1;
+        delta.Height *= scale - 1;
         b.Offset(delta);
     }
 
     public bool CheckConstraint(Vertex a, Vertex b)
-        => (int)Math.Round(a.DistanceTo(b)) == _length;
+        => a.DistanceTo(b).IsEqual(_length);
 }

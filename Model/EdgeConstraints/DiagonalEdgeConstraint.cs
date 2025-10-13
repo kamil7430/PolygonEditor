@@ -1,4 +1,6 @@
-﻿namespace PolygonEditor.Model.EdgeConstraints;
+﻿using PolygonEditor.Model.Helpers;
+
+namespace PolygonEditor.Model.EdgeConstraints;
 
 public class DiagonalEdgeConstraint : IEdgeConstraint
 {
@@ -45,5 +47,5 @@ public class DiagonalEdgeConstraint : IEdgeConstraint
     }
 
     public bool CheckConstraint(Vertex a, Vertex b)
-        => _direction * (b.X - a.X) == b.Y - a.Y;
+        => (b.Y - a.Y).IsEqual(_direction * (b.X - a.X));
 }

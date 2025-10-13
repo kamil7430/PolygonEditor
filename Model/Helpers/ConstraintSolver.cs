@@ -2,7 +2,7 @@
 
 public static class ConstraintSolver
 {
-    public static bool TryMoveVertexAndApplyConstraints(Polygon polygon, Vertex vertexMoved, Point destination)
+    public static bool TryMoveVertexAndApplyConstraints(Polygon polygon, Vertex vertexMoved, PointF destination)
     {
         int movedVertexIndex = polygon.Vertices.IndexOf(vertexMoved);
         var vertices = polygon.Vertices.Clone();

@@ -24,15 +24,15 @@ public class Polygon
             [new(), new(), new(), new()]
         );
 
-    public Vertex MoveVertex(Vertex vertex, Point destination)
+    public Vertex MoveVertex(Vertex vertex, PointF destination)
     {
         int vertexIndex = Vertices.IndexOf(vertex);
         if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, vertex, destination))
-            MoveWholePolygon(destination.Subtract(vertex.ToPoint()).ToSize());
+            MoveWholePolygon(destination.Subtract(vertex.ToPointF()).ToSizeF());
         return Vertices[vertexIndex];
     }
 
-    public void MoveWholePolygon(Size delta)
+    public void MoveWholePolygon(SizeF delta)
         => Vertices.ForEach(v => v.Offset(delta));
 
     public bool TryApplyConstraints(Edge edge, IEdgeConstraint constraint)
@@ -49,7 +49,7 @@ public class Polygon
             return false;
         }
 
-        if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, Vertices[index], Vertices[index].ToPoint()))
+        if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, Vertices[index], Vertices[index].ToPointF()))
         {
             edge.Constraint = oldConstraint;
             return false;
@@ -73,19 +73,19 @@ public class Polygon
         var index = Edges.IndexOf(edge);
         var v1 = Vertices[index];
         var v2 = Vertices[(index + 1) % Vertices.Count];
-        var newVertex = new Vertex((v2.X + v1.X) / 2, (v2.Y + v1.Y) / 2);
+        var newVertex = (v1 + v2) / 2;
         edge.Constraint = new NoConstraint();
         Vertices.Insert(index + 1, newVertex);
         Edges.Insert(index + 1, new Edge());
     }
 
-    public Vertex? GetNearestVertexInRadius(Point point, float radius)
+    public Vertex? GetNearestVertexInRadius(PointF point, float radius)
     {
         (Vertex Vertex, float Distance)? nearestVertex = null;
-        Vector2 p = new(point.X, point.Y);
+        Vector2 p = point.ToVector2();
         foreach (var vertex in Vertices)
         {
-            Vector2 v = new(vertex.X, vertex.Y);
+            Vector2 v = vertex.ToVector2();
             var distance = Vector2.Distance(p, v);
             if (distance <= radius)
                 if (nearestVertex == null || distance < nearestVertex.Value.Distance)
@@ -94,7 +94,7 @@ public class Polygon
         return nearestVertex?.Vertex;
     }
 
-    public Edge? GetNearestEdgeInRadius(Point p, double radius)
+    public Edge? GetNearestEdgeInRadius(PointF p, float radius)
     {
         (Edge Edge, double Distance)? nearestEdge = null;
         var verticesCount = Vertices.Count;
@@ -118,10 +118,10 @@ public class Polygon
         return (Vertices[index], Vertices[(index + 1) % Vertices.Count]);
     }
 
-    public int GetEdgeLength(Edge edge)
+    public float GetEdgeLength(Edge edge)
     {
         int index = Edges.IndexOf(edge);
         int nextIndex = (index + 1).TrueModulo(Edges.Count);
-        return (int)Math.Round(Vertices[index].DistanceTo(Vertices[nextIndex]));
+        return Vertices[index].DistanceTo(Vertices[nextIndex]);
     }
 }

@@ -5,6 +5,6 @@ public class LibraryDrawingFunctionStrategy : IRenderingStrategy
     public bool ShouldUseLibraryDrawingFunction
         => true;
 
-    public IEnumerable<Point> GetPixelsToPaint(Polygon polygon)
+    public IEnumerable<PointF> GetPixelsToPaint(Polygon polygon)
         => throw new NotImplementedException();
 }

@@ -42,22 +42,22 @@ public class CircleArcEdgeConstraint : IEdgeConstraint
         }
     }
 
-    public (Point Center, int Radius, float StartAngle, float SweepAngle) GetCircleParams(Vertex a, Vertex b)
+    public (PointF Center, float Radius, float StartAngle, float SweepAngle) GetCircleParams(Vertex a, Vertex b)
     {
         ThrowIfVertexHasC1Continuity(a, b);
-        Point? center = null;
-        int? radius = null;
+        PointF? center = null;
+        float? radius = null;
         float? startAngle = null;
         float? sweepAngle = null;
 
         if (a.ContinuityType == ContinuityType.G0 && b.ContinuityType == ContinuityType.G0)
         {
-            center = ((a + b) / 2).ToPoint();
-            radius = (int)Math.Round(a.DistanceTo(b) / 2);
-            if (a.X == b.X)
+            center = ((a + b) / 2).ToPointF();
+            radius = a.DistanceTo(b) / 2;
+            if (a.X.IsEqual(b.X))
                 startAngle = 90;
             else
-                startAngle = (float)ToDegrees(Math.Atan((double)(b.Y - a.Y) / (b.X - a.X)));
+                startAngle = (float)ToDegrees(Math.Atan((b.Y - a.Y) / (b.X - a.X)));
             sweepAngle = 180;
         }
         else if (a.ContinuityType == ContinuityType.G0 && b.ContinuityType == ContinuityType.G1)

@@ -1,4 +1,6 @@
-﻿namespace PolygonEditor.Model.EdgeConstraints;
+﻿using PolygonEditor.Model.Helpers;
+
+namespace PolygonEditor.Model.EdgeConstraints;
 
 public class HorizontalEdgeConstraint : IEdgeConstraint
 {
@@ -12,5 +14,5 @@ public class HorizontalEdgeConstraint : IEdgeConstraint
         => b.Y = a.Y;
 
     public bool CheckConstraint(Vertex a, Vertex b)
-        => a.Y == b.Y;
+        => a.Y.IsEqual(b.Y);
 }
