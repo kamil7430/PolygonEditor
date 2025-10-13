@@ -46,10 +46,16 @@ public class PolygonsFormPresenter
     }
 
     private void LibraryAlgorithmChosen(object? sender, EventArgs e)
-        => _renderingStrategy = new LibraryDrawingFunctionStrategy();
+    {
+        _renderingStrategy = new LibraryDrawingFunctionStrategy();
+        _view.RefreshPolygonPanel();
+    }
 
     private void BresenhamAlgorithmChosen(object? sender, EventArgs e)
-        => _renderingStrategy = new MyBresenhamAlgorithmStrategy();
+    {
+        _renderingStrategy = new MyBresenhamAlgorithmStrategy();
+        _view.RefreshPolygonPanel();
+    }
 
     private void PolygonPanelPainting(object? sender, EventArgs e)
     {
