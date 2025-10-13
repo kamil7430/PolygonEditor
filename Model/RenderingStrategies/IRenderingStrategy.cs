@@ -3,5 +3,5 @@
 public interface IRenderingStrategy
 {
     bool ShouldUseLibraryDrawingFunction { get; }
-    IEnumerable<PointF> GetPixelsToPaint(Polygon polygon);
+    IEnumerable<PointF> GetPixelsToPaint(Polygon polygon, IEnumerable<Edge> edgesToPaint);
 }

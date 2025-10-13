@@ -55,10 +55,29 @@ public class PolygonsFormPresenter
     {
         if (e is PaintEventArgs paintEventArgs)
         {
-            var pixels = DrawLines(paintEventArgs.Graphics);
+            List<Edge> lines = [];
+            List<Edge> arcs = [];
+            List<Edge> bezierCurves = [];
+
+            foreach (var edge in _polygon.Edges)
+                switch (edge.Constraint.EdgeType)
+                {
+                    case EdgeType.Line:
+                        lines.Add(edge);
+                        break;
+                    case EdgeType.Arc:
+                        arcs.Add(edge);
+                        break;
+                    case EdgeType.BezierCurve:
+                        bezierCurves.Add(edge);
+                        break;
+                }
+
+            var pixels = DrawLines(paintEventArgs.Graphics, lines);
             if (pixels != null)
                 _view.DrawPixels(paintEventArgs.Graphics, pixels);
-            DrawArcs(paintEventArgs.Graphics);
+            DrawArcs(paintEventArgs.Graphics, arcs);
+            DrawBezierCurves(paintEventArgs.Graphics, bezierCurves);
             DrawVertices(paintEventArgs.Graphics);
             DrawStrings(paintEventArgs.Graphics);
         }
@@ -183,13 +202,11 @@ public class PolygonsFormPresenter
     private void HorizontalEdgeClicked(object? sender, EventArgs e)
         => ChangeConstraintFromContextMenu(new HorizontalEdgeConstraint());
 
-    private IEnumerable<PointF>? DrawLines(Graphics g)
+    private IEnumerable<PointF>? DrawLines(Graphics g, IEnumerable<Edge> edges)
     {
-        // TODO: refactor
         if (!_renderingStrategy.ShouldUseLibraryDrawingFunction)
-            return _renderingStrategy.GetPixelsToPaint(_polygon);
-        var lineEdges = _polygon.Edges.Where(e => e.Constraint.EdgeType == EdgeType.Line);
-        foreach (var edge in lineEdges)
+            return _renderingStrategy.GetPixelsToPaint(_polygon, edges);
+        foreach (var edge in edges)
         {
             var (v1, v2) = _polygon.GetEdgeVertices(edge);
             _view.DrawLine(g, v1.ToPointF(), v2.ToPointF());
@@ -197,10 +214,9 @@ public class PolygonsFormPresenter
         return null;
     }
 
-    private void DrawArcs(Graphics g)
+    private void DrawArcs(Graphics g, IEnumerable<Edge> edges)
     {
-        var arcEdges = _polygon.Edges.Where(e => e.Constraint.EdgeType == EdgeType.Arc);
-        foreach (var edge in arcEdges)
+        foreach (var edge in edges)
         {
             var (v1, v2) = _polygon.GetEdgeVertices(edge);
             var (center, radius, startAngle, sweepAngle) = ((CircleArcEdgeConstraint)edge.Constraint).GetCircleParams(v1, v2);
@@ -208,6 +224,9 @@ public class PolygonsFormPresenter
             _view.DrawDashedLine(g, v1.ToPointF(), v2.ToPointF());
         }
     }
+
+    private void DrawBezierCurves(Graphics g, IEnumerable<Edge> edges)
+    { }
 
     private void DrawVertices(Graphics g)
     {
