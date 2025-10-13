@@ -34,6 +34,17 @@ public class PolygonsFormPresenter
     private void HelpClicked(object? sender, EventArgs e)
         => _view.ShowMessageBox("To jest pomoc.");
 
+    private void PolygonResetClicked(object? sender, EventArgs e)
+    {
+        _polygon = Polygon.Predefined;
+        _vertexBeingDragged = null;
+        _shouldDragWholePolygon = false;
+        _sourceOfPolygonMovement = null;
+        _contextMenusVertex = null;
+        _contextMenusEdge = null;
+        _view.RefreshPolygonPanel();
+    }
+
     private void LibraryAlgorithmChosen(object? sender, EventArgs e)
         => _renderingStrategy = new LibraryDrawingFunctionStrategy();
 
@@ -259,6 +270,7 @@ public class PolygonsFormPresenter
     private void SubscribeToEvents()
     {
         _view.HelpClicked += HelpClicked;
+        _view.PolygonResetClicked += PolygonResetClicked;
         _view.LibraryAlgorithmChosen += LibraryAlgorithmChosen;
         _view.BresenhamAlgorithmChosen += BresenhamAlgorithmChosen;
         _view.PolygonPanelPainting += PolygonPanelPainting;

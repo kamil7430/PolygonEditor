@@ -3,6 +3,7 @@
 public partial class PolygonsForm
 {
     public event EventHandler? HelpClicked;
+    public event EventHandler? PolygonResetClicked;
     public event EventHandler? LibraryAlgorithmChosen;
     public event EventHandler? BresenhamAlgorithmChosen;
     public event EventHandler? PolygonPanelPainting;
@@ -14,6 +15,9 @@ public partial class PolygonsForm
 
     private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         => HelpClicked?.Invoke(sender, e);
+
+    private void resetWielokątaToolStripMenuItem_Click(object sender, EventArgs e)
+        => PolygonResetClicked?.Invoke(sender, e);
 
     private void bresenhamAlgorithmRadioButton_CheckedChanged(object sender, EventArgs e)
     {

@@ -5,6 +5,7 @@ public interface IPolygonEditorView
     float VertexRadius { get; }
 
     event EventHandler? HelpClicked;
+    event EventHandler? PolygonResetClicked;
     event EventHandler? LibraryAlgorithmChosen;
     event EventHandler? BresenhamAlgorithmChosen;
     event EventHandler? PolygonPanelPainting;
