@@ -31,7 +31,7 @@
     - [ ] Ciągłość G1 (ciągłość jednostkowego wektora stycznego
   - [ ] Tylko jeden koniec łuku może mieć ciągłość G1 (ciągłość jednostkowego wektora stycznego)
   - [x] Gry oba końce łuku mają ciągłość G0, to rysowany jest łuk o promieniu równym połowie długości krawędzi
-- [ ] Rysowanie odcinków - algorytm biblioteczny i własna implementacja (alg. Bresenhama) - radiobutton
+- [x] Rysowanie odcinków - algorytm biblioteczny i własna implementacja (alg. Bresenhama) - radiobutton
 - [ ] Rysowanie segmentu Beziera - algorytm przyrostowy: Przejście do bazy potęgowej a następnie szybki iteracyjny algorytm wyznaczania kolejnych punktów.
 - [ ] Definiowanie nowego wielokąta oraz przesuwanie - jak najbardziej intuicyjne
 - [x] Przesuwanie - lewy wciśnięty przycisk myszy
