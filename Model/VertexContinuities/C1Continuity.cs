@@ -1,10 +1,19 @@
-﻿namespace PolygonEditor.Model.VertexContinuities;
+﻿using System.Numerics;
 
-public class C1Continuity : IVertexContinuity
+namespace PolygonEditor.Model.VertexContinuities;
+
+public class C1Continuity : G1C1ContinuitiesBase
 {
-    public bool DoesAccept(EdgeType edge1Type, EdgeType edge2Type)
+    public C1Continuity(Polygon polygon)
+        : base(polygon)
+    { }
+
+    public override bool DoesAccept(EdgeType edge1Type, EdgeType edge2Type)
         => edge1Type == EdgeType.BezierCurve || edge2Type == EdgeType.BezierCurve;
 
-    public object Clone()
-        => new C1Continuity();
+    public override (Vector2 TangentVector, bool ShouldLengthBeEqual)? GetContinuityConditions(Vertex vertex, Edge previousEdge)
+        => (GetTangentVector(vertex, previousEdge), true);
+
+    public override object Clone()
+        => new C1Continuity(Polygon);
 }

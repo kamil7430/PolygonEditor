@@ -177,10 +177,10 @@ public class PolygonsFormPresenter
     }
 
     private void ContinuityC1Clicked(object? sender, EventArgs e)
-        => ChangeVertexContinuityFromContextMenu(new C1Continuity());
+        => ChangeVertexContinuityFromContextMenu(new C1Continuity(_polygon));
 
     private void ContinuityG1Clicked(object? sender, EventArgs e)
-        => ChangeVertexContinuityFromContextMenu(new G1Continuity());
+        => ChangeVertexContinuityFromContextMenu(new G1Continuity(_polygon));
 
     private void ContinuityG0Clicked(object? sender, EventArgs e)
         => ChangeVertexContinuityFromContextMenu(new G0Continuity());
