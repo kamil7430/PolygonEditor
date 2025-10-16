@@ -62,8 +62,10 @@ public class Polygon
     public bool TryApplyVertexContinuity(Vertex vertex, IVertexContinuity continuity)
     {
         var (e1, e2) = GetVertexEdges(vertex);
-
-        if (!continuity.DoesAccept(e1.Constraint.EdgeType, e2.Constraint.EdgeType))
+        int index = Vertices.IndexOf(vertex);
+        var v1 = Vertices[(index - 1).TrueModulo(Vertices.Count)];
+        var v2 = Vertices[(index + 1).TrueModulo(Vertices.Count)];
+        if (!continuity.DoesAccept(e1.Constraint.EdgeType, e2.Constraint.EdgeType, v1.Continuity, v2.Continuity))
             return false;
 
         var oldContinuity = vertex.Continuity;
@@ -135,6 +137,15 @@ public class Polygon
         return nearestEdge?.Edge;
     }
 
+    public Edge GetEdgeBetween(Vertex v1, Vertex v2)
+    {
+        int index1 = Vertices.IndexOf(v1);
+        int index2 = Vertices.IndexOf(v2);
+        if ((Math.Abs(index2 - index1).TrueModulo(Vertices.Count)) != 1)
+            throw new ArgumentException("These vertices are not neighbours!");
+        return Edges[index1];
+    }
+
     public (Vertex V1, Vertex V2) GetEdgeVertices(Edge edge)
     {
         var index = Edges.IndexOf(edge);
@@ -144,7 +155,13 @@ public class Polygon
     public (Edge E1, Edge E2) GetVertexEdges(Vertex vertex)
     {
         var index = Vertices.IndexOf(vertex);
-        return (Edges[index], Edges[(index + 1).TrueModulo(Edges.Count)]);
+        return (Edges[(index - 1).TrueModulo(Vertices.Count)], Edges[index]);
+    }
+
+    public Edge GetOtherEdge(Vertex vertex, Edge edge)
+    {
+        var (e1, e2) = GetVertexEdges(vertex);
+        return edge == e1 ? e2 : e1;
     }
 
     public float GetEdgeLength(Edge edge)

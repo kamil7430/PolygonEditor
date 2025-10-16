@@ -28,7 +28,7 @@ public abstract class G1C1ContinuitiesBase : IVertexContinuity
     }
 
     protected Vector2 GetTangentVectorForLine(Vertex v1, Vertex v2, Edge previousEdge)
-        => (v2 - v1).ToVector2();
+        => Vector2.Normalize((v2 - v1).ToVector2());
 
     protected Vector2 GetTangentVectorForArc(Vertex v1, Vertex v2, Edge previousEdge)
     {
@@ -42,7 +42,7 @@ public abstract class G1C1ContinuitiesBase : IVertexContinuity
         throw new NotImplementedException();
     }
 
-    public abstract bool DoesAccept(EdgeType edge1Type, EdgeType edge2Type);
+    public abstract bool DoesAccept(EdgeType edge1Type, EdgeType edge2Type, IVertexContinuity vertex1Continuity, IVertexContinuity vertex2Continuity);
 
     public abstract (Vector2 TangentVector, bool ShouldLengthBeEqual)? GetContinuityConditions(Vertex vertex, Edge previousEdge);
 

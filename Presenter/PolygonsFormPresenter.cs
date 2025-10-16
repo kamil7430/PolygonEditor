@@ -196,7 +196,7 @@ public class PolygonsFormPresenter
         => ChangeConstraintFromContextMenu(new NoConstraint());
 
     private void CircleArcClicked(object? sender, EventArgs e)
-        => ChangeConstraintFromContextMenu(new CircleArcEdgeConstraint());
+        => ChangeConstraintFromContextMenu(new CircleArcEdgeConstraint(_polygon));
 
     private void BezierCurveClicked(object? sender, EventArgs e)
         => ChangeConstraintFromContextMenu(new BezierCurveEdgeConstraint());
