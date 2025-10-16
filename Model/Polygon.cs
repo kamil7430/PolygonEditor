@@ -1,5 +1,6 @@
 ﻿using PolygonEditor.Model.EdgeConstraints;
 using PolygonEditor.Model.Helpers;
+using PolygonEditor.Model.VertexContinuities;
 using System.Numerics;
 
 namespace PolygonEditor.Model;
@@ -52,6 +53,24 @@ public class Polygon
         if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, Vertices[index], Vertices[index].ToPointF()))
         {
             edge.Constraint = oldConstraint;
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool TryApplyVertexContinuity(Vertex vertex, IVertexContinuity continuity)
+    {
+        var (e1, e2) = GetVertexEdges(vertex);
+
+        if (!continuity.DoesAccept(e1.Constraint.EdgeType, e2.Constraint.EdgeType))
+            return false;
+
+        var oldContinuity = vertex.Continuity;
+        vertex.Continuity = continuity;
+        if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, vertex, vertex.ToPointF()))
+        {
+            vertex.Continuity = oldContinuity;
             return false;
         }
 
@@ -116,6 +135,12 @@ public class Polygon
     {
         var index = Edges.IndexOf(edge);
         return (Vertices[index], Vertices[(index + 1) % Vertices.Count]);
+    }
+
+    public (Edge E1, Edge E2) GetVertexEdges(Vertex vertex)
+    {
+        var index = Vertices.IndexOf(vertex);
+        return (Edges[index], Edges[(index + 1).TrueModulo(Edges.Count)]);
     }
 
     public float GetEdgeLength(Edge edge)

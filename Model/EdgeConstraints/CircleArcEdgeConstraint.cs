@@ -1,4 +1,5 @@
 ﻿using PolygonEditor.Model.Helpers;
+using PolygonEditor.Model.VertexContinuities;
 
 namespace PolygonEditor.Model.EdgeConstraints;
 
@@ -13,9 +14,9 @@ public class CircleArcEdgeConstraint : IEdgeConstraint
     public void ApplyConstraint(Vertex a, Vertex b)
     {
         ThrowIfVertexHasC1Continuity(a, b);
-        if (a.ContinuityType == ContinuityType.G0 && b.ContinuityType == ContinuityType.G0)
+        if (a.Continuity is G0Continuity || b.Continuity is G0Continuity)
             return;
-        if (a.ContinuityType == ContinuityType.G0 && b.ContinuityType == ContinuityType.G1)
+        if (a.Continuity is G1Continuity && b.Continuity is G0Continuity)
         {
             // TODO
         }
@@ -28,9 +29,9 @@ public class CircleArcEdgeConstraint : IEdgeConstraint
     public bool CheckConstraint(Vertex a, Vertex b)
     {
         ThrowIfVertexHasC1Continuity(a, b);
-        if (a.ContinuityType == ContinuityType.G0 && b.ContinuityType == ContinuityType.G0)
+        if (a.Continuity is G0Continuity || b.Continuity is G0Continuity)
             return true;
-        if (a.ContinuityType == ContinuityType.G0 && b.ContinuityType == ContinuityType.G1)
+        if (a.Continuity is G1Continuity && b.Continuity is G0Continuity)
         {
             // TODO
             return false;
@@ -50,7 +51,7 @@ public class CircleArcEdgeConstraint : IEdgeConstraint
         float? startAngle = null;
         float? sweepAngle = null;
 
-        if (a.ContinuityType == ContinuityType.G0 && b.ContinuityType == ContinuityType.G0)
+        if (a.Continuity is G0Continuity || b.Continuity is G0Continuity)
         {
             center = ((a + b) / 2).ToPointF();
             radius = a.DistanceTo(b) / 2;
@@ -60,7 +61,7 @@ public class CircleArcEdgeConstraint : IEdgeConstraint
                 startAngle = (float)ToDegrees(Math.Atan((b.Y - a.Y) / (b.X - a.X)));
             sweepAngle = 180;
         }
-        else if (a.ContinuityType == ContinuityType.G0 && b.ContinuityType == ContinuityType.G1)
+        else if (a.Continuity is G1Continuity && b.Continuity is G0Continuity)
         {
             // TODO
             throw new NotImplementedException();
@@ -76,7 +77,7 @@ public class CircleArcEdgeConstraint : IEdgeConstraint
 
     private void ThrowIfVertexHasC1Continuity(Vertex a, Vertex b)
     {
-        if (a.ContinuityType == ContinuityType.C1 || b.ContinuityType == ContinuityType.C1)
+        if (a.Continuity is C1Continuity || b.Continuity is C1Continuity)
             throw new InvalidOperationException("One of vertices has continuity type C1!");
     }
 

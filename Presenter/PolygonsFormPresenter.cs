@@ -2,6 +2,7 @@
 using PolygonEditor.Model.EdgeConstraints;
 using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.RenderingStrategies;
+using PolygonEditor.Model.VertexContinuities;
 using PolygonEditor.View;
 
 namespace PolygonEditor.Presenter;
@@ -175,6 +176,15 @@ public class PolygonsFormPresenter
         _view.RefreshPolygonPanel();
     }
 
+    private void ContinuityC1Clicked(object? sender, EventArgs e)
+        => ChangeVertexContinuityFromContextMenu(new C1Continuity());
+
+    private void ContinuityG1Clicked(object? sender, EventArgs e)
+        => ChangeVertexContinuityFromContextMenu(new G1Continuity());
+
+    private void ContinuityG0Clicked(object? sender, EventArgs e)
+        => ChangeVertexContinuityFromContextMenu(new G0Continuity());
+
     private void AddVertexClicked(object? sender, EventArgs e)
     {
         _polygon.AddVertex(_contextMenusEdge!);
@@ -293,6 +303,14 @@ public class PolygonsFormPresenter
         _view.RefreshPolygonPanel();
     }
 
+    private void ChangeVertexContinuityFromContextMenu(IVertexContinuity continuity)
+    {
+        if (!_polygon.TryApplyVertexContinuity(_contextMenusVertex!, continuity))
+            _view.ShowMessageBox("Wybrana ciągłość w wierzchołku nie może zostać zastosowana!");
+        _contextMenusVertex = null;
+        _view.RefreshPolygonPanel();
+    }
+
     private void SubscribeToEvents()
     {
         _view.HelpClicked += HelpClicked;
@@ -306,6 +324,9 @@ public class PolygonsFormPresenter
         _view.FormKeyDown += FormKeyDown;
         _view.FormKeyUp += FormKeyUp;
         _view.DeleteVertexClicked += DeleteVertexClicked;
+        _view.ContinuityG0Clicked += ContinuityG0Clicked;
+        _view.ContinuityG1Clicked += ContinuityG1Clicked;
+        _view.ContinuityC1Clicked += ContinuityC1Clicked;
         _view.AddVertexClicked += AddVertexClicked;
         _view.HorizontalEdgeClicked += HorizontalEdgeClicked;
         _view.DiagonalUpEdgeClicked += DiagonalUpEdgeClicked;

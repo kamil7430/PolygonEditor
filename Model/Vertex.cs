@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using PolygonEditor.Model.VertexContinuities;
+using System.Numerics;
 
 namespace PolygonEditor.Model;
 
@@ -6,13 +7,13 @@ public class Vertex : ICastableToVector2, ICloneable
 {
     public float X { get; set; }
     public float Y { get; set; }
-    public ContinuityType ContinuityType { get; set; }
+    public IVertexContinuity Continuity { get; set; }
 
-    public Vertex(float x, float y, ContinuityType continuityType = ContinuityType.G0)
+    public Vertex(float x, float y, IVertexContinuity? continuity = null)
     {
         X = x;
         Y = y;
-        ContinuityType = continuityType;
+        Continuity = continuity ?? new G0Continuity();
     }
 
     public void MoveTo(PointF point)
@@ -34,10 +35,10 @@ public class Vertex : ICastableToVector2, ICloneable
         => new Vertex(a.X - b.X, a.Y - b.Y);
 
     public static Vertex operator *(Vertex a, float b)
-        => new Vertex(a.X * b, a.Y * b, a.ContinuityType);
+        => new Vertex(a.X * b, a.Y * b, (IVertexContinuity)a.Continuity.Clone());
 
     public static Vertex operator /(Vertex a, float b)
-        => new Vertex(a.X / b, a.Y / b, a.ContinuityType);
+        => new Vertex(a.X / b, a.Y / b, (IVertexContinuity)a.Continuity.Clone());
 
     public PointF ToPointF()
         => new PointF(X, Y);
@@ -46,5 +47,5 @@ public class Vertex : ICastableToVector2, ICloneable
         => new Vector2(X, Y);
 
     public object Clone()
-        => new Vertex(X, Y, ContinuityType);
+        => new Vertex(X, Y, (IVertexContinuity)Continuity.Clone());
 }
