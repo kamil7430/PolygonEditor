@@ -14,7 +14,7 @@ public class CircleArcEdgeConstraint : IEdgeConstraint
     public void ApplyConstraint(Vertex a, Vertex b)
     {
         ThrowIfVertexHasC1Continuity(a, b);
-        if (a.Continuity is G0Continuity || b.Continuity is G0Continuity)
+        if (a.Continuity is G0Continuity && b.Continuity is G0Continuity)
             return;
         if (a.Continuity is G1Continuity && b.Continuity is G0Continuity)
         {
@@ -29,7 +29,7 @@ public class CircleArcEdgeConstraint : IEdgeConstraint
     public bool CheckConstraint(Vertex a, Vertex b)
     {
         ThrowIfVertexHasC1Continuity(a, b);
-        if (a.Continuity is G0Continuity || b.Continuity is G0Continuity)
+        if (a.Continuity is G0Continuity && b.Continuity is G0Continuity)
             return true;
         if (a.Continuity is G1Continuity && b.Continuity is G0Continuity)
         {
@@ -51,7 +51,7 @@ public class CircleArcEdgeConstraint : IEdgeConstraint
         float? startAngle = null;
         float? sweepAngle = null;
 
-        if (a.Continuity is G0Continuity || b.Continuity is G0Continuity)
+        if (a.Continuity is G0Continuity && b.Continuity is G0Continuity)
         {
             center = ((a + b) / 2).ToPointF();
             radius = a.DistanceTo(b) / 2;
