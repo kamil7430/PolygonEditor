@@ -85,6 +85,8 @@ public class Polygon
         index %= Edges.Count;
         Edges[(index - 1).TrueModulo(Edges.Count)].Constraint = new NoConstraint();
         Edges[index].Constraint = new NoConstraint();
+        Vertices[(index - 1).TrueModulo(Edges.Count)].Continuity = new G0Continuity();
+        Vertices[index].Continuity = new G0Continuity();
     }
 
     public void AddVertex(Edge edge)
@@ -94,6 +96,8 @@ public class Polygon
         var v2 = Vertices[(index + 1) % Vertices.Count];
         var newVertex = (v1 + v2) / 2;
         edge.Constraint = new NoConstraint();
+        v1.Continuity = new G0Continuity();
+        v2.Continuity = new G0Continuity();
         Vertices.Insert(index + 1, newVertex);
         Edges.Insert(index + 1, new Edge());
     }
