@@ -14,7 +14,7 @@ public partial class PolygonsForm
         => g.DrawLine(Pens.Black, p1, p2);
 
     public void DrawDashedLine(Graphics g, PointF p1, PointF p2)
-        => g.DrawLine(GdiObjectsRepository.BlackDashedPen, p1, p2);
+        => g.DrawLine(GdiObjectsRepository.LightGrayDashedPen, p1, p2);
 
     public void DrawArc(Graphics g, PointF center, float radius, float startAngle, float sweepAngle)
         => g.DrawArc(Pens.Black, center.X - radius, center.Y - radius,
@@ -28,6 +28,10 @@ public partial class PolygonsForm
 
     public void DrawVertex(Graphics g, PointF p)
         => g.FillEllipse(Brushes.PaleVioletRed, p.X - VertexRadius,
+            p.Y - VertexRadius, VertexRadius * 2, VertexRadius * 2);
+
+    public void DrawControlPoint(Graphics g, PointF p)
+        => g.FillEllipse(Brushes.LightGreen, p.X - VertexRadius,
             p.Y - VertexRadius, VertexRadius * 2, VertexRadius * 2);
 
     public void DrawString(Graphics g, string text, PointF point)

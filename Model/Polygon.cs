@@ -119,6 +119,25 @@ public class Polygon
         return nearestVertex?.Vertex;
     }
 
+    public BezierCurveControlPoint? GetNearestBezierCurveControlPointInRadius(PointF point, float radius)
+    {
+        (BezierCurveControlPoint ControlPoint, float Distance)? nearestControlPoint = null;
+        Vector2 p = point.ToVector2();
+        foreach (var bezierCurve in Edges.Where(e => e.Constraint.EdgeType == EdgeType.BezierCurve))
+        {
+            var constraint = (BezierCurveEdgeConstraint)bezierCurve.Constraint;
+            var (cp1, cp2) = (constraint.Cp1, constraint.Cp2);
+            var (dist1, dist2) = (Vector2.Distance(p, cp1.ToVector2()), Vector2.Distance(p, cp2.ToVector2()));
+            if (dist1 <= radius)
+                if (nearestControlPoint == null || dist1 < nearestControlPoint.Value.Distance)
+                    nearestControlPoint = (cp1, dist1);
+            if (dist2 <= radius)
+                if (nearestControlPoint == null || dist2 < nearestControlPoint.Value.Distance)
+                    nearestControlPoint = (cp2, dist2);
+        }
+        return nearestControlPoint?.ControlPoint;
+    }
+
     public Edge? GetNearestEdgeInRadius(PointF p, float radius)
     {
         (Edge Edge, double Distance)? nearestEdge = null;

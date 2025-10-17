@@ -13,6 +13,7 @@ public class PolygonsFormPresenter
 
     private Polygon _polygon;
     private Vertex? _vertexBeingDragged;
+    private BezierCurveControlPoint? _controlPointBeingDragged;
 
     private bool _shouldDragWholePolygon;
     private PointF? _sourceOfPolygonMovement;
@@ -39,6 +40,7 @@ public class PolygonsFormPresenter
     {
         _polygon = Polygon.Predefined;
         _vertexBeingDragged = null;
+        _controlPointBeingDragged = null;
         _shouldDragWholePolygon = false;
         _sourceOfPolygonMovement = null;
         _contextMenusVertex = null;
@@ -120,6 +122,11 @@ public class PolygonsFormPresenter
                 var delta = PointHelper.Subtract(newLoc, _sourceOfPolygonMovement!.Value).ToSizeF();
                 _polygon.MoveWholePolygon(delta);
                 _sourceOfPolygonMovement = newLoc;
+                _view.RefreshPolygonPanel();
+            }
+            else if (_controlPointBeingDragged != null)
+            {
+                _controlPointBeingDragged.MoveControlPoint(_polygon, mouseEventArgs.Location);
                 _view.RefreshPolygonPanel();
             }
         }
@@ -242,7 +249,20 @@ public class PolygonsFormPresenter
     }
 
     private void DrawBezierCurves(Graphics g, IEnumerable<Edge> edges)
-    { }
+    {
+        foreach (var edge in edges)
+        {
+            var (v1, v2) = _polygon.GetEdgeVertices(edge);
+            var bezierConstraint = (BezierCurveEdgeConstraint)edge.Constraint;
+            var (cp1, cp2) = (bezierConstraint.Cp1, bezierConstraint.Cp2);
+            _view.DrawDashedLine(g, v1.ToPointF(), v2.ToPointF());
+            _view.DrawDashedLine(g, v1.ToPointF(), cp1.ToPointF());
+            _view.DrawDashedLine(g, cp1.ToPointF(), cp2.ToPointF());
+            _view.DrawDashedLine(g, cp2.ToPointF(), v2.ToPointF());
+            _view.DrawControlPoint(g, cp1.ToPointF());
+            _view.DrawControlPoint(g, cp2.ToPointF());
+        }
+    }
 
     private void DrawVertices(Graphics g)
     {
@@ -265,6 +285,7 @@ public class PolygonsFormPresenter
     private void HandleLeftButtonUp(MouseEventArgs e)
     {
         _vertexBeingDragged = null;
+        _controlPointBeingDragged = null;
         _sourceOfPolygonMovement = null;
     }
 
@@ -287,12 +308,16 @@ public class PolygonsFormPresenter
 
     private void HandleLeftButtonDown(MouseEventArgs e)
     {
-        if (_vertexBeingDragged != null)
+        if (_vertexBeingDragged != null || _controlPointBeingDragged != null)
             return;
         if (_shouldDragWholePolygon)
             _sourceOfPolygonMovement = e.Location;
         else
+        {
             _vertexBeingDragged = _polygon.GetNearestVertexInRadius(e.Location, _view.VertexRadius);
+            if (_vertexBeingDragged == null)
+                _controlPointBeingDragged = _polygon.GetNearestBezierCurveControlPointInRadius(e.Location, _view.VertexRadius);
+        }
     }
 
     private void ChangeConstraintFromContextMenu(IEdgeConstraint constraint)
