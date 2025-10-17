@@ -1,5 +1,7 @@
-﻿using PolygonEditor.Model.Helpers;
+﻿using PolygonEditor.Model.BezierCurveUtils;
+using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.VertexContinuities;
+using System.Numerics;
 
 namespace PolygonEditor.Model.EdgeConstraints;
 
@@ -31,11 +33,7 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
 
     public void ApplyConstraint(Vertex a, Vertex b)
     {
-
-    }
-
-    public bool CheckConstraint(Vertex a, Vertex b)
-    {
+        // Zastosowanie ograniczeń w przypadku ruszenia czymś innym niż punktem kontrolnym.
         var previousEdge = _polygon.GetPreviousEdge(a, b);
         var thisEdge = _polygon.GetEdgeBetween(a, b);
         var nextEdge = _polygon.GetNextEdge(a, b);
@@ -44,14 +42,125 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
 
         if (conditionsA != null)
         {
-            return false;
+            var cp = GetCorrespondingControlPoint(a);
+
+            if (conditionsA.Value.ShouldLengthBeEqual)
+            {
+                cp.X = a.X + conditionsA.Value.TangentVector.X / 3;
+                cp.Y = a.Y + conditionsA.Value.TangentVector.Y / 3;
+            }
+            else
+            {
+                var vector = conditionsA.Value.TangentVector;
+                float length = a.DistanceTo(cp);
+                float scale = length / vector.Length();
+                vector.X *= scale;
+                vector.Y *= scale;
+                cp.X = a.X + vector.X;
+                cp.Y = a.Y + vector.Y;
+            }
         }
         if (conditionsB != null)
         {
-            return false;
+            var cp = GetCorrespondingControlPoint(b);
+
+            if (conditionsB.Value.ShouldLengthBeEqual)
+            {
+                cp.X = b.X + conditionsB.Value.TangentVector.X / 3;
+                cp.Y = b.Y + conditionsB.Value.TangentVector.Y / 3;
+            }
+            else
+            {
+                var vector = conditionsB.Value.TangentVector;
+                float length = b.DistanceTo(cp);
+                float scale = length / vector.Length();
+                vector.X *= scale;
+                vector.Y *= scale;
+                cp.X = b.X + vector.X;
+                cp.Y = b.Y + vector.Y;
+            }
+        }
+    }
+
+    public bool CheckConstraint(Vertex a, Vertex b)
+    {
+        // TODO: czy kolejność krawędzi coś zmienia? Chyba jest dobrze (por. implementację w Polygonie)
+        var previousEdge = _polygon.GetPreviousEdge(a, b);
+        var thisEdge = _polygon.GetEdgeBetween(a, b);
+        var nextEdge = _polygon.GetNextEdge(a, b);
+        var conditionsA = a.Continuity.GetContinuityConditions(a, previousEdge, thisEdge);
+        var conditionsB = b.Continuity.GetContinuityConditions(b, nextEdge, thisEdge);
+
+        if (conditionsA != null)
+        {
+            var cp = GetCorrespondingControlPoint(a);
+            var frontTangentVector = GetTangentVector(a, cp);
+
+            if (conditionsA.Value.ShouldLengthBeEqual)
+            {
+                if (!(frontTangentVector.X.IsEqual(conditionsA.Value.TangentVector.X)
+                    && frontTangentVector.Y.IsEqual(conditionsA.Value.TangentVector.Y)))
+                    return false;
+            }
+            else
+            {
+                var v_actual = frontTangentVector;
+                var v_target = conditionsA.Value.TangentVector;
+
+                // Sprawdzenie, czy wektory skierowane są w tym samym kierunku
+                float dotProduct = v_actual.X * v_target.X + v_actual.Y * v_target.Y;
+                if (dotProduct <= 0)
+                    return false;
+
+                // Sprawdzenie współliniowości przy użyciu iloczynu wektorowego
+                float crossProduct = v_actual.X * v_target.Y - v_actual.Y * v_target.X;
+                if (!crossProduct.IsEqual(0.0f))
+                    return false;
+            }
+        }
+        if (conditionsB != null)
+        {
+            var cp = GetCorrespondingControlPoint(b);
+            var backTangentVector = GetTangentVector(b, cp);
+
+            if (conditionsB.Value.ShouldLengthBeEqual)
+            {
+                if (!(backTangentVector.X.IsEqual(conditionsB.Value.TangentVector.X)
+                    && backTangentVector.Y.IsEqual(conditionsB.Value.TangentVector.Y)))
+                    return false;
+            }
+            else
+            {
+                var v_actual = backTangentVector;
+                var v_target = conditionsB.Value.TangentVector;
+
+                // Sprawdzenie, czy wektory skierowane są w tym samym kierunku
+                float dotProduct = v_actual.X * v_target.X + v_actual.Y * v_target.Y;
+                if (dotProduct <= 0)
+                    return false;
+
+                // Sprawdzenie współliniowości przy użyciu iloczynu wektorowego
+                float crossProduct = v_actual.X * v_target.Y - v_actual.Y * v_target.X;
+                if (!crossProduct.IsEqual(0.0f))
+                    return false;
+            }
         }
 
         return true;
+    }
+
+    private Vector2 GetTangentVector(Vertex vertex, BezierCurveControlPoint controlPoint)
+        => ((vertex - controlPoint.ToVertex()) * 3).ToVector2();
+
+    public BezierCurveControlPoint GetCorrespondingControlPoint(Vertex vertex)
+    {
+        var (v1, v2) = _polygon.GetEdgeVertices(_edge);
+        if (vertex == v1)
+            return Cp1;
+        else if (vertex == v2)
+            return Cp2;
+        else
+            throw new ArgumentException("This vertex is not on this edge!");
     }
 
     public void MoveControlPoint(BezierCurveControlPoint controlPoint, Polygon polygon, PointF destination)

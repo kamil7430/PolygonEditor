@@ -1,7 +1,7 @@
 ﻿using PolygonEditor.Model.EdgeConstraints;
 using System.Numerics;
 
-namespace PolygonEditor.Model;
+namespace PolygonEditor.Model.BezierCurveUtils;
 
 public class BezierCurveControlPoint : ICastableToVector2, ICloneable
 {
@@ -30,6 +30,9 @@ public class BezierCurveControlPoint : ICastableToVector2, ICloneable
 
     public PointD ToPointD()
         => new PointD(X, Y);
+
+    public Vertex ToVertex()
+        => new Vertex(X, Y);
 
     public void MoveControlPoint(Polygon polygon, PointF destination)
         => _constraint.MoveControlPoint(this, polygon, destination);

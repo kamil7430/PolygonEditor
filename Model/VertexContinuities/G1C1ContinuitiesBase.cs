@@ -30,7 +30,7 @@ public abstract class G1C1ContinuitiesBase : IVertexContinuity
     }
 
     protected Vector2 GetTangentVectorForLine(Vertex v1, Vertex v2, Edge previousEdge)
-        => Vector2.Normalize((v2 - v1).ToVector2());
+        => (v2 - v1).ToVector2();
 
     protected Vector2 GetTangentVectorForArc(Vertex v1, Vertex v2, Edge previousEdge)
     {
@@ -41,7 +41,9 @@ public abstract class G1C1ContinuitiesBase : IVertexContinuity
 
     protected Vector2 GetTangentVectorForBezierCurve(Vertex v1, Vertex v2, Edge previousEdge)
     {
-        throw new NotImplementedException();
+        var bezier = (BezierCurveEdgeConstraint)previousEdge.Constraint;
+        var controlPoint = bezier.GetCorrespondingControlPoint(v2).ToVertex();
+        return ((v2 - controlPoint) * 3).ToVector2();
     }
 
     public abstract bool DoesAccept(EdgeType edge1Type, EdgeType edge2Type, IVertexContinuity vertex1Continuity, IVertexContinuity vertex2Continuity);

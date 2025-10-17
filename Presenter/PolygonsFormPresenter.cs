@@ -1,4 +1,5 @@
 ﻿using PolygonEditor.Model;
+using PolygonEditor.Model.BezierCurveUtils;
 using PolygonEditor.Model.EdgeConstraints;
 using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.RenderingStrategies;
