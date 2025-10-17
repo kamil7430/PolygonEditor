@@ -28,8 +28,9 @@ public class Polygon
     public Vertex MoveVertex(Vertex vertex, PointF destination)
     {
         int vertexIndex = Vertices.IndexOf(vertex);
+        var delta = destination.Subtract(vertex.ToPointF()).ToSizeF();
         if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, vertex, destination))
-            MoveWholePolygon(destination.Subtract(vertex.ToPointF()).ToSizeF());
+            MoveWholePolygon(delta);
         return Vertices[vertexIndex];
     }
 
@@ -205,6 +206,12 @@ public class Polygon
         var (e1, e2) = GetVertexEdges(vertex);
         return edge == e1 ? e2 : e1;
     }
+
+    public Edge GetPreviousEdge(Vertex a, Vertex b)
+        => GetOtherEdge(a, GetEdgeBetween(a, b));
+
+    public Edge GetNextEdge(Vertex a, Vertex b)
+        => GetOtherEdge(b, GetEdgeBetween(a, b));
 
     public float GetEdgeLength(Edge edge)
     {

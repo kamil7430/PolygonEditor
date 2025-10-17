@@ -6,12 +6,12 @@ public static class ConstraintSolver
     {
         int movedVertexIndex = polygon.Vertices.IndexOf(vertexMoved);
         var vertices = polygon.Vertices.Clone();
-        vertices[movedVertexIndex].MoveTo(destination);
-        if (TryApplyConstraints(vertices, polygon.Edges, movedVertexIndex))
-        {
-            polygon.Vertices = vertices;
+        polygon.Vertices[movedVertexIndex].MoveTo(destination);
+
+        if (TryApplyConstraints(polygon.Vertices, polygon.Edges, movedVertexIndex))
             return true;
-        }
+
+        polygon.Vertices = vertices;
         return false;
     }
 

@@ -36,6 +36,21 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
 
     public bool CheckConstraint(Vertex a, Vertex b)
     {
+        var previousEdge = _polygon.GetPreviousEdge(a, b);
+        var thisEdge = _polygon.GetEdgeBetween(a, b);
+        var nextEdge = _polygon.GetNextEdge(a, b);
+        var conditionsA = a.Continuity.GetContinuityConditions(a, previousEdge, thisEdge);
+        var conditionsB = b.Continuity.GetContinuityConditions(b, nextEdge, thisEdge);
+
+        if (conditionsA != null)
+        {
+            return false;
+        }
+        if (conditionsB != null)
+        {
+            return false;
+        }
+
         return true;
     }
 
