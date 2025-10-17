@@ -5,7 +5,9 @@ namespace PolygonEditor.View;
 
 public partial class PolygonsForm
 {
-    public float VertexRadius { get; } = 10f;
+    public float VertexRadius { get; } = 15f;
+    private readonly float _vertexLabelFontSize = 9;
+    private Font? _vertexLabelFont;
 
     public void ShowMessageBox(string message)
         => MessageBox.Show(message);
@@ -26,9 +28,14 @@ public partial class PolygonsForm
             g.FillRectangle(Brushes.Black, p.X, p.Y, 1, 1);
     }
 
-    public void DrawVertex(Graphics g, PointF p)
-        => g.FillEllipse(Brushes.PaleVioletRed, p.X - VertexRadius,
-            p.Y - VertexRadius, VertexRadius * 2, VertexRadius * 2);
+    public void DrawVertex(Graphics g, PointF p, string? label)
+    {
+        var rect = new RectangleF(p.X - VertexRadius, p.Y - VertexRadius,
+            VertexRadius * 2, VertexRadius * 2);
+        g.FillEllipse(Brushes.PaleVioletRed, rect);
+        _vertexLabelFont ??= new Font(Font.FontFamily, _vertexLabelFontSize);
+        g.DrawString(label, _vertexLabelFont, Brushes.White, rect);
+    }
 
     public void DrawControlPoint(Graphics g, PointF p)
         => g.FillEllipse(Brushes.LightGreen, p.X - VertexRadius,

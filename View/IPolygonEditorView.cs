@@ -34,7 +34,7 @@ public interface IPolygonEditorView
     void DrawDashedLine(Graphics g, PointF p1, PointF p2);
     void DrawArc(Graphics g, PointF center, float radius, float startAngle, float sweepAngle);
     void DrawPixels(Graphics g, IEnumerable<PointF> points);
-    void DrawVertex(Graphics g, PointF p);
+    void DrawVertex(Graphics g, PointF p, string? label);
     void DrawControlPoint(Graphics g, PointF p);
     void DrawString(Graphics g, string text, PointF point);
     void RefreshPolygonPanel();

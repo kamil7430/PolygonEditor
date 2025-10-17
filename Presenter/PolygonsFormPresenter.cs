@@ -267,7 +267,7 @@ public class PolygonsFormPresenter
     private void DrawVertices(Graphics g)
     {
         foreach (var vertex in _polygon.Vertices)
-            _view.DrawVertex(g, vertex.ToPointF());
+            _view.DrawVertex(g, vertex.ToPointF(), vertex.Continuity.Label);
     }
 
     private void DrawStrings(Graphics g)

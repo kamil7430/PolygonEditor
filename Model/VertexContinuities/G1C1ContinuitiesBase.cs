@@ -7,6 +7,8 @@ public abstract class G1C1ContinuitiesBase : IVertexContinuity
 {
     protected readonly Polygon Polygon;
 
+    public abstract string? Label { get; }
+
     protected G1C1ContinuitiesBase(Polygon polygon)
     {
         Polygon = polygon;

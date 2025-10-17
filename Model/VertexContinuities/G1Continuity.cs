@@ -4,6 +4,9 @@ namespace PolygonEditor.Model.VertexContinuities;
 
 public class G1Continuity : G1C1ContinuitiesBase
 {
+    public override string? Label
+        => "G1";
+
     public G1Continuity(Polygon polygon)
         : base(polygon)
     { }
