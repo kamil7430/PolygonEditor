@@ -35,7 +35,11 @@ public class Polygon
         return Vertices[vertexIndex];
     }
 
+    public void MoveBezierCurveControlPoint(Vertex vertex)
+    { }
+
     public void MoveWholePolygon(SizeF delta)
+        // TODO: nie przesuwa punktów kontrolnych
         => Vertices.ForEach(v => v.Offset(delta));
 
     public bool TryApplyConstraints(Edge edge, IEdgeConstraint constraint)

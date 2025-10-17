@@ -1,4 +1,6 @@
-﻿namespace PolygonEditor.Model.Helpers;
+﻿using PolygonEditor.Model.EdgeConstraints;
+
+namespace PolygonEditor.Model.Helpers;
 
 public static class ConstraintSolver
 {
@@ -27,6 +29,8 @@ public static class ConstraintSolver
             if (j == movedVertexIndex)
                 break;
         }
+        if (j != movedVertexIndex && edges[j].Constraint is BezierCurveEdgeConstraint)
+            edges[j].Constraint.ApplyConstraint(vertices[j], vertices[(j + 1).TrueModulo(vertexCount)]);
 
         int lastTouchedIndex = i;
         i = movedVertexIndex;
@@ -39,6 +43,8 @@ public static class ConstraintSolver
             if (lastTouchedIndex == i)
                 return false;
         }
+        if (edges[(j - 1).TrueModulo(vertexCount)].Constraint is BezierCurveEdgeConstraint)
+            edges[(j - 1).TrueModulo(vertexCount)].Constraint.ApplyConstraint(vertices[j], vertices[(j - 1).TrueModulo(vertexCount)]);
 
         return true;
     }

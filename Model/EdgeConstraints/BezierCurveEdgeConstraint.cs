@@ -34,6 +34,7 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
     public void ApplyConstraint(Vertex a, Vertex b)
     {
         // Zastosowanie ograniczeń w przypadku ruszenia czymś innym niż punktem kontrolnym.
+
         var previousEdge = _polygon.GetPreviousEdge(a, b);
         var thisEdge = _polygon.GetEdgeBetween(a, b);
         var nextEdge = _polygon.GetNextEdge(a, b);
@@ -84,7 +85,6 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
 
     public bool CheckConstraint(Vertex a, Vertex b)
     {
-        // TODO: czy kolejność krawędzi coś zmienia? Chyba jest dobrze (por. implementację w Polygonie)
         var previousEdge = _polygon.GetPreviousEdge(a, b);
         var thisEdge = _polygon.GetEdgeBetween(a, b);
         var nextEdge = _polygon.GetNextEdge(a, b);
@@ -165,13 +165,15 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
 
     public void MoveControlPoint(BezierCurveControlPoint controlPoint, Polygon polygon, PointF destination)
     {
-        // TODO: prawdopodobnie trzeba będzie wydzielić nową funkcję w Polygonie
+        // Funkcja poruszająca punktem kontrolnym - ta operacja ma oddzielny mechanizm aplikowania
+        // ograniczeń, ze względu na konieczność modyfikowania nie swoich wierzchołków.
+
         controlPoint.MoveTo(destination);
         var (v1, v2) = polygon.GetEdgeVertices(_edge);
         if (controlPoint == Cp1)
-            polygon.MoveVertex(v1, v1.ToPointF());
+            polygon.MoveBezierCurveControlPoint(v1);
         else if (controlPoint == Cp2)
-            polygon.MoveVertex(v2, v2.ToPointF());
+            polygon.MoveBezierCurveControlPoint(v2);
         else
             throw new ArgumentException("Control points don't match!");
     }
