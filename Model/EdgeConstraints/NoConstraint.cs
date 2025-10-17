@@ -1,4 +1,6 @@
-﻿namespace PolygonEditor.Model.EdgeConstraints;
+﻿using PolygonEditor.Model.VertexContinuities;
+
+namespace PolygonEditor.Model.EdgeConstraints;
 
 public class NoConstraint : IEdgeConstraint
 {
@@ -7,6 +9,9 @@ public class NoConstraint : IEdgeConstraint
 
     public string? Label
         => "";
+
+    public IVertexContinuity DefaultContinuity
+        => new G0Continuity();
 
     public void ApplyConstraint(Vertex a, Vertex b)
     { }

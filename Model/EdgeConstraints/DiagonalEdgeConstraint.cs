@@ -1,4 +1,5 @@
 ﻿using PolygonEditor.Model.Helpers;
+using PolygonEditor.Model.VertexContinuities;
 
 namespace PolygonEditor.Model.EdgeConstraints;
 
@@ -29,6 +30,9 @@ public class DiagonalEdgeConstraint : IEdgeConstraint
         => EdgeType.Line;
 
     public string? Label { get; }
+
+    public IVertexContinuity DefaultContinuity
+        => new G0Continuity();
 
     public void ApplyConstraint(Vertex a, Vertex b)
     {

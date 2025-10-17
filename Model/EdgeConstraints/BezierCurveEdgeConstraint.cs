@@ -1,10 +1,12 @@
 ﻿using PolygonEditor.Model.Helpers;
+using PolygonEditor.Model.VertexContinuities;
 
 namespace PolygonEditor.Model.EdgeConstraints;
 
 public class BezierCurveEdgeConstraint : IEdgeConstraint
 {
     private readonly Edge _edge;
+    private readonly Polygon _polygon;
     public BezierCurveControlPoint Cp1 { get; set; }
     public BezierCurveControlPoint Cp2 { get; set; }
 
@@ -12,6 +14,7 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
     {
         int offset = 50;
         _edge = edge;
+        _polygon = polygon;
         var (a, b) = polygon.GetEdgeVertices(edge);
         Cp1 = new BezierCurveControlPoint(a.X + offset, a.Y + offset, this);
         Cp2 = new BezierCurveControlPoint(b.X - offset, b.Y - offset, this);
@@ -22,6 +25,9 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
 
     public string? Label
         => "B";
+
+    public IVertexContinuity DefaultContinuity
+        => new G1Continuity(_polygon);
 
     public void ApplyConstraint(Vertex a, Vertex b)
     {
@@ -78,9 +84,9 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
         yield return delta0P.ToPointF();
         for (double i = 0; i <= 1; i += d)
         {
-            delta2P = delta2P + delta3P;
-            delta1P = delta1P + delta2P;
-            delta0P = delta0P + delta1P;
+            delta2P += delta3P;
+            delta1P += delta2P;
+            delta0P += delta1P;
             yield return delta0P.ToPointF();
         }
     }

@@ -19,6 +19,9 @@ public class CircleArcEdgeConstraint : IEdgeConstraint
     public string? Label
         => "Ł";
 
+    public IVertexContinuity DefaultContinuity
+        => new G0Continuity();
+
     public void ApplyConstraint(Vertex a, Vertex b)
     { }
 

@@ -50,8 +50,25 @@ public class Polygon
             return false;
         }
 
+        var oldContinuity = Vertices[index].Continuity;
+        if (!TryApplyVertexContinuity(Vertices[index], constraint.DefaultContinuity))
+        {
+            edge.Constraint = oldConstraint;
+            return false;
+        }
+
+        var oldContinuityNext = Vertices[(index + 1).TrueModulo(Vertices.Count)].Continuity;
+        if (!TryApplyVertexContinuity(Vertices[(index + 1).TrueModulo(Vertices.Count)], constraint.DefaultContinuity))
+        {
+            Vertices[index].Continuity = oldContinuity;
+            edge.Constraint = oldConstraint;
+            return false;
+        }
+
         if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, Vertices[index], Vertices[index].ToPointF()))
         {
+            Vertices[index].Continuity = oldContinuity;
+            Vertices[(index + 1).TrueModulo(Vertices.Count)].Continuity = oldContinuityNext;
             edge.Constraint = oldConstraint;
             return false;
         }
