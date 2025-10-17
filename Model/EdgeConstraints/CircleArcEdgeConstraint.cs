@@ -42,16 +42,18 @@ public class CircleArcEdgeConstraint : IEdgeConstraint
         }
         else if (a.Continuity is G1Continuity g1Continuity && b.Continuity is G0Continuity)
         {
-            var previousEdge = _polygon.GetOtherEdge(a, _polygon.GetEdgeBetween(a, b));
-            var tangentA = g1Continuity.GetContinuityConditions(a, previousEdge)!.Value.TangentVector;
+            var thisEdge = _polygon.GetEdgeBetween(a, b);
+            var previousEdge = _polygon.GetOtherEdge(a, thisEdge);
+            var tangentA = g1Continuity.GetContinuityConditions(a, previousEdge, thisEdge)!.Value.TangentVector;
             (center, radius) = CalculateCircle(a, b, tangentA);
             startAngle = GetStartAngle(new Vertex(center.Value.X, center.Value.Y), a);
             sweepAngle = (float)ToDegrees(GetCentralAngle(a, b, center.Value));
         }
         else if (a.Continuity is G0Continuity && b.Continuity is G1Continuity g1ContinuityB)
         {
-            var nextEdge = _polygon.GetOtherEdge(b, _polygon.GetEdgeBetween(a, b));
-            var tangentB = g1ContinuityB.GetContinuityConditions(b, nextEdge)!.Value.TangentVector;
+            var thisEdge = _polygon.GetEdgeBetween(a, b);
+            var nextEdge = _polygon.GetOtherEdge(b, thisEdge);
+            var tangentB = g1ContinuityB.GetContinuityConditions(b, nextEdge, thisEdge)!.Value.TangentVector;
             tangentB.X *= -1;
             tangentB.Y *= -1;
             (center, radius) = CalculateCircle(b, a, tangentB);

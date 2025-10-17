@@ -141,8 +141,14 @@ public class Polygon
     {
         int index1 = Vertices.IndexOf(v1);
         int index2 = Vertices.IndexOf(v2);
-        if ((Math.Abs(index2 - index1).TrueModulo(Vertices.Count)) != 1)
+        if (index1 > index2)
+            (index1, index2) = (index2, index1);
+
+        if (index2 - index1 != 1 && !(index2 == Vertices.Count - 1 && index1 == 0))
             throw new ArgumentException("These vertices are not neighbours!");
+
+        if (index2 == Vertices.Count - 1 && index1 == 0)
+            return Edges[index2];
         return Edges[index1];
     }
 

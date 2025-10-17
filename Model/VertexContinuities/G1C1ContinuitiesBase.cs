@@ -44,7 +44,7 @@ public abstract class G1C1ContinuitiesBase : IVertexContinuity
 
     public abstract bool DoesAccept(EdgeType edge1Type, EdgeType edge2Type, IVertexContinuity vertex1Continuity, IVertexContinuity vertex2Continuity);
 
-    public abstract (Vector2 TangentVector, bool ShouldLengthBeEqual)? GetContinuityConditions(Vertex vertex, Edge previousEdge);
+    public abstract (Vector2 TangentVector, bool ShouldLengthBeEqual)? GetContinuityConditions(Vertex vertex, Edge previousEdge, Edge currentEdge);
 
     public abstract object Clone();
 }

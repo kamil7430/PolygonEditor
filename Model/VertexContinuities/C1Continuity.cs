@@ -12,7 +12,7 @@ public class C1Continuity : G1C1ContinuitiesBase
         => (edge1Type == EdgeType.BezierCurve || edge2Type == EdgeType.BezierCurve)
         && (edge1Type != EdgeType.Arc && edge2Type != EdgeType.Arc);
 
-    public override (Vector2 TangentVector, bool ShouldLengthBeEqual)? GetContinuityConditions(Vertex vertex, Edge previousEdge)
+    public override (Vector2 TangentVector, bool ShouldLengthBeEqual)? GetContinuityConditions(Vertex vertex, Edge previousEdge, Edge currentEdge)
         => (GetTangentVector(vertex, previousEdge), true);
 
     public override object Clone()
