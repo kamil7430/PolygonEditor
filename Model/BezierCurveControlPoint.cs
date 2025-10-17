@@ -16,6 +16,12 @@ public class BezierCurveControlPoint : ICastableToVector2, ICloneable
         _constraint = constraint;
     }
 
+    public void MoveTo(PointF point)
+    {
+        X = point.X;
+        Y = point.Y;
+    }
+
     public PointF ToPointF()
         => new PointF(X, Y);
 
