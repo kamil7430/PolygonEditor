@@ -39,8 +39,15 @@ public class Polygon
     { }
 
     public void MoveWholePolygon(SizeF delta)
-        // TODO: nie przesuwa punktów kontrolnych
-        => Vertices.ForEach(v => v.Offset(delta));
+    {
+        Vertices.ForEach(v => v.Offset(delta));
+        foreach (var edge in Edges.Where(e => e.Constraint.EdgeType == EdgeType.BezierCurve))
+        {
+            var bezier = (BezierCurveEdgeConstraint)edge.Constraint;
+            bezier.Cp1.Offset(delta);
+            bezier.Cp2.Offset(delta);
+        }
+    }
 
     public bool TryApplyConstraints(Edge edge, IEdgeConstraint constraint)
     {
@@ -57,16 +64,9 @@ public class Polygon
         }
 
         var oldContinuity = Vertices[index].Continuity;
-        if (!TryApplyVertexContinuity(Vertices[index], constraint.DefaultContinuity))
-        {
-            edge.Constraint = oldConstraint;
-            return false;
-        }
-
         var oldContinuityNext = Vertices[(index + 1).TrueModulo(Vertices.Count)].Continuity;
-        if (!TryApplyVertexContinuity(Vertices[(index + 1).TrueModulo(Vertices.Count)], constraint.DefaultContinuity))
+        if (!TryApplyVertexContinuity(Vertices[index], constraint.DefaultContinuity, Vertices[(index + 1).TrueModulo(Vertices.Count)]))
         {
-            Vertices[index].Continuity = oldContinuity;
             edge.Constraint = oldConstraint;
             return false;
         }
@@ -82,20 +82,51 @@ public class Polygon
         return true;
     }
 
-    public bool TryApplyVertexContinuity(Vertex vertex, IVertexContinuity continuity)
+    public bool TryApplyVertexContinuity(Vertex ver1, IVertexContinuity continuity, Vertex? ver2 = null)
     {
-        var (e1, e2) = GetVertexEdges(vertex);
-        int index = Vertices.IndexOf(vertex);
-        var v1 = Vertices[(index - 1).TrueModulo(Vertices.Count)];
-        var v2 = Vertices[(index + 1).TrueModulo(Vertices.Count)];
-        if (!continuity.DoesAccept(e1.Constraint.EdgeType, e2.Constraint.EdgeType, v1.Continuity, v2.Continuity))
-            return false;
+        var (e1, e2) = GetVertexEdges(ver1);
+        Edge? e3 = null, e4 = null;
+        if (ver2 != null)
+            (e3, e4) = GetVertexEdges(ver2);
 
-        var oldContinuity = vertex.Continuity;
-        vertex.Continuity = continuity;
-        if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, vertex, vertex.ToPointF()))
+        int index1 = Vertices.IndexOf(ver1);
+        int? index2 = null;
+        if (ver2 != null)
+            index2 = Vertices.IndexOf(ver2);
+
+        if (ver2 == null)
         {
-            vertex.Continuity = oldContinuity;
+            var v1 = Vertices[(index1 - 1).TrueModulo(Vertices.Count)];
+            var v2 = Vertices[(index1 + 1).TrueModulo(Vertices.Count)];
+            if (!continuity.DoesAccept(e1.Constraint.EdgeType, e2.Constraint.EdgeType, v1.Continuity, v2.Continuity))
+                return false;
+        }
+        else
+        {
+            if (index1 > index2!.Value && !(index1 == Vertices.Count - 1 && index2.Value == 0))
+            {
+                (index1, index2) = (index2.Value, index1);
+                (e1, e2, e3, e4) = (e3, e4, e1, e2);
+            }
+            var ver0 = Vertices[(index1 - 1).TrueModulo(Vertices.Count)];
+            var ver3 = Vertices[(index2.Value + 1).TrueModulo(Vertices.Count)];
+
+            if (!continuity.DoesAccept(e1!.Constraint.EdgeType, e2!.Constraint.EdgeType, ver0.Continuity, continuity))
+                return false;
+            if (!continuity.DoesAccept(e3!.Constraint.EdgeType, e4!.Constraint.EdgeType, continuity, ver3.Continuity))
+                return false;
+        }
+
+        var oldContinuity = ver1.Continuity;
+        var oldContinuityNext = ver2?.Continuity;
+        ver1.Continuity = continuity;
+        if (ver2 != null)
+            ver2.Continuity = continuity;
+        if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, ver1, ver1.ToPointF()))
+        {
+            ver1.Continuity = oldContinuity;
+            if (ver2 != null)
+                ver2.Continuity = oldContinuityNext!;
             return false;
         }
 

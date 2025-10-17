@@ -22,6 +22,12 @@ public class BezierCurveControlPoint : ICastableToVector2, ICloneable
         Y = point.Y;
     }
 
+    public void Offset(SizeF delta)
+    {
+        X += delta.Width;
+        Y += delta.Height;
+    }
+
     public PointF ToPointF()
         => new PointF(X, Y);
 
