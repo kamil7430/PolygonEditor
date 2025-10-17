@@ -46,6 +46,9 @@ public class Vertex : ICastableToVector2, ICloneable
     public Vector2 ToVector2()
         => new Vector2(X, Y);
 
+    public PointD ToPointD()
+        => new PointD(X, Y);
+
     public object Clone()
         => new Vertex(X, Y, (IVertexContinuity)Continuity.Clone());
 }

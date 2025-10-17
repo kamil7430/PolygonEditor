@@ -28,6 +28,9 @@ public class BezierCurveControlPoint : ICastableToVector2, ICloneable
     public Vector2 ToVector2()
         => new Vector2(X, Y);
 
+    public PointD ToPointD()
+        => new PointD(X, Y);
+
     public void MoveControlPoint(Polygon polygon, PointF destination)
         => _constraint.MoveControlPoint(this, polygon, destination);
 

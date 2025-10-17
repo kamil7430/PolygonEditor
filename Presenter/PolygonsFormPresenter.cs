@@ -261,6 +261,7 @@ public class PolygonsFormPresenter
             _view.DrawDashedLine(g, cp2.ToPointF(), v2.ToPointF());
             _view.DrawControlPoint(g, cp1.ToPointF());
             _view.DrawControlPoint(g, cp2.ToPointF());
+            _view.DrawPixels(g, bezierConstraint.GetPixelsToPaint(v1, v2));
         }
     }
 
