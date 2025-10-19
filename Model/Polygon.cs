@@ -35,8 +35,24 @@ public class Polygon
         return Vertices[vertexIndex];
     }
 
-    public void MoveBezierCurveControlPoint(Vertex vertex)
-    { }
+    public void MoveBezierCurveControlPoint(BezierCurveControlPoint controlPoint, Vertex vertex,
+        BezierCurveEdgeConstraint bezierConstraint, Edge bezierEdge, PointF destination)
+    {
+        var delta = destination.Subtract(controlPoint.ToPointF()).ToSizeF();
+
+        var firstEdgeToMove = GetOtherEdge(vertex, bezierEdge);
+        var vertexToMove = GetOtherVertex(firstEdgeToMove, vertex);
+        var (oldControlPoint, oldVertex, oldVertexToMove) = BezierConstraintSolver.MoveFirstEdge(this,
+            controlPoint, vertex, vertexToMove, bezierConstraint, bezierEdge, firstEdgeToMove, destination);
+
+        if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, vertexToMove, vertexToMove.ToPointF()))
+        {
+            (controlPoint.X, controlPoint.Y) = (oldControlPoint.X, oldControlPoint.Y);
+            (vertex.X, vertex.Y) = (oldVertex.X, oldVertex.Y);
+            (vertexToMove.X, vertexToMove.Y) = (oldVertexToMove.X, oldVertexToMove.Y);
+            MoveWholePolygon(delta);
+        }
+    }
 
     public void MoveWholePolygon(SizeF delta)
     {
@@ -241,6 +257,12 @@ public class Polygon
     {
         var (e1, e2) = GetVertexEdges(vertex);
         return edge == e1 ? e2 : e1;
+    }
+
+    public Vertex GetOtherVertex(Edge edge, Vertex vertex)
+    {
+        var (v1, v2) = GetEdgeVertices(edge);
+        return vertex == v1 ? v2 : v1;
     }
 
     public Edge GetPreviousEdge(Vertex a, Vertex b)

@@ -1,5 +1,6 @@
 ﻿using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.VertexContinuities;
+using System.Numerics;
 
 namespace PolygonEditor.Model.EdgeConstraints;
 
@@ -33,4 +34,9 @@ public class FixedEdgeLengthConstraint : IEdgeConstraint
 
     public bool CheckConstraint(Vertex a, Vertex b)
         => a.DistanceTo(b).IsEqual(_length);
+
+    public void ApplyBezierNeighbourConstraint(Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
+    {
+        throw new NotImplementedException();
+    }
 }

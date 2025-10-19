@@ -1,5 +1,6 @@
 ﻿using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.VertexContinuities;
+using System.Numerics;
 
 namespace PolygonEditor.Model.EdgeConstraints;
 
@@ -52,4 +53,9 @@ public class DiagonalEdgeConstraint : IEdgeConstraint
 
     public bool CheckConstraint(Vertex a, Vertex b)
         => (b.Y - a.Y).IsEqual(_direction * (b.X - a.X));
+
+    public void ApplyBezierNeighbourConstraint(Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
+    {
+        throw new NotImplementedException();
+    }
 }

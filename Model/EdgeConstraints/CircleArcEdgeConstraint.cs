@@ -28,6 +28,11 @@ public class CircleArcEdgeConstraint : IEdgeConstraint
     public bool CheckConstraint(Vertex a, Vertex b)
         => true;
 
+    public void ApplyBezierNeighbourConstraint(Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
+    {
+        throw new NotImplementedException();
+    }
+
     public (PointF Center, float Radius, float StartAngle, float SweepAngle) GetCircleParams(Vertex a, Vertex b)
     {
         ThrowIfVertexHasC1Continuity(a, b);

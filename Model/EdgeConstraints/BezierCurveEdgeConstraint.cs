@@ -149,6 +149,11 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
         return true;
     }
 
+    public void ApplyBezierNeighbourConstraint(Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
+    {
+        throw new NotImplementedException();
+    }
+
     private Vector2 GetTangentVector(Vertex vertex, BezierCurveControlPoint controlPoint)
         => ((vertex - controlPoint.ToVertex()) * 3).ToVector2();
 
@@ -168,12 +173,11 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
         // Funkcja poruszająca punktem kontrolnym - ta operacja ma oddzielny mechanizm aplikowania
         // ograniczeń, ze względu na konieczność modyfikowania nie swoich wierzchołków.
 
-        controlPoint.MoveTo(destination);
         var (v1, v2) = polygon.GetEdgeVertices(_edge);
         if (controlPoint == Cp1)
-            polygon.MoveBezierCurveControlPoint(v1);
+            polygon.MoveBezierCurveControlPoint(Cp1, v1, this, _edge, destination);
         else if (controlPoint == Cp2)
-            polygon.MoveBezierCurveControlPoint(v2);
+            polygon.MoveBezierCurveControlPoint(Cp2, v2, this, _edge, destination);
         else
             throw new ArgumentException("Control points don't match!");
     }

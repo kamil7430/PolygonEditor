@@ -1,5 +1,6 @@
 ﻿using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.VertexContinuities;
+using System.Numerics;
 
 namespace PolygonEditor.Model.EdgeConstraints;
 
@@ -19,4 +20,9 @@ public class HorizontalEdgeConstraint : IEdgeConstraint
 
     public bool CheckConstraint(Vertex a, Vertex b)
         => a.Y.IsEqual(b.Y);
+
+    public void ApplyBezierNeighbourConstraint(Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
+    {
+        throw new NotImplementedException();
+    }
 }
