@@ -1,4 +1,5 @@
-﻿using PolygonEditor.Model.Helpers;
+﻿using PolygonEditor.Model.BezierCurveUtils;
+using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.VertexContinuities;
 using System.Numerics;
 
@@ -28,7 +29,8 @@ public class CircleArcEdgeConstraint : IEdgeConstraint
     public bool CheckConstraint(Vertex a, Vertex b)
         => true;
 
-    public void ApplyBezierNeighbourConstraint(Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
+    public void ApplyBezierNeighbourConstraint(BezierCurveControlPoint oldControlPoint, BezierCurveControlPoint controlPoint,
+        Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
     {
         throw new NotImplementedException();
     }

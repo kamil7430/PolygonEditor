@@ -1,4 +1,5 @@
-﻿using PolygonEditor.Model.VertexContinuities;
+﻿using PolygonEditor.Model.BezierCurveUtils;
+using PolygonEditor.Model.VertexContinuities;
 using System.Numerics;
 
 namespace PolygonEditor.Model.EdgeConstraints;
@@ -10,5 +11,6 @@ public interface IEdgeConstraint
     IVertexContinuity DefaultContinuity { get; }
     bool CheckConstraint(Vertex a, Vertex b);
     void ApplyConstraint(Vertex a, Vertex b);
-    void ApplyBezierNeighbourConstraint(Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual);
+    void ApplyBezierNeighbourConstraint(BezierCurveControlPoint oldControlPoint, BezierCurveControlPoint controlPoint,
+        Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual);
 }

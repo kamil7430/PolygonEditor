@@ -1,4 +1,6 @@
-﻿using PolygonEditor.Model.VertexContinuities;
+﻿using PolygonEditor.Model.BezierCurveUtils;
+using PolygonEditor.Model.Helpers;
+using PolygonEditor.Model.VertexContinuities;
 using System.Numerics;
 
 namespace PolygonEditor.Model.EdgeConstraints;
@@ -20,7 +22,8 @@ public class NoConstraint : IEdgeConstraint
     public bool CheckConstraint(Vertex a, Vertex b)
         => true;
 
-    public void ApplyBezierNeighbourConstraint(Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
+    public void ApplyBezierNeighbourConstraint(BezierCurveControlPoint oldControlPoint, BezierCurveControlPoint controlPoint,
+        Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
     {
         if (shouldLengthBeEqual)
         {
@@ -28,8 +31,6 @@ public class NoConstraint : IEdgeConstraint
             b.Y = a.Y + tangentVector.Y;
         }
         else
-        {
-
-        }
+            VertexHelper.ParallelToVectorKeepingLength(a, b, tangentVector);
     }
 }

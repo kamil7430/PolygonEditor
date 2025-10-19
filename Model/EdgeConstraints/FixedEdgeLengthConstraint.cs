@@ -1,4 +1,5 @@
-﻿using PolygonEditor.Model.Helpers;
+﻿using PolygonEditor.Model.BezierCurveUtils;
+using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.VertexContinuities;
 using System.Numerics;
 
@@ -35,8 +36,16 @@ public class FixedEdgeLengthConstraint : IEdgeConstraint
     public bool CheckConstraint(Vertex a, Vertex b)
         => a.DistanceTo(b).IsEqual(_length);
 
-    public void ApplyBezierNeighbourConstraint(Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
+    public void ApplyBezierNeighbourConstraint(BezierCurveControlPoint oldControlPoint, BezierCurveControlPoint controlPoint,
+        Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
     {
-        throw new NotImplementedException();
+        if (shouldLengthBeEqual)
+        {
+            var delta = new SizeF(controlPoint.X - oldControlPoint.X, controlPoint.Y - oldControlPoint.Y);
+            a.Offset(delta);
+            b.Offset(delta);
+        }
+        else
+            VertexHelper.ParallelToVectorKeepingLength(a, b, tangentVector);
     }
 }

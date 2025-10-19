@@ -15,7 +15,7 @@ public static class BezierConstraintSolver
         controlPoint.MoveTo(destination);
         var continuityConditions = vertex.Continuity.GetContinuityConditions(vertex, bezierEdge, edgeToMove);
         if (continuityConditions != null)
-            edgeToMove.Constraint.ApplyBezierNeighbourConstraint(vertex, vertexToMove,
+            edgeToMove.Constraint.ApplyBezierNeighbourConstraint(oldControlPoint, controlPoint, vertex, vertexToMove,
                 continuityConditions.Value.TangentVector, continuityConditions.Value.ShouldLengthBeEqual);
 
         return (oldControlPoint, oldVertex, oldVertexToMove);

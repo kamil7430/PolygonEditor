@@ -1,4 +1,5 @@
-﻿using PolygonEditor.Model.Helpers;
+﻿using PolygonEditor.Model.BezierCurveUtils;
+using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.VertexContinuities;
 using System.Numerics;
 
@@ -21,8 +22,15 @@ public class HorizontalEdgeConstraint : IEdgeConstraint
     public bool CheckConstraint(Vertex a, Vertex b)
         => a.Y.IsEqual(b.Y);
 
-    public void ApplyBezierNeighbourConstraint(Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
+    public void ApplyBezierNeighbourConstraint(BezierCurveControlPoint oldControlPoint, BezierCurveControlPoint controlPoint,
+        Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
     {
-        throw new NotImplementedException();
+        a.Y = controlPoint.Y;
+        b.Y = controlPoint.Y;
+        var length = shouldLengthBeEqual ? tangentVector.Length() : a.DistanceTo(b);
+        if (a.X < controlPoint.X)
+            b.X = a.X - length;
+        else
+            b.X = a.X + length;
     }
 }

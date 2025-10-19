@@ -149,7 +149,8 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
         return true;
     }
 
-    public void ApplyBezierNeighbourConstraint(Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
+    public void ApplyBezierNeighbourConstraint(BezierCurveControlPoint oldControlPoint, BezierCurveControlPoint controlPoint,
+        Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
     {
         throw new NotImplementedException();
     }
