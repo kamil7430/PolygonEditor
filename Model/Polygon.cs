@@ -45,7 +45,7 @@ public class Polygon
         var (oldControlPoint, oldVertex, oldVertexToMove) = BezierConstraintSolver.MoveFirstEdge(this,
             controlPoint, vertex, vertexToMove, bezierConstraint, bezierEdge, firstEdgeToMove, destination);
 
-        if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, vertexToMove, vertexToMove.ToPointF()))
+        if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, vertexToMove, vertexToMove.ToPointF(), true))
         {
             (controlPoint.X, controlPoint.Y) = (oldControlPoint.X, oldControlPoint.Y);
             (vertex.X, vertex.Y) = (oldVertex.X, oldVertex.Y);

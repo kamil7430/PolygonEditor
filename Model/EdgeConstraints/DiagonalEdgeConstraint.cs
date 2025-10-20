@@ -60,15 +60,6 @@ public class DiagonalEdgeConstraint : IEdgeConstraint
     public void ApplyBezierNeighbourConstraint(BezierCurveControlPoint oldControlPoint, BezierCurveControlPoint controlPoint,
         Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
     {
-        // Odsunięcie wierzchołków od punktu kontrolnego, jeśli jest za blisko.
-        var dist = controlPoint.DistanceTo(a);
-        if (dist < BEZIER_CONTROL_POINT_MINIMUM_DISTANCE)
-        {
-            var delta = new SizeF(oldControlPoint.X - controlPoint.X, oldControlPoint.Y - controlPoint.Y);
-            a.Offset(delta);
-            b.Offset(delta);
-        }
-
         // Dopasowanie punktów, aby mieć 45 stopni (lub 135).
         if (_changeX)
         {

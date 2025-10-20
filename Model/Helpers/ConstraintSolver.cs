@@ -4,20 +4,20 @@ namespace PolygonEditor.Model.Helpers;
 
 public static class ConstraintSolver
 {
-    public static bool TryMoveVertexAndApplyConstraints(Polygon polygon, Vertex vertexMoved, PointF destination)
+    public static bool TryMoveVertexAndApplyConstraints(Polygon polygon, Vertex vertexMoved, PointF destination, bool skipBack = false)
     {
         int movedVertexIndex = polygon.Vertices.IndexOf(vertexMoved);
         var vertices = polygon.Vertices.Clone();
         polygon.Vertices[movedVertexIndex].MoveTo(destination);
 
-        if (TryApplyConstraints(polygon.Vertices, polygon.Edges, movedVertexIndex))
+        if (TryApplyConstraints(polygon.Vertices, polygon.Edges, movedVertexIndex, skipBack))
             return true;
 
         polygon.Vertices = vertices;
         return false;
     }
 
-    private static bool TryApplyConstraints(List<Vertex> vertices, List<Edge> edges, int movedVertexIndex)
+    private static bool TryApplyConstraints(List<Vertex> vertices, List<Edge> edges, int movedVertexIndex, bool skipBack)
     {
         int vertexCount = vertices.Count;
         int i = movedVertexIndex, j = (i + 1).TrueModulo(vertexCount);
@@ -31,6 +31,13 @@ public static class ConstraintSolver
         }
         if (j != movedVertexIndex && edges[j].Constraint is BezierCurveEdgeConstraint)
             edges[j].Constraint.ApplyConstraint(vertices[j], vertices[(j + 1).TrueModulo(vertexCount)]);
+
+        if (skipBack)
+        {
+            if (j == movedVertexIndex)
+                return false;
+            return true;
+        }
 
         int lastTouchedIndex = i;
         i = movedVertexIndex;
