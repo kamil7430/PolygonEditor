@@ -20,11 +20,18 @@ public class Polygon
     }
 
     public static Polygon Predefined
-        => new Polygon
-        (
-            [new(30, 15), new(530, 130), new(440, 425), new(75, 330)],
-            [new(), new(), new(), new()]
-        );
+    {
+        get
+        {
+            var polygon = new Polygon
+            (
+                [new(30, 15), new(530, 130), new(440, 425), new(75, 330)],
+                [new(), new(), new(), new()]
+            );
+            polygon.Edges[1].Constraint = new BezierCurveEdgeConstraint(polygon.Edges[1], polygon);
+            return polygon;
+        }
+    }
 
     public Vertex MoveVertex(Vertex vertex, PointF destination)
     {
