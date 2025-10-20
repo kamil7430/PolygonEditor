@@ -7,8 +7,6 @@ namespace PolygonEditor.Model.EdgeConstraints;
 
 public class DiagonalEdgeConstraint : IEdgeConstraint
 {
-    private const int BEZIER_CONTROL_POINT_MINIMUM_DISTANCE = 100;
-
     public enum DiagonalDirection
     {
         RightUp = -1,
@@ -60,20 +58,45 @@ public class DiagonalEdgeConstraint : IEdgeConstraint
     public void ApplyBezierNeighbourConstraint(BezierCurveControlPoint oldControlPoint, BezierCurveControlPoint controlPoint,
         Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
     {
+        // Jeżeli punkt kontrolny wylądował pomiędzy a i b, przerzucenie b na drugą stronę.
+        if (controlPoint.X >= Math.Min(a.X, b.X) && controlPoint.X <= Math.Max(a.X, b.X))
+            if (controlPoint.Y >= Math.Min(a.Y, b.Y) && controlPoint.Y <= Math.Max(a.Y, b.Y))
+            {
+                var vector = (b - a).ToVector2();
+                b.X = a.X - vector.X;
+                b.Y = a.Y - vector.Y;
+            }
+
         // Dopasowanie punktów, aby mieć 45 stopni (lub 135).
-        if (_changeX)
+        if (!shouldLengthBeEqual)
         {
-            var delta = oldControlPoint.Y - controlPoint.Y;
-            a.X += delta * _direction;
-            b.X += delta * _direction;
-            _changeX = false;
+            if (_changeX)
+            {
+                var delta = oldControlPoint.Y - controlPoint.Y;
+                a.X += delta * _direction;
+                b.X += delta * _direction;
+                _changeX = false;
+            }
+            else
+            {
+                var delta = oldControlPoint.X - controlPoint.X;
+                a.Y += delta * _direction;
+                b.Y += delta * _direction;
+                _changeX = true;
+            }
         }
         else
         {
-            var delta = oldControlPoint.X - controlPoint.X;
-            a.Y += delta * _direction;
-            b.Y += delta * _direction;
-            _changeX = true;
+            if (_changeX)
+            {
+
+                _changeX = false;
+            }
+            else
+            {
+
+                _changeX = true;
+            }
         }
     }
 }
