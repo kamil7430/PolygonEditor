@@ -152,7 +152,21 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
     public void ApplyBezierNeighbourConstraint(BezierCurveControlPoint oldControlPoint, BezierCurveControlPoint controlPoint,
         Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
     {
-        throw new NotImplementedException();
+        var cp = GetCorrespondingControlPoint(a);
+        if (shouldLengthBeEqual)
+        {
+            cp.X = a.X + tangentVector.X / 3;
+            cp.Y = a.Y + tangentVector.Y / 3;
+        }
+        else
+        {
+            float length = a.DistanceTo(cp);
+            float scale = length / tangentVector.Length();
+            tangentVector.X *= scale;
+            tangentVector.Y *= scale;
+            cp.X = a.X + tangentVector.X;
+            cp.Y = a.Y + tangentVector.Y;
+        }
     }
 
     private Vector2 GetTangentVector(Vertex vertex, BezierCurveControlPoint controlPoint)

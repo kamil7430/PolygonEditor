@@ -83,8 +83,11 @@ public class Polygon
         var oldContinuityNext = Vertices[(index + 1).TrueModulo(Vertices.Count)].Continuity;
         if (!TryApplyVertexContinuity(Vertices[index], constraint.DefaultContinuity, Vertices[(index + 1).TrueModulo(Vertices.Count)]))
         {
-            edge.Constraint = oldConstraint;
-            return false;
+            if (!TryApplyVertexContinuity(Vertices[index], new G0Continuity(), Vertices[(index + 1).TrueModulo(Vertices.Count)]))
+            {
+                edge.Constraint = oldConstraint;
+                return false;
+            }
         }
 
         if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, Vertices[index], Vertices[index].ToPointF()))

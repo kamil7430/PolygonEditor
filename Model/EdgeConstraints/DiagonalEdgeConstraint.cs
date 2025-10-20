@@ -7,6 +7,8 @@ namespace PolygonEditor.Model.EdgeConstraints;
 
 public class DiagonalEdgeConstraint : IEdgeConstraint
 {
+    private const int BEZIER_CONTROL_POINT_MINIMUM_DISTANCE = 100;
+
     public enum DiagonalDirection
     {
         RightUp = -1,
@@ -58,6 +60,29 @@ public class DiagonalEdgeConstraint : IEdgeConstraint
     public void ApplyBezierNeighbourConstraint(BezierCurveControlPoint oldControlPoint, BezierCurveControlPoint controlPoint,
         Vertex a, Vertex b, Vector2 tangentVector, bool shouldLengthBeEqual)
     {
-        throw new NotImplementedException();
+        // Odsunięcie wierzchołków od punktu kontrolnego, jeśli jest za blisko.
+        var dist = controlPoint.DistanceTo(a);
+        if (dist < BEZIER_CONTROL_POINT_MINIMUM_DISTANCE)
+        {
+            var delta = new SizeF(oldControlPoint.X - controlPoint.X, oldControlPoint.Y - controlPoint.Y);
+            a.Offset(delta);
+            b.Offset(delta);
+        }
+
+        // Dopasowanie punktów, aby mieć 45 stopni (lub 135).
+        if (_changeX)
+        {
+            var delta = oldControlPoint.Y - controlPoint.Y;
+            a.X += delta * _direction;
+            b.X += delta * _direction;
+            _changeX = false;
+        }
+        else
+        {
+            var delta = oldControlPoint.X - controlPoint.X;
+            a.Y += delta * _direction;
+            b.Y += delta * _direction;
+            _changeX = true;
+        }
     }
 }
