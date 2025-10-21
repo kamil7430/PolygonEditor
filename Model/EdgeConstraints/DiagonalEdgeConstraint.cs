@@ -68,35 +68,33 @@ public class DiagonalEdgeConstraint : IEdgeConstraint
             }
 
         // Dopasowanie punktów, aby mieć 45 stopni (lub 135).
-        if (!shouldLengthBeEqual)
+        if (_changeX)
         {
-            if (_changeX)
+            var delta = oldControlPoint.Y - controlPoint.Y;
+            a.X += delta * _direction;
+            if (shouldLengthBeEqual)
             {
-                var delta = oldControlPoint.Y - controlPoint.Y;
-                a.X += delta * _direction;
-                b.X += delta * _direction;
-                _changeX = false;
+                var tangent = ((a - controlPoint.ToVertex()) * 3).ToVector2();
+                b.X = a.X + tangent.X;
+                b.Y = a.Y + tangent.Y;
             }
             else
-            {
-                var delta = oldControlPoint.X - controlPoint.X;
-                a.Y += delta * _direction;
-                b.Y += delta * _direction;
-                _changeX = true;
-            }
+                b.X += delta * _direction;
+            _changeX = false;
         }
         else
         {
-            if (_changeX)
+            var delta = oldControlPoint.X - controlPoint.X;
+            a.Y += delta * _direction;
+            if (shouldLengthBeEqual)
             {
-
-                _changeX = false;
+                var tangent = ((a - controlPoint.ToVertex()) * 3).ToVector2();
+                b.X = a.X + tangent.X;
+                b.Y = a.Y + tangent.Y;
             }
             else
-            {
-
-                _changeX = true;
-            }
+                b.Y += delta * _direction;
+            _changeX = true;
         }
     }
 }

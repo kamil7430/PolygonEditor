@@ -17,15 +17,15 @@
   - [x] Dodawanie wierzchołka na krawędzi lub usuwanie wierzchołka - usuwa ograniczenia i typ "przyległych" krawędzi
   - [x] Ustawione ograniczenia są widoczne (jako odpowiednie "ikonki") przy środku krawędzi
   - [x] Powinna istnieć mozliwość usuwania relacji
-- [ ] Włączanie/wyłączanie dla wybranej krawędzi - segmentu Beziera 3-go stopnia (krawędż nie jest odcinkiem tylko krzywą).
+- [x] Włączanie/wyłączanie dla wybranej krawędzi - segmentu Beziera 3-go stopnia (krawędż nie jest odcinkiem tylko krzywą).
   - [x] Rysowany jest wielobok Beziera (np. przerywaną linią) oraz dodatkowe 2 punkty kontrolne
-  - [ ] Jeśli wierzchołek sąsiaduje z segmentem - powinna być możliwość ustawienia wymaganej ciągłości w wierzchołku:
-    - [ ] Ciągłość G0
-    - [ ] Ciągłość G1 (ciągłość jednostkowego wektora stycznego
-    - [ ] Ciągłość C1 (ciągłość wektora stycznego)
+  - [x] Jeśli wierzchołek sąsiaduje z segmentem - powinna być możliwość ustawienia wymaganej ciągłości w wierzchołku:
+    - [x] Ciągłość G0
+    - [x] Ciągłość G1 (ciągłość jednostkowego wektora stycznego
+    - [x] Ciągłość C1 (ciągłość wektora stycznego)
   - [x] Przełączanie z krawędzi na krzywą - od razu wymusza domyślną klasę ciągłości w sąsiednich wierzchołkach (chyba, że klasa ciągłości była już ustawiona w wierzchołku): Ciągłość G1 (ciągłość jednostkowego wektora stycznego (osoby o nazwiskach od A do K)
-  - [ ] Punkty kontrolne ustawiane są dowolnie z uwzględnieniem ograniczeń ciągłości
-  - [ ] W zależności od ustawionej ciągłości - należy uwzględnić "ograniczenia" przy przesuwaniu wierzchołków i punktów kontrolnych
+  - [x] Punkty kontrolne ustawiane są dowolnie z uwzględnieniem ograniczeń ciągłości
+  - [x] W zależności od ustawionej ciągłości - należy uwzględnić "ograniczenia" przy przesuwaniu wierzchołków i punktów kontrolnych
 - [x] Włączanie/wyłączanie dla wybranej krawędzi - łuku okręgu (krawędż nie jest odcinkiem tylko łukiem okręgu).
   - [x] Jeśli wierzchołek sąsiaduje z łukiem - powinna być możliwość ustawienia wymaganej ciągłości w wierzchołku:
     - [x] Ciągłość G0
@@ -34,12 +34,12 @@
   - [x] Gry oba końce łuku mają ciągłość G0, to rysowany jest łuk o promieniu równym połowie długości krawędzi
 - [x] Rysowanie odcinków - algorytm biblioteczny i własna implementacja (alg. Bresenhama) - radiobutton
 - [x] Rysowanie segmentu Beziera - algorytm przyrostowy: Przejście do bazy potęgowej a następnie szybki iteracyjny algorytm wyznaczania kolejnych punktów.
-- [ ] Definiowanie nowego wielokąta oraz przesuwanie - jak najbardziej intuicyjne
+- [x] Definiowanie nowego wielokąta oraz przesuwanie - jak najbardziej intuicyjne
 - [x] Przesuwanie - lewy wciśnięty przycisk myszy
-- [ ] Przesuwany wierzchołek lub punkt kontrolny zawsze podąża za kursorem myszki
-- [ ] Przesuwanie punktu kontrolnego - nie powinno (może tylko w wyjątkowych przypadkach) przesuwać wierzchołków danego segmentu, może (a czasem musi) natomiast przesuwać inne wierzchołki
+- [x] Przesuwany wierzchołek lub punkt kontrolny zawsze podąża za kursorem myszki
+- [x] Przesuwanie punktu kontrolnego - nie powinno (może tylko w wyjątkowych przypadkach) przesuwać wierzchołków danego segmentu, może (a czasem musi) natomiast przesuwać inne wierzchołki
 - Proszę bardziej się skupić na algorytmach, modelu danych i architekturze programu niż na UI/UX
-- [ ] **!!!Po uruchomieniu programu powinna pojawić się predefiniowana scena z ograniczeniami i przynajmniej jedną krawędzią zamienioną na segment Beziera.**
+- [x] **!!!Po uruchomieniu programu powinna pojawić się predefiniowana scena z ograniczeniami i przynajmniej jedną krawędzią zamienioną na segment Beziera.**
 - [ ] Proszę również o przygotowanie prostej dokumentacji (najlepiej jako część aplikacji) zawierającej:
   - [ ] Instrukcji obsługi - "klawiszologia"
   - [ ] Przyjętych założeń i opisu zaimplementowanego algorytmu "relacji"

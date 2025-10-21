@@ -25,10 +25,12 @@ public class Polygon
         {
             var polygon = new Polygon
             (
-                [new(30, 15), new(530, 130), new(440, 425), new(75, 330)],
-                [new(), new(), new(), new()]
+                [new(30, 15), new(530, 130), new(440, 425), new(75, 330), new(235, 135)],
+                [new(), new(), new(), new(), new()]
             );
-            polygon.Edges[1].Constraint = new BezierCurveEdgeConstraint(polygon.Edges[1], polygon);
+            polygon.TryApplyConstraints(polygon.Edges[1], new CircleArcEdgeConstraint(polygon));
+            polygon.TryApplyConstraints(polygon.Edges[3], new DiagonalEdgeConstraint(DiagonalEdgeConstraint.DiagonalDirection.RightUp));
+            polygon.TryApplyConstraints(polygon.Edges[2], new BezierCurveEdgeConstraint(polygon.Edges[2], polygon));
             return polygon;
         }
     }
