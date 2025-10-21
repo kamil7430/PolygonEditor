@@ -3,6 +3,7 @@
 public interface IPolygonEditorView
 {
     float VertexRadius { get; }
+    string KeyBindingsDescription { get; }
 
     event EventHandler? HelpClicked;
     event EventHandler? PolygonResetClicked;

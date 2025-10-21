@@ -35,7 +35,7 @@ public class PolygonsFormPresenter
     }
 
     private void HelpClicked(object? sender, EventArgs e)
-        => _view.ShowMessageBox("To jest pomoc.");
+        => _view.ShowMessageBox(_view.KeyBindingsDescription);
 
     private void PolygonResetClicked(object? sender, EventArgs e)
     {

@@ -40,6 +40,6 @@
 - [x] Przesuwanie punktu kontrolnego - nie powinno (może tylko w wyjątkowych przypadkach) przesuwać wierzchołków danego segmentu, może (a czasem musi) natomiast przesuwać inne wierzchołki
 - Proszę bardziej się skupić na algorytmach, modelu danych i architekturze programu niż na UI/UX
 - [x] **!!!Po uruchomieniu programu powinna pojawić się predefiniowana scena z ograniczeniami i przynajmniej jedną krawędzią zamienioną na segment Beziera.**
-- [ ] Proszę również o przygotowanie prostej dokumentacji (najlepiej jako część aplikacji) zawierającej:
-  - [ ] Instrukcji obsługi - "klawiszologia"
-  - [ ] Przyjętych założeń i opisu zaimplementowanego algorytmu "relacji"
+- [x] Proszę również o przygotowanie prostej dokumentacji (najlepiej jako część aplikacji) zawierającej:
+  - [x] Instrukcji obsługi - "klawiszologia"
+  - [x] Przyjętych założeń i opisu zaimplementowanego algorytmu "relacji"
