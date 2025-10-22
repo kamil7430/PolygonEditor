@@ -9,7 +9,7 @@ public partial class PolygonsForm
     // udostępnianych przez widok: do rysowania, wyświetlania Message Boxów i menu
     // kontekstowych.
 
-    public float VertexRadius { get; } = 15f;
+    public float VertexRadius { get; } = 10f;
     private readonly float _vertexLabelFontSize = 9;
     private Font? _vertexLabelFont;
 
