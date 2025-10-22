@@ -18,7 +18,6 @@ public class G1Continuity : G1C1ContinuitiesBase
 
     public override (Vector2 TangentVector, bool ShouldLengthBeEqual)? GetContinuityConditions(Vertex vertex, Edge previousEdge, Edge currentEdge)
     {
-        // TODO: check for bezier
         // Ten warunek zapobiega stack overflow przy ciągłości G1 dla dwóch sąsiadujących łuków.
         // Wyznacza wersor prostopadły do prostej wyznaczonej przez końce obu łuków.
         if (previousEdge.Constraint.EdgeType == EdgeType.Arc && currentEdge.Constraint.EdgeType == EdgeType.Arc)

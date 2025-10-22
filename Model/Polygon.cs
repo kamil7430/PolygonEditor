@@ -37,6 +37,10 @@ public class Polygon
 
     public Vertex MoveVertex(Vertex vertex, PointF destination)
     {
+        // Funkcja wywoływana, gdy użytkownik chce przesunąć wierzchołek. Oprócz
+        // zmiany pozycji w modelu, dodatkowo wywoływany jest Solver, który
+        // rozwiązuje ograniczenia, bądź informuje o niemożności takiej operacji.
+
         int vertexIndex = Vertices.IndexOf(vertex);
         var delta = destination.Subtract(vertex.ToPointF()).ToSizeF();
         if (!ConstraintSolver.TryMoveVertexAndApplyConstraints(this, vertex, destination))
@@ -47,6 +51,11 @@ public class Polygon
     public void MoveBezierCurveControlPoint(BezierCurveControlPoint controlPoint, Vertex vertex,
         BezierCurveEdgeConstraint bezierConstraint, Edge bezierEdge, PointF destination)
     {
+        // Obsługuje przesuwanie punktu kontrolnego krzywej Beziera. Wykorzystuje 'BezierConstraintSolver'
+        // do wstępnego przeliczenia pozycji (z uwzględnieniem ciągłości),
+        // a następnie 'ConstraintSolver' do walidacji i zastosowania zmian w kontekście całego wielokąta.
+        // W razie niepowodzenia cofa zmiany i przesuwa cały wielokąt.
+
         var delta = destination.Subtract(controlPoint.ToPointF()).ToSizeF();
 
         var firstEdgeToMove = GetOtherEdge(vertex, bezierEdge);
@@ -65,6 +74,9 @@ public class Polygon
 
     public void MoveWholePolygon(SizeF delta)
     {
+        // Przesuwa cały wielokąt (wszystkie wierzchołki oraz punkty kontrolne krzywych Beziera)
+        // o podany wektor (delta).
+
         Vertices.ForEach(v => v.Offset(delta));
         foreach (var edge in Edges.Where(e => e.Constraint.EdgeType == EdgeType.BezierCurve))
         {
@@ -76,6 +88,11 @@ public class Polygon
 
     public bool TryApplyConstraints(Edge edge, IEdgeConstraint constraint)
     {
+        // Próbuje zastosować nowe ograniczenie (constraint) do wybranej krawędzi.
+        // Sprawdza specyficzne warunki (np. sąsiednie ograniczenia poziome),
+        // próbuje ustawić domyślną ciągłość wierzchołków (lub G0) i wywołuje Solver,
+        // aby sprawdzić, czy zmiana jest możliwa. W razie niepowodzenia cofa wszystkie zmiany.
+
         var oldConstraint = edge.Constraint;
         edge.Constraint = constraint;
         var index = Edges.IndexOf(edge);
@@ -112,6 +129,10 @@ public class Polygon
 
     public bool TryApplyVertexContinuity(Vertex ver1, IVertexContinuity continuity, Vertex? ver2 = null)
     {
+        // Próbuje zastosować nową regułę ciągłości do jednego lub dwóch wierzchołków. 
+        // Sprawdza, czy typy sąsiednich krawędzi i ciągłość sąsiednich wierzchołków są akceptowane
+        // przez nową regułę. Na koniec waliduje zmianę za pomocą Solvera.
+
         var (e1, e2) = GetVertexEdges(ver1);
         Edge? e3 = null, e4 = null;
         if (ver2 != null)
@@ -163,6 +184,9 @@ public class Polygon
 
     public void DeleteVertex(Vertex vertex)
     {
+        // Usuwa wierzchołek z wielokąta. Usuwa również powiązaną z nim krawędź i resetuje ograniczenia oraz ciągłość
+        // na sąsiednich krawędziach i wierzchołkach do stanu domyślnego (brak ograniczeń, ciągłość G0).
+
         var index = Vertices.IndexOf(vertex);
         Vertices.RemoveAt(index);
         Edges.RemoveAt(index);
@@ -175,6 +199,10 @@ public class Polygon
 
     public void AddVertex(Edge edge)
     {
+        // Dodaje nowy wierzchołek pośrodku wybranej krawędzi, efektywnie dzieląc ją na dwie. 
+        // Resetuje ograniczenie na oryginalnej krawędzi oraz ciągłość na jej wierzchołkach
+        // i wstawia nowy wierzchołek i nową krawędź.
+
         var index = Edges.IndexOf(edge);
         var v1 = Vertices[index];
         var v2 = Vertices[(index + 1) % Vertices.Count];
@@ -188,6 +216,9 @@ public class Polygon
 
     public Vertex? GetNearestVertexInRadius(PointF point, float radius)
     {
+        // Wyszukuje najbliższy wierzchołek do danego punktu, pod warunkiem, że znajduje się on w określonym promieniu (radius).
+        // Zwraca 'null', jeśli żaden wierzchołek nie spełnia kryterium. Używa przeszukiwania liniowego.
+
         (Vertex Vertex, float Distance)? nearestVertex = null;
         Vector2 p = point.ToVector2();
         foreach (var vertex in Vertices)
@@ -203,6 +234,9 @@ public class Polygon
 
     public BezierCurveControlPoint? GetNearestBezierCurveControlPointInRadius(PointF point, float radius)
     {
+        // Wyszukuje najbliższy punkt kontrolny krzywej Beziera do danego punktu, w określonym promieniu.
+        // Przeszukuje tylko krawędzie z ograniczeniem 'BezierCurveEdgeConstraint'.
+
         (BezierCurveControlPoint ControlPoint, float Distance)? nearestControlPoint = null;
         Vector2 p = point.ToVector2();
         foreach (var bezierCurve in Edges.Where(e => e.Constraint.EdgeType == EdgeType.BezierCurve))
@@ -222,6 +256,10 @@ public class Polygon
 
     public Edge? GetNearestEdgeInRadius(PointF p, float radius)
     {
+        // Wyszukuje najbliższą krawędź do danego punktu (p) w określonym promieniu. 
+        // Oblicza odległość prostopadłą punktu od linii zdefiniowanej przez wierzchołki krawędzi.
+        // Zwraca krawędź z najmniejszą odległością, jeśli jest ona mniejsza niż 'radius'.
+
         (Edge Edge, double Distance)? nearestEdge = null;
         var verticesCount = Vertices.Count;
         for (int i = 0; i < verticesCount; i++)
@@ -240,6 +278,9 @@ public class Polygon
 
     public Edge GetEdgeBetween(Vertex v1, Vertex v2)
     {
+        // Zwraca krawędź znajdującą się pomiędzy dwoma podanymi wierzchołkami.
+        // Rzuca wyjątek, jeśli wierzchołki nie są bezpośrednimi sąsiadami.
+
         int index1 = Vertices.IndexOf(v1);
         int index2 = Vertices.IndexOf(v2);
         if (index1 > index2)
@@ -255,36 +296,52 @@ public class Polygon
 
     public (Vertex V1, Vertex V2) GetEdgeVertices(Edge edge)
     {
+        // Zwraca krotkę (V1, V2) zawierającą dwa wierzchołki, które definiują podaną krawędź.
+
         var index = Edges.IndexOf(edge);
         return (Vertices[index], Vertices[(index + 1) % Vertices.Count]);
     }
 
     public (Edge E1, Edge E2) GetVertexEdges(Vertex vertex)
     {
+        // Zwraca krotkę (E1, E2) zawierającą dwie krawędzie, które spotykają się
+        // w podanym wierzchołku (krawędź wchodząca i wychodząca).
+
         var index = Vertices.IndexOf(vertex);
         return (Edges[(index - 1).TrueModulo(Vertices.Count)], Edges[index]);
     }
 
     public Edge GetOtherEdge(Vertex vertex, Edge edge)
     {
+        // Dla danego wierzchołka i jednej z jego krawędzi, zwraca tę drugą krawędź
+        // połączoną z tym wierzchołkiem.
+
         var (e1, e2) = GetVertexEdges(vertex);
         return edge == e1 ? e2 : e1;
     }
 
     public Vertex GetOtherVertex(Edge edge, Vertex vertex)
     {
+        // Dla danej krawędzi i jednego z jej wierzchołków, zwraca ten drugi
+        // wierzchołek należący do tej krawędzi.
+
         var (v1, v2) = GetEdgeVertices(edge);
         return vertex == v1 ? v2 : v1;
     }
 
+    // Zwraca krawędź poprzedzającą krawędź (a, b) z perspektywy wierzchołka 'a'.
     public Edge GetPreviousEdge(Vertex a, Vertex b)
         => GetOtherEdge(a, GetEdgeBetween(a, b));
 
+    // Zwraca krawędź następującą po krawędzi (a, b) z perspektywy wierzchołka 'b'.
     public Edge GetNextEdge(Vertex a, Vertex b)
         => GetOtherEdge(b, GetEdgeBetween(a, b));
 
     public float GetEdgeLength(Edge edge)
     {
+        // Oblicza długość (odległość euklidesową) podanej krawędzi, bazując
+        // na pozycjach jej dwóch wierzchołków.
+
         int index = Edges.IndexOf(edge);
         int nextIndex = (index + 1).TrueModulo(Edges.Count);
         return Vertices[index].DistanceTo(Vertices[nextIndex]);
