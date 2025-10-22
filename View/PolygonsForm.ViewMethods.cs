@@ -5,6 +5,10 @@ namespace PolygonEditor.View;
 
 public partial class PolygonsForm
 {
+    // Część implementacji klasy głównego formularza, zawierająca definicje funkcji
+    // udostępnianych przez widok: do rysowania, wyświetlania Message Boxów i menu
+    // kontekstowych.
+
     public float VertexRadius { get; } = 15f;
     private readonly float _vertexLabelFontSize = 9;
     private Font? _vertexLabelFont;

@@ -2,6 +2,9 @@
 
 public partial class PolygonsForm
 {
+    // Część implementacji klasy formularza, która deleguje wydarzenia w widoku
+    // do odpowiednich eventów, zdefiniowanych w interfejsie.
+
     public event EventHandler? HelpClicked;
     public event EventHandler? PolygonResetClicked;
     public event EventHandler? LibraryAlgorithmChosen;

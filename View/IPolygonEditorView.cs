@@ -2,6 +2,9 @@
 
 public interface IPolygonEditorView
 {
+    // Interfejs zawierający deklaracje wszystkich eventów i metod, jakie
+    // implementuje konkretny widok (w tym przypadku jeden - PolygonsForm).
+
     float VertexRadius { get; }
     string KeyBindingsDescription { get; }
 
