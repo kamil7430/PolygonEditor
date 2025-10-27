@@ -1,4 +1,5 @@
-﻿using PolygonEditor.Model.VertexContinuities;
+﻿using PolygonEditor.Model.Dtos;
+using PolygonEditor.Model.VertexContinuities;
 using System.Numerics;
 
 namespace PolygonEditor.Model;
@@ -51,4 +52,7 @@ public class Vertex : ICastableToVector2, ICloneable
 
     public object Clone()
         => new Vertex(X, Y, (IVertexContinuity)Continuity.Clone());
+
+    public VertexDto ToDto()
+        => new VertexDto(X, Y, Continuity.ToDto());
 }

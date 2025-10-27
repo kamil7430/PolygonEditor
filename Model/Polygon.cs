@@ -1,4 +1,5 @@
 ﻿using PolygonEditor.Model.BezierCurveUtils;
+using PolygonEditor.Model.Dtos;
 using PolygonEditor.Model.EdgeConstraints;
 using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.VertexContinuities;
@@ -17,6 +18,17 @@ public class Polygon
             throw new ArgumentException("Vertex count does not match edge count!");
         Vertices = vertices;
         Edges = edges;
+    }
+
+    public PolygonDto ToDto()
+    {
+        List<VertexDto> vertices = [];
+        List<EdgeDto> edges = [];
+        foreach (var v in Vertices)
+            vertices.Add(v.ToDto());
+        foreach (var e in Edges)
+            edges.Add(e.ToDto());
+        return new PolygonDto(vertices, edges);
     }
 
     public static Polygon Predefined
