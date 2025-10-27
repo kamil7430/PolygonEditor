@@ -210,6 +210,9 @@ public partial class PolygonsFormPresenter
         _sourceOfPolygonMovement = null;
     }
 
+    private void SharpBezierClicked(object? sender, EventArgs e)
+        => ChangeConstraintFromContextMenu(new SharpBezierEdgeConstraint(_contextMenusEdge!, _polygon));
+
     private void SubscribeToEvents()
     {
         _view.HelpClicked += HelpClicked;
@@ -236,5 +239,6 @@ public partial class PolygonsFormPresenter
         _view.RemoveConstraintClicked += RemoveConstraintClicked;
         _view.VertexContextMenuClosing += VertexContextMenuClosing;
         _view.EdgeContextMenuClosing += EdgeContextMenuClosing;
+        _view.SharpBezierClicked += SharpBezierClicked;
     }
 }

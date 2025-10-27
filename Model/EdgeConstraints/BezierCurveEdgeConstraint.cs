@@ -7,8 +7,8 @@ namespace PolygonEditor.Model.EdgeConstraints;
 
 public class BezierCurveEdgeConstraint : IEdgeConstraint
 {
-    private readonly Edge _edge;
-    private readonly Polygon _polygon;
+    protected readonly Edge _edge;
+    protected readonly Polygon _polygon;
     public BezierCurveControlPoint Cp1 { get; set; }
     public BezierCurveControlPoint Cp2 { get; set; }
 
@@ -25,10 +25,10 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
     public EdgeType EdgeType
         => EdgeType.BezierCurve;
 
-    public string? Label
+    public virtual string? Label
         => "B";
 
-    public IVertexContinuity DefaultContinuity
+    public virtual IVertexContinuity DefaultContinuity
         => new G1Continuity(_polygon);
 
     public void ApplyConstraint(Vertex a, Vertex b)

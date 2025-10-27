@@ -108,4 +108,9 @@ public partial class PolygonsForm
 
     private void edgeContextMenuStrip_Closing(object sender, ToolStripDropDownClosingEventArgs e)
         => EdgeContextMenuClosing?.Invoke(sender, e);
+
+    public event EventHandler? SharpBezierClicked;
+
+    private void labBezierZOstrzemToolStripMenuItem_Click(object sender, EventArgs e)
+        => SharpBezierClicked?.Invoke(sender, e);
 }
