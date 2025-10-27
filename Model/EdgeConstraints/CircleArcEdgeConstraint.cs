@@ -1,4 +1,5 @@
 ﻿using PolygonEditor.Model.BezierCurveUtils;
+using PolygonEditor.Model.Dtos.EdgeConstraints;
 using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.VertexContinuities;
 using System.Numerics;
@@ -155,4 +156,7 @@ public class CircleArcEdgeConstraint : IEdgeConstraint
 
         return (S, radius);
     }
+
+    public IEdgeConstraintDto ToDto()
+        => new CircleArcEdgeConstraintDto();
 }

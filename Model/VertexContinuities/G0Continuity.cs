@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using PolygonEditor.Model.Dtos.VertexContinuities;
+using System.Numerics;
 
 namespace PolygonEditor.Model.VertexContinuities;
 
@@ -15,4 +16,7 @@ public class G0Continuity : IVertexContinuity
 
     public object Clone()
         => new G0Continuity();
+
+    public IVertexContinuityDto ToDto()
+        => new G0ContinuityDto();
 }

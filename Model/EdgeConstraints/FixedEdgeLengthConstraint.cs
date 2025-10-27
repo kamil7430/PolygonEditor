@@ -1,4 +1,5 @@
 ﻿using PolygonEditor.Model.BezierCurveUtils;
+using PolygonEditor.Model.Dtos.EdgeConstraints;
 using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.VertexContinuities;
 using System.Numerics;
@@ -48,4 +49,7 @@ public class FixedEdgeLengthConstraint : IEdgeConstraint
         else
             VertexHelper.ParallelToVectorKeepingLength(a, b, tangentVector);
     }
+
+    public IEdgeConstraintDto ToDto()
+        => new FixedEdgeLengthConstraintDto(_length);
 }

@@ -1,4 +1,5 @@
 ﻿using PolygonEditor.Model.BezierCurveUtils;
+using PolygonEditor.Model.Dtos.EdgeConstraints;
 using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.VertexContinuities;
 using System.Numerics;
@@ -235,4 +236,7 @@ public class BezierCurveEdgeConstraint : IEdgeConstraint
             yield return delta0P.ToPointF();
         }
     }
+
+    public virtual IEdgeConstraintDto ToDto()
+        => new BezierCurveEdgeConstraintDto(_polygon.Edges.IndexOf(_edge), Cp1, Cp2);
 }

@@ -1,4 +1,5 @@
 ﻿using PolygonEditor.Model.BezierCurveUtils;
+using PolygonEditor.Model.Dtos.EdgeConstraints;
 using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.VertexContinuities;
 using System.Numerics;
@@ -33,4 +34,7 @@ public class HorizontalEdgeConstraint : IEdgeConstraint
         else
             b.X = a.X + length;
     }
+
+    public IEdgeConstraintDto ToDto()
+        => new HorizontalEdgeConstraintDto();
 }

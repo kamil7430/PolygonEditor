@@ -1,4 +1,5 @@
-﻿using PolygonEditor.Model.Helpers;
+﻿using PolygonEditor.Model.Dtos.EdgeConstraints;
+using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.VertexContinuities;
 
 namespace PolygonEditor.Model.EdgeConstraints;
@@ -40,4 +41,7 @@ public class SharpBezierEdgeConstraint : BezierCurveEdgeConstraint
 
     public override IVertexContinuity DefaultContinuity
         => new G0Continuity();
+
+    public override IEdgeConstraintDto ToDto()
+        => new SharpBezierEdgeConstraintDto(_polygon.Edges.IndexOf(_edge), Cp1, Cp2);
 }

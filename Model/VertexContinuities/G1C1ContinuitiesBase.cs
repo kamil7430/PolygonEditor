@@ -1,4 +1,5 @@
-﻿using PolygonEditor.Model.EdgeConstraints;
+﻿using PolygonEditor.Model.Dtos.VertexContinuities;
+using PolygonEditor.Model.EdgeConstraints;
 using System.Numerics;
 
 namespace PolygonEditor.Model.VertexContinuities;
@@ -51,4 +52,5 @@ public abstract class G1C1ContinuitiesBase : IVertexContinuity
     public abstract (Vector2 TangentVector, bool ShouldLengthBeEqual)? GetContinuityConditions(Vertex vertex, Edge previousEdge, Edge currentEdge);
 
     public abstract object Clone();
+    public abstract IVertexContinuityDto ToDto();
 }

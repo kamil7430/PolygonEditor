@@ -1,4 +1,5 @@
 ﻿using PolygonEditor.Model.BezierCurveUtils;
+using PolygonEditor.Model.Dtos.EdgeConstraints;
 using PolygonEditor.Model.Helpers;
 using PolygonEditor.Model.VertexContinuities;
 using System.Numerics;
@@ -97,4 +98,7 @@ public class DiagonalEdgeConstraint : IEdgeConstraint
             _changeX = true;
         }
     }
+
+    public IEdgeConstraintDto ToDto()
+        => new DiagonalEdgeConstraintDto((DiagonalDirection)_direction, _changeX);
 }
