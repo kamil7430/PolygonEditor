@@ -33,6 +33,8 @@ public interface IPolygonEditorView
     event ToolStripDropDownClosingEventHandler? VertexContextMenuClosing;
     event ToolStripDropDownClosingEventHandler? EdgeContextMenuClosing;
     event EventHandler? SharpBezierClicked;
+    event EventHandler? SavePolygonClicked;
+    event EventHandler? LoadPolygonClicked;
 
     void ShowMessageBox(string message);
     void DrawLine(Graphics g, PointF p1, PointF p2);

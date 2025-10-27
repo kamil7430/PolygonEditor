@@ -1,4 +1,5 @@
-﻿using PolygonEditor.Model.EdgeConstraints;
+﻿using PolygonEditor.Model.Dtos.BezierCurveUtils;
+using PolygonEditor.Model.EdgeConstraints;
 using System.Numerics;
 
 namespace PolygonEditor.Model.BezierCurveUtils;
@@ -45,4 +46,7 @@ public class BezierCurveControlPoint : ICastableToVector2, ICloneable
 
     public object Clone()
         => new BezierCurveControlPoint(X, Y, _constraint);
+
+    public BezierCurveControlPointDto ToDto()
+        => new BezierCurveControlPointDto(X, Y);
 }

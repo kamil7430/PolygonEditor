@@ -113,4 +113,13 @@ public partial class PolygonsForm
 
     private void labBezierZOstrzemToolStripMenuItem_Click(object sender, EventArgs e)
         => SharpBezierClicked?.Invoke(sender, e);
+
+    public event EventHandler? SavePolygonClicked;
+    public event EventHandler? LoadPolygonClicked;
+
+    private void zapiszToolStripMenuItem_Click(object sender, EventArgs e)
+        => SavePolygonClicked?.Invoke(sender, e);
+
+    private void wczytajToolStripMenuItem_Click(object sender, EventArgs e)
+        => LoadPolygonClicked?.Invoke(sender, e);
 }

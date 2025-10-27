@@ -213,6 +213,65 @@ public partial class PolygonsFormPresenter
     private void SharpBezierClicked(object? sender, EventArgs e)
         => ChangeConstraintFromContextMenu(new SharpBezierEdgeConstraint(_contextMenusEdge!, _polygon));
 
+    private void LoadPolygonClicked(object? sender, EventArgs e)
+    {
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+
+        openFileDialog.Title = "Otwórz plik";
+        openFileDialog.Filter = "Pliki tekstowe (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*";
+        openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        openFileDialog.RestoreDirectory = true;
+        openFileDialog.Multiselect = false;
+
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
+        {
+            string sciezkaDoPliku = openFileDialog.FileName;
+            try
+            {
+                string trescPliku = System.IO.File.ReadAllText(sciezkaDoPliku);
+                var polygon = PolygonSerializer.DeserializePolygon(trescPliku);
+                if (polygon != null)
+                {
+                    _polygon = polygon;
+                    _view.RefreshPolygonPanel();
+                    return;
+                }
+                _view.ShowMessageBox("Wczytano wielokąt pomyślnie!");
+            }
+            catch (Exception ex)
+            {
+                _view.ShowMessageBox("Wystąpił błąd podczas wczytywania pliku: " + ex.Message);
+            }
+        }
+    }
+
+    private void SavePolygonClicked(object? sender, EventArgs e)
+    {
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+        saveFileDialog.Title = "Zapisz plik jako...";
+        saveFileDialog.Filter = "Pliki tekstowe (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*";
+        saveFileDialog.DefaultExt = "txt";
+        saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        saveFileDialog.RestoreDirectory = true;
+
+        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+        {
+            string sciezkaDoPliku = saveFileDialog.FileName;
+            try
+            {
+                string trescDoZapisu = PolygonSerializer.SerializePolygon(_polygon);
+                System.IO.File.WriteAllText(sciezkaDoPliku, trescDoZapisu);
+
+                _view.ShowMessageBox("Plik zapisany pomyślnie!");
+            }
+            catch (Exception ex)
+            {
+                _view.ShowMessageBox("Wystąpił błąd podczas zapisu pliku: " + ex.Message);
+            }
+        }
+    }
+
     private void SubscribeToEvents()
     {
         _view.HelpClicked += HelpClicked;
@@ -240,5 +299,7 @@ public partial class PolygonsFormPresenter
         _view.VertexContextMenuClosing += VertexContextMenuClosing;
         _view.EdgeContextMenuClosing += EdgeContextMenuClosing;
         _view.SharpBezierClicked += SharpBezierClicked;
+        _view.SavePolygonClicked += SavePolygonClicked;
+        _view.LoadPolygonClicked += LoadPolygonClicked;
     }
 }

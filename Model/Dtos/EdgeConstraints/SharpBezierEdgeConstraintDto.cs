@@ -12,6 +12,9 @@ public class SharpBezierEdgeConstraintDto : BezierCurveEdgeConstraintDto
     public override IEdgeConstraint GetConstraint(Polygon polygon)
     {
         var edge = polygon.Edges[EdgeIndex];
-        return new SharpBezierEdgeConstraint(edge, polygon);
+        var bezier = new SharpBezierEdgeConstraint(edge, polygon);
+        bezier.Cp1 = Cp1.GetControlPoint(bezier);
+        bezier.Cp2 = Cp2.GetControlPoint(bezier);
+        return bezier;
     }
 }

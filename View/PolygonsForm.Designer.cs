@@ -52,8 +52,11 @@ namespace PolygonEditor.View
             stałaDługośćKrawędziToolStripMenuItem = new ToolStripMenuItem();
             krzywaBezieraToolStripMenuItem = new ToolStripMenuItem();
             łukOkręguToolStripMenuItem = new ToolStripMenuItem();
-            usuńOgraniczenieToolStripMenuItem = new ToolStripMenuItem();
             labBezierZOstrzemToolStripMenuItem = new ToolStripMenuItem();
+            usuńOgraniczenieToolStripMenuItem = new ToolStripMenuItem();
+            zarządzanieWielokątemToolStripMenuItem = new ToolStripMenuItem();
+            zapiszToolStripMenuItem = new ToolStripMenuItem();
+            wczytajToolStripMenuItem = new ToolStripMenuItem();
             menuStrip.SuspendLayout();
             vertexContextMenuStrip.SuspendLayout();
             edgeContextMenuStrip.SuspendLayout();
@@ -62,7 +65,7 @@ namespace PolygonEditor.View
             // menuStrip
             // 
             menuStrip.ImageScalingSize = new Size(24, 24);
-            menuStrip.Items.AddRange(new ToolStripItem[] { helpToolStripMenuItem, resetWielokątaToolStripMenuItem });
+            menuStrip.Items.AddRange(new ToolStripItem[] { helpToolStripMenuItem, resetWielokątaToolStripMenuItem, zarządzanieWielokątemToolStripMenuItem });
             menuStrip.Location = new Point(0, 0);
             menuStrip.Name = "menuStrip";
             menuStrip.Padding = new Padding(4, 1, 0, 1);
@@ -171,13 +174,13 @@ namespace PolygonEditor.View
             edgeContextMenuStrip.ImageScalingSize = new Size(24, 24);
             edgeContextMenuStrip.Items.AddRange(new ToolStripItem[] { dodajWierzchołekToolStripMenuItem, dodajOgraniczenieToolStripMenuItem, usuńOgraniczenieToolStripMenuItem });
             edgeContextMenuStrip.Name = "edgeContextMenuStrip";
-            edgeContextMenuStrip.Size = new Size(181, 92);
+            edgeContextMenuStrip.Size = new Size(177, 70);
             edgeContextMenuStrip.Closing += edgeContextMenuStrip_Closing;
             // 
             // dodajWierzchołekToolStripMenuItem
             // 
             dodajWierzchołekToolStripMenuItem.Name = "dodajWierzchołekToolStripMenuItem";
-            dodajWierzchołekToolStripMenuItem.Size = new Size(180, 22);
+            dodajWierzchołekToolStripMenuItem.Size = new Size(176, 22);
             dodajWierzchołekToolStripMenuItem.Text = "Dodaj wierzchołek";
             dodajWierzchołekToolStripMenuItem.Click += dodajWierzchołekToolStripMenuItem_Click;
             // 
@@ -185,7 +188,7 @@ namespace PolygonEditor.View
             // 
             dodajOgraniczenieToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { krawędźPoziomaToolStripMenuItem, krawędźSkośnaToolStripMenuItem, diagonalDownToolStripMenuItem, stałaDługośćKrawędziToolStripMenuItem, krzywaBezieraToolStripMenuItem, łukOkręguToolStripMenuItem, labBezierZOstrzemToolStripMenuItem });
             dodajOgraniczenieToolStripMenuItem.Name = "dodajOgraniczenieToolStripMenuItem";
-            dodajOgraniczenieToolStripMenuItem.Size = new Size(180, 22);
+            dodajOgraniczenieToolStripMenuItem.Size = new Size(176, 22);
             dodajOgraniczenieToolStripMenuItem.Text = "Ustaw ograniczenie";
             // 
             // krawędźPoziomaToolStripMenuItem
@@ -230,19 +233,40 @@ namespace PolygonEditor.View
             łukOkręguToolStripMenuItem.Text = "Łuk okręgu";
             łukOkręguToolStripMenuItem.Click += łukOkręguToolStripMenuItem_Click;
             // 
-            // usuńOgraniczenieToolStripMenuItem
-            // 
-            usuńOgraniczenieToolStripMenuItem.Name = "usuńOgraniczenieToolStripMenuItem";
-            usuńOgraniczenieToolStripMenuItem.Size = new Size(180, 22);
-            usuńOgraniczenieToolStripMenuItem.Text = "Usuń ograniczenie";
-            usuńOgraniczenieToolStripMenuItem.Click += usuńOgraniczenieToolStripMenuItem_Click;
-            // 
             // labBezierZOstrzemToolStripMenuItem
             // 
             labBezierZOstrzemToolStripMenuItem.Name = "labBezierZOstrzemToolStripMenuItem";
             labBezierZOstrzemToolStripMenuItem.Size = new Size(221, 22);
             labBezierZOstrzemToolStripMenuItem.Text = "[Lab] Bezier z ostrzem";
             labBezierZOstrzemToolStripMenuItem.Click += labBezierZOstrzemToolStripMenuItem_Click;
+            // 
+            // usuńOgraniczenieToolStripMenuItem
+            // 
+            usuńOgraniczenieToolStripMenuItem.Name = "usuńOgraniczenieToolStripMenuItem";
+            usuńOgraniczenieToolStripMenuItem.Size = new Size(176, 22);
+            usuńOgraniczenieToolStripMenuItem.Text = "Usuń ograniczenie";
+            usuńOgraniczenieToolStripMenuItem.Click += usuńOgraniczenieToolStripMenuItem_Click;
+            // 
+            // zarządzanieWielokątemToolStripMenuItem
+            // 
+            zarządzanieWielokątemToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { zapiszToolStripMenuItem, wczytajToolStripMenuItem });
+            zarządzanieWielokątemToolStripMenuItem.Name = "zarządzanieWielokątemToolStripMenuItem";
+            zarządzanieWielokątemToolStripMenuItem.Size = new Size(145, 22);
+            zarządzanieWielokątemToolStripMenuItem.Text = "Zarządzanie wielokątem";
+            // 
+            // zapiszToolStripMenuItem
+            // 
+            zapiszToolStripMenuItem.Name = "zapiszToolStripMenuItem";
+            zapiszToolStripMenuItem.Size = new Size(180, 22);
+            zapiszToolStripMenuItem.Text = "Zapisz...";
+            zapiszToolStripMenuItem.Click += zapiszToolStripMenuItem_Click;
+            // 
+            // wczytajToolStripMenuItem
+            // 
+            wczytajToolStripMenuItem.Name = "wczytajToolStripMenuItem";
+            wczytajToolStripMenuItem.Size = new Size(180, 22);
+            wczytajToolStripMenuItem.Text = "Wczytaj...";
+            wczytajToolStripMenuItem.Click += wczytajToolStripMenuItem_Click;
             // 
             // PolygonsForm
             // 
@@ -295,5 +319,8 @@ namespace PolygonEditor.View
         private ToolStripMenuItem diagonalDownToolStripMenuItem;
         private ToolStripMenuItem resetWielokątaToolStripMenuItem;
         private ToolStripMenuItem labBezierZOstrzemToolStripMenuItem;
+        private ToolStripMenuItem zarządzanieWielokątemToolStripMenuItem;
+        private ToolStripMenuItem zapiszToolStripMenuItem;
+        private ToolStripMenuItem wczytajToolStripMenuItem;
     }
 }

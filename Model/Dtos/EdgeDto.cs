@@ -10,4 +10,7 @@ public class EdgeDto
     {
         this.Constraint = constraint;
     }
+
+    public Edge GetEdge(Polygon polygon)
+        => new Edge(Constraint.GetConstraint(polygon));
 }

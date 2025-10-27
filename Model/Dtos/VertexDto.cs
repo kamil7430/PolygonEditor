@@ -14,4 +14,7 @@ public class VertexDto
         Y = y;
         Continuity = continuity;
     }
+
+    public Vertex GetVertex(Polygon polygon)
+        => new Vertex(X, Y, Continuity.GetContinuity(polygon));
 }
